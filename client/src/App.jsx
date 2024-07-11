@@ -9,9 +9,13 @@ import PrivateRoute from './components/PrivateRoute';
 
 export default function App() {
   return (
+    
+
     <BrowserRouter>
-      {/* header */}
+  
       <Header />
+      <div className='mt-16'>
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
@@ -21,6 +25,8 @@ export default function App() {
           <Route path='/profile' element={<Profile />} />
         </Route>
       </Routes>
+      </div>
     </BrowserRouter>
+    
   );
 }
