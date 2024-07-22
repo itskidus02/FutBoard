@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 
 export default function CreateTableAndClub() {
   const [numTeams, setNumTeams] = useState(0);
-  const [tableName, setTableName] = useState("");
+  const [tableName, setTableName] = useState(""); // State for table name
   const [teamNames, setTeamNames] = useState([]);
   const [error, setError] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +27,7 @@ export default function CreateTableAndClub() {
       },
     ],
   });
+  console.log(formData);
 
   const handleNumTeamsChange = (e) => {
     const value = parseInt(e.target.value, 10);
@@ -33,6 +38,7 @@ export default function CreateTableAndClub() {
   };
 
   const handleTableNameChange = (e) => {
+    setTableName(e.target.value); // Update tableName state
     setFormData({
       ...formData,
       name: e.target.value,
@@ -71,13 +77,19 @@ export default function CreateTableAndClub() {
 
     setError("");
 
+    // Set userId in formData
+    const updatedFormData = {
+      ...formData,
+      userId: currentUser._id,
+    };
+
     try {
       const res = await fetch("/api/table/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData), // Use updatedFormData
       });
 
       if (!res.ok) {
@@ -115,6 +127,7 @@ export default function CreateTableAndClub() {
     }
   };
 
+
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
@@ -126,8 +139,8 @@ export default function CreateTableAndClub() {
             type="text"
             placeholder="Table Name"
             className="border p-3 rounded-lg"
-            value={formData.name}
-            onChange={handleTableNameChange}
+            value={tableName}
+            onChange={handleTableNameChange} // Corrected function name
             required
           />
           <input

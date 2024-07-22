@@ -7,15 +7,16 @@ const tableSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+  
     userId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     clubs: [
       {
         clubId: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.Schema.Types.ObjectId,
           ref: "Club",
           required: true,
         },
@@ -51,6 +52,7 @@ const tableSchema = new mongoose.Schema(
           type: Number,
           default: 0,
         },
+       
       },
     ],
   },
