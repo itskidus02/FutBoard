@@ -7,10 +7,10 @@ const clubSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    logoUrl: {
+    logoUrl:  {
       type: String,
-      required: true,
-      trim: true,
+      default:
+        'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg',
     },
   },
   { timestamps: true }

@@ -1,4 +1,5 @@
 import Table from "../models/table.model.js";
+import Club from "../models/club.model.js";
 import { errorHandler } from "../utils/error.js";
 
 // Create a new table
@@ -10,6 +11,32 @@ export const createTable = async (req, res, next) => {
     next(error);
   }
 };
+
+// Create clubs and add them to a table
+export const addClubsToTable = async (req, res, next) => {
+  try {
+    const { tableId, clubs } = req.body;
+    const table = await Table.findById(tableId);
+
+    if (!table) {
+      return next(errorHandler(404, "Table not found!"));
+    }
+
+    const clubIds = [];
+    for (const clubData of clubs) {
+      const club = await Club.create({ name: clubData.name, logoUrl: clubData.logoUrl });
+      clubIds.push({ clubId: club._id });
+    }
+
+    table.clubs = clubIds;
+    await table.save();
+
+    res.status(200).json(table);
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 // Delete a table by ID
 export const deleteTable = async (req, res, next) => {
