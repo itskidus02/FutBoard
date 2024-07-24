@@ -5,8 +5,8 @@ import { verifyToken } from '../utils/verifyUser.js';
 const router = express.Router();
 
 // Verify token for creating, deleting, and updating tables
-router.post('/create', createTable);
-router.post('/add-clubs', addClubsToTable);
+router.post('/create', verifyToken, createTable);
+router.post('/add-clubs', verifyToken, addClubsToTable);
 router.delete('/delete/:id', verifyToken, deleteTable);
 router.post('/update/:id', verifyToken, updateTable);
 router.get('/get/:id', getTable);
