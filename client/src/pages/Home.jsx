@@ -33,8 +33,12 @@ export default function Home() {
       <h1 className='text-3xl font-bold mb-4 text-slate-800'>
         The new project
       </h1>
-      
-      <div>
+      <div >
+        <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
+          <Link to="/create-table-team">Create Table</Link>
+        </button>
+      </div>
+      <div className='mt-3'>
         <h2 className='text-xl font-bold mb-2'>Tables:</h2>
         <ul>
           {tables.map((table) => (

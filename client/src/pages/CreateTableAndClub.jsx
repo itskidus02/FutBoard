@@ -80,6 +80,7 @@ export default function CreateTableAndClub() {
       setNumTeams(0);
       setTableName("");
       setTeamNames([]);
+      navigate(`/display-table/${tableId}`);
     } catch (error) {
       setError(error.message);
       console.error("Error creating table and clubs:", error);
