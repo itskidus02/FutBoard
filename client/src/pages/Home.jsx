@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [tables, setTables] = useState([]);
@@ -38,7 +39,9 @@ export default function Home() {
         <ul>
           {tables.map((table) => (
             <li key={table._id}>
-              <p>{table.name}</p> {/* Assuming each table has a 'name' property */}
+              <Link to={`/display-table/${table._id}`}>
+                <p className='text-blue-500 cursor-pointer'>{table.name}</p>
+              </Link>
              
               {/* Render other table details as needed */}
             </li>
