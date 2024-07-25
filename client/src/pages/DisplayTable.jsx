@@ -6,6 +6,8 @@ export default function DisplayTable() {
   const [table, setTable] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [creator, setCreator] = useState(null);
+
   const { currentUser } = useSelector((state) => state.user);
   const params = useParams();
 
@@ -31,6 +33,21 @@ export default function DisplayTable() {
     fetchTable();
   }, [params.tableId]);
 
+  useEffect(() => {
+    const fetchCreator = async () => {
+      try {
+        if (table && table.userId) {
+          const res = await fetch(`/api/user/${table.userId}`);
+          const data = await res.json();
+          setCreator(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCreator();
+  }, [table]);
+
   return (
     <main>
       {loading && (
@@ -44,6 +61,16 @@ export default function DisplayTable() {
       {table && !loading && !error && (
         <div className="max-w-4xl mx-auto p-3 my-7">
           <h1 className="text-3xl font-semibold text-center my-7">{table.name}</h1>
+          {creator && (
+            <div className="flex justify-center mb-4">
+              <div className="flex ring-2 p-2 ring-[#00ed64] rounded-lg flex-col gap-2">
+                <p>
+                  Created by{" "}
+                  <span className="font-semibold">{creator.username}</span>
+                </p>
+              </div>
+            </div>
+          )}
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border-collapse">
               <thead>

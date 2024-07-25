@@ -7,9 +7,12 @@ const tableSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-  
+    userRef: {
+      type: String,
+      required: true,
+    },
     userId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
