@@ -49,7 +49,7 @@ export default function CreateTableAndClub() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: tableName, userId: currentUser._id }),
+        body: JSON.stringify({ name: tableName, userRef: currentUser.username, userId: currentUser._id }),
       });
 
       if (!tableRes.ok) {
