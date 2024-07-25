@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-export default function DisplayTable() {
+const DisplayTable = () => {
   const [table, setTable] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [creator, setCreator] = useState(null);
-
-  const { currentUser } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -16,16 +13,13 @@ export default function DisplayTable() {
       try {
         setLoading(true);
         const res = await fetch(`/api/table/get/${params.tableId}`);
+        if (!res.ok) throw new Error('Failed to fetch table');
         const data = await res.json();
-        if (data.success === false) {
-          setError(true);
-          setLoading(false);
-          return;
-        }
+        console.log('Fetched table data:', data); // Log the fetched data
         setTable(data);
         setLoading(false);
-        setError(false);
       } catch (error) {
+        console.error('Error fetching table:', error); // Log any errors
         setError(true);
         setLoading(false);
       }
@@ -36,39 +30,39 @@ export default function DisplayTable() {
   useEffect(() => {
     const fetchCreator = async () => {
       try {
-        if (table && table.userId) {
-          const res = await fetch(`/api/user/${table.userId}`);
-          const data = await res.json();
-          setCreator(data);
-        }
+        const res = await fetch(`/api/user/${table.userId._id}`);
+        if (!res.ok) throw new Error('Failed to fetch creator');
+        const data = await res.json();
+        console.log('Fetched creator data:', data); // Log the fetched data
+        setCreator(data);
       } catch (error) {
-        console.log(error);
+        console.error('Error fetching creator:', error); // Log any errors
       }
     };
-    fetchCreator();
+    if (table) {
+      fetchCreator();
+    }
   }, [table]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error loading table</p>;
+  }
 
   return (
     <main>
-      {loading && (
-        <div className="fixed top-1/3 left-1/2 transform -translate-y-1/3 -translate-x-1/2">
-          <p>Loading...</p>
-        </div>
-      )}
-      {error && (
-        <p className="text-center my-7 text-2xl">Error loading table</p>
-      )}
-      {table && !loading && !error && (
+      {table && (
         <div className="max-w-4xl mx-auto p-3 my-7">
           <h1 className="text-3xl font-semibold text-center my-7">{table.name}</h1>
           {creator && (
-            <div className="flex justify-center mb-4">
-              <div className="flex ring-2 p-2 ring-[#00ed64] rounded-lg flex-col gap-2">
-                <p>
-                  Created by{" "}
-                  <span className="font-semibold">{creator.username}</span>
-                </p>
-              </div>
+            <div className="flex ring-2 p-2 ring-[#00ed64] rounded-lg flex-col gap-2">
+              <p>
+                Listed by{" "}
+                <span className="font-semibold">{creator.username}</span>{" "}
+              </p>
             </div>
           )}
           <div className="overflow-x-auto">
@@ -107,4 +101,6 @@ export default function DisplayTable() {
       )}
     </main>
   );
-}
+};
+
+export default DisplayTable;
