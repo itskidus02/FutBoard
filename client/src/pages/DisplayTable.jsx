@@ -98,8 +98,8 @@ const DisplayTable = () => {
                   <th className="py-2 px-4 border-b">Club</th>
                   <th className="py-2 px-4 border-b">Played</th>
                   <th className="py-2 px-4 border-b">Won</th>
-                  <th className="py-2 px-4 border-b">Lost</th>
                   <th className="py-2 px-4 border-b">Drawn</th>
+                  <th className="py-2 px-4 border-b">Lost</th>
                   <th className="py-2 px-4 border-b">Goals Scored</th>
                   <th className="py-2 px-4 border-b">Goals Conceded</th>
                   <th className="py-2 px-4 border-b">Goal Difference</th>
