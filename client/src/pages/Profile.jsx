@@ -19,6 +19,7 @@ import {
   deleteUserFailure,
   signOut,
 } from '../redux/user/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -211,9 +212,14 @@ export default function Profile() {
       <h2 className='text-2xl font-semibold text-center my-5'>My Tables</h2>
       {userTables.length > 0 ? (
         userTables.map((table) => (
-          <div key={table._id} className='bg-slate-100 p-3 rounded-lg mb-4'>
+          <div key={table._id} className='bg-slate-100 flex justify-between p-3 rounded-lg mb-4'>
             <h3 className='text-xl font-semibold'>{table.name}</h3>
             {/* Display more table details as needed */}
+            <button>
+            <Link to={`/manage-matches/${table._id}`}>
+                <p className='text-blue-500 cursor-pointer'>Edit</p>
+              </Link>
+            </button>
           </div>
         ))
       ) : (
