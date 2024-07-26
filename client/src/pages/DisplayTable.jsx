@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const DisplayTable = () => {
   const [table, setTable] = useState(null);
@@ -44,6 +46,26 @@ const DisplayTable = () => {
     }
   }, [table]);
 
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(table.clubs.map((club, index) => ({
+      Position: index + 1,
+      Club: club.clubId.name,
+      Played: club.played,
+      Won: club.won,
+      Lost: club.lost,
+      Drawn: club.drawn,
+      'Goals Scored': club.goalsScored,
+      'Goals Conceded': club.goalsConceded,
+      'Goal Difference': club.goalDifference,
+      Points: club.points
+    })));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Table');
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(blob, `${table.name}.xlsx`);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -65,6 +87,9 @@ const DisplayTable = () => {
               </p>
             </div>
           )}
+          <button onClick={exportToExcel} className="px-4 py-2 bg-black text-white rounded-md mb-4">
+            Export to Excel
+          </button>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border-collapse">
               <thead>
