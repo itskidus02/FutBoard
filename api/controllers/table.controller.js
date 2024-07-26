@@ -123,3 +123,57 @@ export const getTablesByUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateMatchResult = async (req, res, next) => {
+  try {
+    const { tableId, homeClubId, awayClubId, homeGoals, awayGoals } = req.body;
+    const table = await Table.findById(tableId);
+
+    if (!table) {
+      return next(errorHandler(404, "Table not found!"));
+    }
+
+    // Find clubs in the table and update their stats based on match result
+    const homeClub = table.clubs.find(club => club.clubId.toString() === homeClubId);
+    const awayClub = table.clubs.find(club => club.clubId.toString() === awayClubId);
+
+    if (!homeClub || !awayClub) {
+      return next(errorHandler(404, "Clubs not found in the table!"));
+    }
+
+    // Update match stats
+    homeClub.played++;
+    awayClub.played++;
+    homeClub.goalsScored += parseInt(homeGoals);
+    homeClub.goalsConceded += parseInt(awayGoals);
+    awayClub.goalsScored += parseInt(awayGoals);
+    awayClub.goalsConceded += parseInt(homeGoals);
+
+    // Determine match result (win, lose, draw) and update points
+    if (homeGoals > awayGoals) {
+      homeClub.won++;
+      awayClub.lost++;
+      homeClub.points += 3;
+    } else if (awayGoals > homeGoals) {
+      awayClub.won++;
+      homeClub.lost++;
+      awayClub.points += 3;
+    } else {
+      homeClub.drawn++;
+      awayClub.drawn++;
+      homeClub.points++;
+      awayClub.points++;
+    }
+
+    // Update goal difference
+    homeClub.goalDifference = homeClub.goalsScored - homeClub.goalsConceded;
+    awayClub.goalDifference = awayClub.goalsScored - awayClub.goalsConceded;
+
+    // Save table updates
+    await table.save();
+
+    res.status(200).json(table);
+  } catch (error) {
+    next(error);
+  }
+};
