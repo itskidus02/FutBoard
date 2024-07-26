@@ -13,6 +13,6 @@ router.delete('/delete/:id', verifyToken, deleteTable);
 router.post('/update/:id', verifyToken, updateTable);
 router.get('/get/:id', getTable);
 router.get('/get', getTables);
-router.get('/user/:userId', verifyToken, getTablesByUser);
+router.get('/user/:userId', getTablesByUser);
 
 export default router;

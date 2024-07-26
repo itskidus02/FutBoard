@@ -17,11 +17,17 @@ const DisplayTable = () => {
         const res = await fetch(`/api/table/get/${params.tableId}`);
         if (!res.ok) throw new Error('Failed to fetch table');
         const data = await res.json();
-        // console.log('Fetched table data:', data); // Log the fetched data
+        // Sort clubs by points and then by goal difference
+        data.clubs.sort((a, b) => {
+          if (b.points === a.points) {
+            return b.goalDifference - a.goalDifference;
+          }
+          return b.points - a.points;
+        });
         setTable(data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching table:', error); // Log any errors
+        console.error('Error fetching table:', error);
         setError(true);
         setLoading(false);
       }
@@ -35,10 +41,9 @@ const DisplayTable = () => {
         const res = await fetch(`/api/user/${table.userId._id}`);
         if (!res.ok) throw new Error('Failed to fetch creator');
         const data = await res.json();
-        // console.log('Fetched creator data:', data); // Log the fetched data
         setCreator(data);
       } catch (error) {
-        console.error('Error fetching creator:', error); // Log any errors
+        console.error('Error fetching creator:', error);
       }
     };
     if (table) {
