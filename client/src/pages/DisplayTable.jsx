@@ -69,6 +69,8 @@ const DisplayTable = () => {
             <table className="min-w-full bg-white border-collapse">
               <thead>
                 <tr>
+
+                  
                   <th className="py-2 px-4 border-b">Club Name</th>
                   <th className="py-2 px-4 border-b">Played</th>
                   <th className="py-2 px-4 border-b">Won</th>
