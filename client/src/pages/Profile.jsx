@@ -1,3 +1,5 @@
+// Profile.jsx
+
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
 import {
@@ -26,13 +28,30 @@ export default function Profile() {
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [userTables, setUserTables] = useState([]);
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (image) {
       handleFileUpload(image);
     }
   }, [image]);
+
+  useEffect(() => {
+    fetchUserTables();
+  }, [currentUser]);
+
+  const fetchUserTables = async () => {
+    try {
+      const res = await fetch(`/api/table/user/${currentUser._id}`);
+      const data = await res.json();
+      setUserTables(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleFileUpload = async (image) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + image.name;
@@ -55,6 +74,7 @@ export default function Profile() {
       }
     );
   };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -107,6 +127,7 @@ export default function Profile() {
       console.log(error);
     }
   };
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -185,6 +206,19 @@ export default function Profile() {
       <p className='text-green-700 mt-5'>
         {updateSuccess && 'User is updated successfully!'}
       </p>
+
+      {/* Displaying user tables */}
+      <h2 className='text-2xl font-semibold text-center my-5'>My Tables</h2>
+      {userTables.length > 0 ? (
+        userTables.map((table) => (
+          <div key={table._id} className='bg-slate-100 p-3 rounded-lg mb-4'>
+            <h3 className='text-xl font-semibold'>{table.name}</h3>
+            {/* Display more table details as needed */}
+          </div>
+        ))
+      ) : (
+        <p className='text-center'>You haven't created any tables yet.</p>
+      )}
     </div>
   );
 }

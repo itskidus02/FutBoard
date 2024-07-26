@@ -107,3 +107,19 @@ export const getTables = async (req, res, next) => {
     next(error);
   }
 };
+
+
+// table.controller.js
+
+// Get tables by user ID
+export const getTablesByUser = async (req, res, next) => {
+  try {
+    const tables = await Table.find({ userId: req.params.userId }).populate('userId').populate('clubs.clubId');
+    if (!tables) {
+      return next(errorHandler(404, "Tables not found!"));
+    }
+    res.status(200).json(tables);
+  } catch (error) {
+    next(error);
+  }
+};
