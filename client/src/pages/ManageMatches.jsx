@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import DisplayTable from "./DisplayTable";
 
 export default function ManageMatches() {
   const { tableId } = useParams();
@@ -73,6 +74,7 @@ export default function ManageMatches() {
 
   return (
     <div>
+      <DisplayTable/> 
       <h1>Manage Matches</h1>
       <form onSubmit={handleMatchSubmit}>
         <select value={selectedClubs.homeClub} onChange={(e) => handleClubChange("homeClub", e.target.value)}>
