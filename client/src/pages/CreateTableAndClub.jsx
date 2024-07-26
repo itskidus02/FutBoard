@@ -112,7 +112,7 @@ export default function CreateTableAndClub() {
       setTableName("");
       setTeamNames([]);
       setTeamLogos([]);
-      navigate(`/display-table/${tableId}`);
+      navigate(`/manage-matches/${tableId}`);
     } catch (error) {
       setError(error.message);
       console.error("Error creating table and clubs:", error);

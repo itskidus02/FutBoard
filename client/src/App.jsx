@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateTableAndClub from "./pages/CreateTableAndClub";
 import DisplayTable from "./pages/DisplayTable";
+import ManageMatches from "./pages/ManageMatches";
 
 export default function App() {
   return (
@@ -23,6 +24,8 @@ export default function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-table-team" element={<CreateTableAndClub />} />
+            <Route path="/manage-matches/:tableId" element={<ManageMatches />} />
+            
           </Route>
         </Routes>
       </div>
