@@ -2,7 +2,7 @@ import React from 'react'
 
 const ManageMatches = () => {
   return (
-    <div>ManageMathes</div>
+    <div>ManageMatches</div>
   )
 }
 
