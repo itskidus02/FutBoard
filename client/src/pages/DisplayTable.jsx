@@ -17,7 +17,7 @@ const DisplayTable = () => {
         const res = await fetch(`/api/table/get/${params.tableId}`);
         if (!res.ok) throw new Error('Failed to fetch table');
         const data = await res.json();
-        console.log('Fetched table data:', data); // Log the fetched data
+        // console.log('Fetched table data:', data); // Log the fetched data
         setTable(data);
         setLoading(false);
       } catch (error) {
@@ -35,7 +35,7 @@ const DisplayTable = () => {
         const res = await fetch(`/api/user/${table.userId._id}`);
         if (!res.ok) throw new Error('Failed to fetch creator');
         const data = await res.json();
-        console.log('Fetched creator data:', data); // Log the fetched data
+        // console.log('Fetched creator data:', data); // Log the fetched data
         setCreator(data);
       } catch (error) {
         console.error('Error fetching creator:', error); // Log any errors
