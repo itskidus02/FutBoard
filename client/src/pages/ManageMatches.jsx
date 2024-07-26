@@ -65,7 +65,7 @@ export default function ManageMatches() {
       }
 
       const updatedTable = await response.json();
-      console.log("Match result updated successfully:", updatedTable);
+      console.log("Match result updated successfully:");
       // Optionally, you can redirect or show a success message
     } catch (error) {
       console.error("Error updating match result:", error);
