@@ -30,6 +30,7 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [userTables, setUserTables] = useState([]);
+  const [deleteError, setDeleteError] = useState("");
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -123,9 +124,29 @@ export default function Profile() {
   const handleSignOut = async () => {
     try {
       await fetch('/api/auth/signout');
-      dispatch(signOut())
+      dispatch(signOut());
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleTableDelete = async (tableId) => {
+    setDeleteError(""); // Clear previous error messages
+    try {
+      const res = await fetch(`/api/table/delete/${tableId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to delete table");
+      }
+      // Remove deleted table from state
+      setUserTables(userTables.filter((table) => table._id !== tableId));
+    } catch (error) {
+      setDeleteError(error.message);
     }
   };
 
@@ -191,7 +212,6 @@ export default function Profile() {
         <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
           {loading ? 'Loading...' : 'Update profile'}
         </button>
-       
       </form>
       <div className='flex justify-between mt-5'>
         <span
@@ -210,12 +230,12 @@ export default function Profile() {
       </p>
       <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
           <Link to="/create-table-team">Create Table</Link>
-        </button>
+      </button>
       {/* Displaying user tables */}
       <h2 className='text-2xl font-semibold text-center my-5'>My Tables</h2>
       {userTables.length > 0 ? (
         userTables.map((table) => (
-          <div key={table._id} className='bg-slate-100 flex justify-between p-3 rounded-lg mb-4'>
+          <div key={table._id} className='bg-slate-100 flex justify-evenly p-3 rounded-lg mb-4'>
             <h3 className='text-xl font-semibold'>{table.name}</h3>
             {/* Display more table details as needed */}
             <button>
@@ -223,11 +243,18 @@ export default function Profile() {
                 <p className='text-blue-500 cursor-pointer'>Edit</p>
               </Link>
             </button>
+            <button
+                onClick={() => handleTableDelete(table._id)}
+                className="text-red-700 uppercase"
+              >
+                Delete
+              </button>
           </div>
         ))
       ) : (
         <p className='text-center'>You haven't created any tables yet.</p>
       )}
+      {deleteError && <p className='text-red-700 mt-5'>{deleteError}</p>}
     </div>
   );
 }

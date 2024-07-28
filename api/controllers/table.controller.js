@@ -48,9 +48,9 @@ export const deleteTable = async (req, res, next) => {
     }
 
     // Check if the requester is the owner of the table or an admin
-    if (req.user.isAdmin || req.user.id === table.userId.toString()) {
+    if (req.user.id === table.userId.toString()) {
       await Table.findByIdAndDelete(req.params.id);
-      res.status(200).json("Table has been deleted!");
+      res.status(200).json({ success: true, message: "Table has been deleted!" });
     } else {
       return next(errorHandler(401, "You are not authorized to delete this table!"));
     }
@@ -58,6 +58,7 @@ export const deleteTable = async (req, res, next) => {
     next(error);
   }
 };
+
 
 // Update a table by ID
 export const updateTable = async (req, res, next) => {
