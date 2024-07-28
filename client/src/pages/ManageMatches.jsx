@@ -7,6 +7,7 @@ export default function ManageMatches() {
   const [clubs, setClubs] = useState([]);
   const [selectedClubs, setSelectedClubs] = useState({ homeClub: "", awayClub: "" });
   const [matchResult, setMatchResult] = useState({ homeGoals: 0, awayGoals: 0 });
+  const [matchDate, setMatchDate] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -41,6 +42,10 @@ export default function ManageMatches() {
     }));
   };
 
+  const handleMatchDateChange = (e) => {
+    setMatchDate(e.target.value);
+  };
+
   const handleMatchSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -51,7 +56,8 @@ export default function ManageMatches() {
         homeClubId: selectedClubs.homeClub,
         awayClubId: selectedClubs.awayClub,
         homeGoals: matchResult.homeGoals,
-        awayGoals: matchResult.awayGoals
+        awayGoals: matchResult.awayGoals,
+        matchDate: matchDate
       };
 
       const response = await fetch("/api/table/update-match", {
@@ -125,10 +131,10 @@ export default function ManageMatches() {
             id="homeGoals"
             value={matchResult.homeGoals}
             onChange={(e) => handleMatchResultChange("homeGoals", e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayGoals">
             Away Goals
           </label>
@@ -137,22 +143,30 @@ export default function ManageMatches() {
             id="awayGoals"
             value={matchResult.awayGoals}
             onChange={(e) => handleMatchResultChange("awayGoals", e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
         </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="matchDate">
+            Match Date
+          </label>
+          <input
+            type="date"
+            id="matchDate"
+            value={matchDate}
+            onChange={handleMatchDateChange}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          />
+        </div>
+        {error && <p className="text-red-500 text-xs italic">{error}</p>}
         <div className="flex items-center justify-between">
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
-            Submit Match Result
+            Save Match Result
           </button>
         </div>
-        {error && (
-          <div className="mt-4 text-red-500 text-sm font-bold">
-            {error}
-          </div>
-        )}
       </form>
     </div>
   );

@@ -1,5 +1,33 @@
 import mongoose, { Schema } from 'mongoose';
 
+const matchSchema = new mongoose.Schema(
+  {
+    homeClubId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Club",
+      required: true,
+    },
+    awayClubId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Club",
+      required: true,
+    },
+    homeGoals: {
+      type: Number,
+      required: true,
+    },
+    awayGoals: {
+      type: Number,
+      required: true,
+    },
+    matchDate: {
+      type: Date,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
 const tableSchema = new mongoose.Schema(
   {
     name: {
@@ -55,9 +83,9 @@ const tableSchema = new mongoose.Schema(
           type: Number,
           default: 0,
         },
-       
       },
     ],
+    matches: [matchSchema],
   },
   { timestamps: true }
 );

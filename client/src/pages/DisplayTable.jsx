@@ -95,7 +95,7 @@ const DisplayTable = () => {
           <button onClick={exportToExcel} className="px-4 py-2 bg-black text-white rounded-md mb-4">
             Export to Excel
           </button>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto mb-8">
             <table className="min-w-full bg-white border-collapse">
               <thead>
                 <tr>
@@ -133,6 +133,31 @@ const DisplayTable = () => {
                     <td className="py-2 px-4 border-b">{club.goalsConceded}</td>
                     <td className="py-2 px-4 border-b">{club.goalDifference}</td>
                     <td className="py-2 px-4 border-b">{club.points}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="overflow-x-auto">
+            <h2 className="text-2xl font-semibold text-center my-5">Matches Played</h2>
+            <table className="min-w-full bg-white border-collapse">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Home Club</th>
+                  <th className="py-2 px-4 border-b">Away Club</th>
+                  <th className="py-2 px-4 border-b">Home Goals</th>
+                  <th className="py-2 px-4 border-b">Away Goals</th>
+                  <th className="py-2 px-4 border-b">Match Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {table.matches.map((match, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="py-2 px-4 border-b">{match.homeClubId.name}</td>
+                    <td className="py-2 px-4 border-b">{match.awayClubId.name}</td>
+                    <td className="py-2 px-4 border-b">{match.homeGoals}</td>
+                    <td className="py-2 px-4 border-b">{match.awayGoals}</td>
+                    <td className="py-2 px-4 border-b">{new Date(match.matchDate).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>

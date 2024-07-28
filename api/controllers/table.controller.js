@@ -127,7 +127,7 @@ export const getTablesByUser = async (req, res, next) => {
 
 export const updateMatchResult = async (req, res, next) => {
   try {
-    const { tableId, homeClubId, awayClubId, homeGoals, awayGoals } = req.body;
+    const { tableId, homeClubId, awayClubId, homeGoals, awayGoals, matchDate } = req.body;
     const table = await Table.findById(tableId);
 
     if (!table) {
@@ -175,6 +175,15 @@ export const updateMatchResult = async (req, res, next) => {
     homeClub.goalDifference = homeClub.goalsScored - homeClub.goalsConceded;
     awayClub.goalDifference = awayClub.goalsScored - awayClub.goalsConceded;
 
+    // Add match to matches array
+    table.matches.push({
+      homeClubId,
+      awayClubId,
+      homeGoals,
+      awayGoals,
+      matchDate: new Date(matchDate)
+    });
+
     // Save table updates
     await table.save();
 
@@ -183,4 +192,6 @@ export const updateMatchResult = async (req, res, next) => {
     next(error);
   }
 };
+
+
 
