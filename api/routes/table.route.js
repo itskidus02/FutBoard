@@ -8,7 +8,7 @@ const router = express.Router();
 // Verify token for creating, deleting, and updating tables
 router.post('/create', createTable);
 router.post('/add-clubs', addClubsToTable);
-router.post('/update-match', updateMatchResult); // New route for updating match result
+router.post('/update-match', verifyToken, updateMatchResult); // New route for updating match result
 router.delete('/delete/:id', verifyToken, deleteTable);
 router.post('/update/:id', verifyToken, updateTable);
 router.get('/get/:id', getTable);
