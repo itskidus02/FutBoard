@@ -189,8 +189,9 @@ export default function Profile() {
           onChange={handleChange}
         />
         <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-          {loading ? 'Loading...' : 'Update'}
+          {loading ? 'Loading...' : 'Update profile'}
         </button>
+       
       </form>
       <div className='flex justify-between mt-5'>
         <span
@@ -207,7 +208,9 @@ export default function Profile() {
       <p className='text-green-700 mt-5'>
         {updateSuccess && 'User is updated successfully!'}
       </p>
-
+      <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
+          <Link to="/create-table-team">Create Table</Link>
+        </button>
       {/* Displaying user tables */}
       <h2 className='text-2xl font-semibold text-center my-5'>My Tables</h2>
       {userTables.length > 0 ? (
