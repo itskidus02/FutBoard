@@ -133,6 +133,11 @@ export const updateMatchResult = async (req, res, next) => {
       return next(errorHandler(404, "Table not found!"));
     }
 
+    // Check if the authenticated user is the creator of the table
+    if (req.user.id !== table.userId.toString()) {
+      return next(errorHandler(401, "You can only update the match result for your own tables!"));
+    }
+
     // Find clubs in the table and update their stats based on match result
     const homeClub = table.clubs.find(club => club.clubId.toString() === homeClubId);
     const awayClub = table.clubs.find(club => club.clubId.toString() === awayClubId);
@@ -177,3 +182,4 @@ export const updateMatchResult = async (req, res, next) => {
     next(error);
   }
 };
+
