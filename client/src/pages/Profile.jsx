@@ -132,21 +132,23 @@ export default function Profile() {
 
   const handleTableDelete = async (tableId) => {
     setDeleteError(""); // Clear previous error messages
-    try {
-      const res = await fetch(`/api/table/delete/${tableId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to delete table");
+    if (window.confirm("Are you sure you want to delete this table?")) {
+      try {
+        const res = await fetch(`/api/table/delete/${tableId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message || "Failed to delete table");
+        }
+        // Remove deleted table from state
+        setUserTables(userTables.filter((table) => table._id !== tableId));
+      } catch (error) {
+        setDeleteError(error.message);
       }
-      // Remove deleted table from state
-      setUserTables(userTables.filter((table) => table._id !== tableId));
-    } catch (error) {
-      setDeleteError(error.message);
     }
   };
 
