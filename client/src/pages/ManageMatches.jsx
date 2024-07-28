@@ -7,6 +7,7 @@ export default function ManageMatches() {
   const [clubs, setClubs] = useState([]);
   const [selectedClubs, setSelectedClubs] = useState({ homeClub: "", awayClub: "" });
   const [matchResult, setMatchResult] = useState({ homeGoals: 0, awayGoals: 0 });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     // Fetch clubs from the table
@@ -19,7 +20,7 @@ export default function ManageMatches() {
         const table = await response.json();
         setClubs(table.clubs.map(c => c.clubId)); // Extract club information
       } catch (error) {
-        console.error("Error fetching clubs:", error);
+        setError("Error fetching clubs: " + error.message);
       }
     };
 
@@ -42,6 +43,7 @@ export default function ManageMatches() {
 
   const handleMatchSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
       const matchData = {
@@ -61,14 +63,15 @@ export default function ManageMatches() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update match result");
+        const responseBody = await response.json();
+        throw new Error(responseBody.message || "Failed to update match result");
       }
 
       const updatedTable = await response.json();
-      console.log("Match result updated successfully:");
+      console.log("Match result updated successfully:", updatedTable);
       // Optionally, you can redirect or show a success message
     } catch (error) {
-      console.error("Error updating match result:", error);
+      setError("Error updating match result: " + error.message);
     }
   };
 
@@ -145,6 +148,11 @@ export default function ManageMatches() {
             Submit Match Result
           </button>
         </div>
+        {error && (
+          <div className="mt-4 text-red-500 text-sm font-bold">
+            {error}
+          </div>
+        )}
       </form>
     </div>
   );
