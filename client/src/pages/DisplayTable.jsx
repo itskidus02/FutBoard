@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
-
 const DisplayTable = () => {
   const [table, setTable] = useState(null);
   const [creator, setCreator] = useState(null);
@@ -144,21 +143,21 @@ const DisplayTable = () => {
             <table className="min-w-full bg-white border-collapse">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b">Home Club</th>
-                  <th className="py-2 px-4 border-b">Away Club</th>
-                  <th className="py-2 px-4 border-b">Home Goals</th>
-                  <th className="py-2 px-4 border-b">Away Goals</th>
+                  <th className="py-2 px-4 border-b">Match</th>
                   <th className="py-2 px-4 border-b">Match Date</th>
                 </tr>
               </thead>
               <tbody>
                 {table.matches.map((match, index) => (
                   <tr key={index} className="text-center">
-                    <td className="py-2 px-4 border-b">{table.clubs.find(club => club.clubId._id === match.homeClubId)?.clubId.name}</td>
-                    <td className="py-2 px-4 border-b">{table.clubs.find(club => club.clubId._id === match.awayClubId)?.clubId.name}</td>
-                    <td className="py-2 px-4 border-b">{match.homeGoals}</td>
-                    <td className="py-2 px-4 border-b">{match.awayGoals}</td>
-                    <td className="py-2 px-4 border-b">{new Date(match.matchDate).toLocaleDateString()}</td>
+                    <td className="py-2 px-4 border-b">
+                      {table.clubs.find(club => club.clubId._id === match.homeClubId)?.clubId.name}, 
+                      {match.homeGoals} - {match.awayGoals}, 
+                      {table.clubs.find(club => club.clubId._id === match.awayClubId)?.clubId.name}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {new Date(match.matchDate).toLocaleDateString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>
