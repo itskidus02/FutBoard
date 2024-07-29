@@ -154,8 +154,8 @@ const DisplayTable = () => {
               <tbody>
                 {table.matches.map((match, index) => (
                   <tr key={index} className="text-center">
-                    <td className="py-2 px-4 border-b">{table.clubs.find(club => club.clubId === match.homeClubId)?.name}</td>
-                    <td className="py-2 px-4 border-b">{table.clubs.find(club => club.clubId === match.awayClubId)?.name}</td>
+                    <td className="py-2 px-4 border-b">{table.clubs.find(club => club.clubId._id === match.homeClubId)?.clubId.name}</td>
+                    <td className="py-2 px-4 border-b">{table.clubs.find(club => club.clubId._id === match.awayClubId)?.clubId.name}</td>
                     <td className="py-2 px-4 border-b">{match.homeGoals}</td>
                     <td className="py-2 px-4 border-b">{match.awayGoals}</td>
                     <td className="py-2 px-4 border-b">{new Date(match.matchDate).toLocaleDateString()}</td>
