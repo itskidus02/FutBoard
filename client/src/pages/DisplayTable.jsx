@@ -162,26 +162,41 @@ const DisplayTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {table.matches.map((match, index) => (
-                  <tr key={index} className="text-center">
-                    <td className="py-2 px-4 border-b">
-                      {
-                        table.clubs.find(
-                          (club) => club.clubId._id === match.homeClubId
-                        )?.clubId.name
-                      }
-                      {match.homeGoals} - {match.awayGoals}
-                      {
-                        table.clubs.find(
-                          (club) => club.clubId._id === match.awayClubId
-                        )?.clubId.name
-                      }
-                    </td>
-                    <td className="py-2 px-4 border-b">
-                      {new Date(match.matchDate).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))}
+                {table.matches.map((match, index) => {
+                  const homeClub = table.clubs.find(
+                    (club) => club.clubId._id === match.homeClubId
+                  );
+                  const awayClub = table.clubs.find(
+                    (club) => club.clubId._id === match.awayClubId
+                  );
+
+                  return (
+                    <tr key={index} className="text-center">
+                      <td className="py-2 px-4 border-b flex items-center justify-center">
+                        {homeClub?.clubId.name}
+                        {homeClub?.clubId.logoUrl && (
+                          <img
+                            src={homeClub.clubId.logoUrl}
+                            alt={`${homeClub.clubId.name} logo`}
+                            className="w-6 h-6 mx-2"
+                          />
+                        )}
+                        {match.homeGoals} - {match.awayGoals}
+                        {awayClub?.clubId.logoUrl && (
+                          <img
+                            src={awayClub.clubId.logoUrl}
+                            alt={`${awayClub.clubId.name} logo`}
+                            className="w-6 h-6 mx-2"
+                          />
+                        )}
+                        {awayClub?.clubId.name}
+                      </td>
+                      <td className="py-2 px-4 border-b">
+                        {new Date(match.matchDate).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
