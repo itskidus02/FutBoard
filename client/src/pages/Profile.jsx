@@ -245,7 +245,11 @@ export default function Profile() {
                 <p className='text-blue-500 cursor-pointer'>Manage matches</p>
               </Link>
             </button>
-            
+            <button>
+            <Link to={`/update-table/${table._id}`}>
+                <p className='text-green-500 cursor-pointer'>Update table </p>
+              </Link>
+            </button>
             <button
                 onClick={() => handleTableDelete(table._id)}
                 className="text-red-700 uppercase"
