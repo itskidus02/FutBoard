@@ -1,6 +1,6 @@
 // table.route.js
 import express from 'express';
-import { createTable, deleteTable, updateTable, getTable, getTables, getTablesByUser, addClubsToTable, updateMatchResult } from '../controllers/table.controller.js';
+import { createTable, deleteTable, updateTable, getTable, getTables, getTablesByUser, updateClubsInTable, addClubsToTable, updateMatchResult } from '../controllers/table.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
 
 const router = express.Router();
@@ -14,5 +14,7 @@ router.post('/update/:id', verifyToken, updateTable);
 router.get('/get/:id', getTable);
 router.get('/get', getTables);
 router.get('/user/:userId', getTablesByUser);
+router.post('/update-clubs', verifyToken, updateClubsInTable);
+
 
 export default router;

@@ -195,3 +195,30 @@ export const updateMatchResult = async (req, res, next) => {
 
 
 
+// Update clubs in a table
+export const updateClubsInTable = async (req, res, next) => {
+  try {
+    const { tableId, clubs } = req.body;
+    const table = await Table.findById(tableId);
+
+    if (!table) {
+      return next(errorHandler(404, "Table not found!"));
+    }
+
+    if (req.user.id !== table.userId.toString()) {
+      return next(errorHandler(401, "You can only update your own tables!"));
+    }
+
+    for (const clubData of clubs) {
+      if (clubData.logoUrl) {
+        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name, logoUrl: clubData.logoUrl });
+      } else {
+        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name });
+      }
+    }
+
+    res.status(200).json({ success: true, message: "Clubs updated successfully!" });
+  } catch (error) {
+    next(error);
+  }
+};
