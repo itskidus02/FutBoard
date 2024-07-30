@@ -83,6 +83,9 @@ export default function ManageMatches() {
     }
   };
 
+  const filteredHomeClubs = clubs.filter(club => club._id !== selectedClubs.awayClub);
+  const filteredAwayClubs = clubs.filter(club => club._id !== selectedClubs.homeClub);
+
   return (
     <div className="w-3/4 mx-auto p-6 my-7">
       <h1 className="text-3xl font-semibold text-center mb-8">Manage Matches</h1>
@@ -100,7 +103,7 @@ export default function ManageMatches() {
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               <option value="">Select Home Club</option>
-              {clubs.map(club => (
+              {filteredHomeClubs.map(club => (
                 <option key={club._id} value={club._id}>
                   {club.name}
                 </option>
@@ -118,7 +121,7 @@ export default function ManageMatches() {
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               <option value="">Select Away Club</option>
-              {clubs.map(club => (
+              {filteredAwayClubs.map(club => (
                 <option key={club._id} value={club._id}>
                   {club.name}
                 </option>
