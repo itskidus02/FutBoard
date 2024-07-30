@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DisplayTable from "./DisplayTable";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ManageMatches() {
   const { tableId } = useParams();
@@ -74,103 +76,103 @@ export default function ManageMatches() {
       }
 
       const updatedTable = await response.json();
-      console.log("Match result updated successfully:", updatedTable);
-      // Optionally, you can redirect or show a success message
+      toast.success("Match result updated successfully!");
     } catch (error) {
       setError("Error updating match result: " + error.message);
+      toast.error("Error updating match result: " + error.message);
     }
   };
 
   return (
     <div className="w-3/4 mx-auto p-6 my-7">
-    <h1 className="text-3xl font-semibold text-center mb-8">Manage Matches</h1>
-    <DisplayTable />
-    <form onSubmit={handleMatchSubmit} className="mt-8 ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
-      <div className="mb-4 flex justify-between">
-        <div className="w-1/2 pr-2">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeClub">
-            Home Club
-          </label>
-          <select
-            id="homeClub"
-            value={selectedClubs.homeClub}
-            onChange={(e) => handleClubChange("homeClub", e.target.value)}
-            className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          >
-            <option value="">Select Home Club</option>
-            {clubs.map(club => (
-              <option key={club._id} value={club._id}>
-                {club.name}
-              </option>
-            ))}
-          </select>
+      <h1 className="text-3xl font-semibold text-center mb-8">Manage Matches</h1>
+      <DisplayTable />
+      <form onSubmit={handleMatchSubmit} className="mt-8 ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4 flex justify-between">
+          <div className="w-1/2 pr-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeClub">
+              Home Club
+            </label>
+            <select
+              id="homeClub"
+              value={selectedClubs.homeClub}
+              onChange={(e) => handleClubChange("homeClub", e.target.value)}
+              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            >
+              <option value="">Select Home Club</option>
+              {clubs.map(club => (
+                <option key={club._id} value={club._id}>
+                  {club.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="w-1/2 pl-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayClub">
+              Away Club
+            </label>
+            <select
+              id="awayClub"
+              value={selectedClubs.awayClub}
+              onChange={(e) => handleClubChange("awayClub", e.target.value)}
+              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            >
+              <option value="">Select Away Club</option>
+              {clubs.map(club => (
+                <option key={club._id} value={club._id}>
+                  {club.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div className="w-1/2 pl-2">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayClub">
-            Away Club
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeGoals">
+            Home Goals
           </label>
-          <select
-            id="awayClub"
-            value={selectedClubs.awayClub}
-            onChange={(e) => handleClubChange("awayClub", e.target.value)}
-            className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          >
-            <option value="">Select Away Club</option>
-            {clubs.map(club => (
-              <option key={club._id} value={club._id}>
-                {club.name}
-              </option>
-            ))}
-          </select>
+          <input
+            type="number"
+            id="homeGoals"
+            value={matchResult.homeGoals}
+            onChange={(e) => handleMatchResultChange("homeGoals", e.target.value)}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          />
         </div>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeGoals">
-          Home Goals
-        </label>
-        <input
-          type="number"
-          id="homeGoals"
-          value={matchResult.homeGoals}
-          onChange={(e) => handleMatchResultChange("homeGoals", e.target.value)}
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayGoals">
-          Away Goals
-        </label>
-        <input
-          type="number"
-          id="awayGoals"
-          value={matchResult.awayGoals}
-          onChange={(e) => handleMatchResultChange("awayGoals", e.target.value)}
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="matchDate">
-          Match Date
-        </label>
-        <input
-          type="date"
-          id="matchDate"
-          value={matchDate}
-          onChange={handleMatchDateChange}
-          className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        />
-      </div>
-      {error && <p className="text-red-500 text-xs italic">{error}</p>}
-      <div className="flex items-center justify-between">
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Save Match Result
-        </button>
-      </div>
-    </form>
-  </div>
-  
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayGoals">
+            Away Goals
+          </label>
+          <input
+            type="number"
+            id="awayGoals"
+            value={matchResult.awayGoals}
+            onChange={(e) => handleMatchResultChange("awayGoals", e.target.value)}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="matchDate">
+            Match Date
+          </label>
+          <input
+            type="date"
+            id="matchDate"
+            value={matchDate}
+            onChange={handleMatchDateChange}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          />
+        </div>
+        {error && <p className="text-red-500 text-xs italic">{error}</p>}
+        <div className="flex items-center justify-between">
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Save Match Result
+          </button>
+        </div>
+      </form>
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+    </div>
   );
 }
