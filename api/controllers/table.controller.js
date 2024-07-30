@@ -196,7 +196,6 @@ export const updateMatchResult = async (req, res, next) => {
 
 
 // Update clubs in a table
-// Update clubs in a table
 export const updateClubsInTable = async (req, res, next) => {
   try {
     const { tableId, clubs } = req.body;
@@ -210,29 +209,16 @@ export const updateClubsInTable = async (req, res, next) => {
       return next(errorHandler(401, "You can only update your own tables!"));
     }
 
-    // Remove existing clubs not present in the new clubs array
-    for (const club of table.clubs) {
-      if (!clubs.some((newClub) => newClub.clubId === club.clubId.toString())) {
-        await Club.findByIdAndDelete(club.clubId);
-      }
-    }
-
-    // Add or update clubs
     for (const clubData of clubs) {
       if (clubData.logoUrl) {
-        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name, logoUrl: clubData.logoUrl }, { upsert: true });
+        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name, logoUrl: clubData.logoUrl });
       } else {
-        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name }, { upsert: true });
+        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name });
       }
     }
-
-    // Update table clubs array
-    table.clubs = clubs.map((club) => ({ clubId: club.clubId }));
-    await table.save();
 
     res.status(200).json({ success: true, message: "Clubs updated successfully!" });
   } catch (error) {
     next(error);
   }
 };
-
