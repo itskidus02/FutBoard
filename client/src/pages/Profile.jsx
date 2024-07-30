@@ -245,6 +245,7 @@ export default function Profile() {
                 <p className='text-blue-500 cursor-pointer'>Manage matches</p>
               </Link>
             </button>
+            
             <button
                 onClick={() => handleTableDelete(table._id)}
                 className="text-red-700 uppercase"
