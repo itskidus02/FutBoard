@@ -242,7 +242,7 @@ export default function Profile() {
             {/* Display more table details as needed */}
             <button>
             <Link to={`/manage-matches/${table._id}`}>
-                <p className='text-blue-500 cursor-pointer'>Edit</p>
+                <p className='text-blue-500 cursor-pointer'>Manage matches</p>
               </Link>
             </button>
             <button
