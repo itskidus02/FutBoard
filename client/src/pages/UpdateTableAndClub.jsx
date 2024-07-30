@@ -42,15 +42,6 @@ export default function UpdateTableAndClub() {
     fetchTableData();
   }, [tableId]);
 
-  const handleNumTeamsChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    if (value >= 0) {
-      setNumTeams(value);
-      setTeamNames(new Array(value).fill(""));
-      setTeamLogos(new Array(value).fill(null)); // Initialize logos as null
-    }
-  };
-
   const handleTableNameChange = (e) => {
     setTableName(e.target.value);
   };
@@ -65,6 +56,20 @@ export default function UpdateTableAndClub() {
     const newTeamLogos = [...teamLogos];
     newTeamLogos[index] = e.target.files[0];
     setTeamLogos(newTeamLogos);
+  };
+
+  const handleAddTeam = () => {
+    setNumTeams(numTeams + 1);
+    setTeamNames([...teamNames, ""]);
+    setExistingTeamLogos([...existingTeamLogos, ""]);
+    setTeamLogos([...teamLogos, null]);
+  };
+
+  const handleRemoveTeam = (index) => {
+    setNumTeams(numTeams - 1);
+    setTeamNames(teamNames.filter((_, i) => i !== index));
+    setExistingTeamLogos(existingTeamLogos.filter((_, i) => i !== index));
+    setTeamLogos(teamLogos.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -174,15 +179,23 @@ export default function UpdateTableAndClub() {
             onChange={handleTableNameChange}
             required
           />
-          <input
-            type="number"
-            placeholder="Number of Teams"
-            className="border p-3 rounded-lg"
-            value={numTeams}
-            onChange={handleNumTeamsChange}
-            disabled
-            required
-          />
+          <div className="flex justify-between items-center">
+            <input
+              type="number"
+              placeholder="Number of Teams"
+              className="border p-3 rounded-lg"
+              value={numTeams}
+              readOnly
+              required
+            />
+            <button
+              type="button"
+              onClick={handleAddTeam}
+              className="p-2 bg-blue-500 text-white rounded-lg"
+            >
+              Add Team
+            </button>
+          </div>
           {teamNames.map((teamName, index) => (
             <div key={index} className="flex gap-4 items-center">
               <input
@@ -199,6 +212,13 @@ export default function UpdateTableAndClub() {
                 className="border p-3 rounded-lg"
                 onChange={(e) => handleLogoChange(index, e)}
               />
+              <button
+                type="button"
+                onClick={() => handleRemoveTeam(index)}
+                className="p-2 bg-red-500 text-white rounded-lg"
+              >
+                Remove
+              </button>
             </div>
           ))}
         </div>
