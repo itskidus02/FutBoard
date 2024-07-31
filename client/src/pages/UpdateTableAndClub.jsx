@@ -112,7 +112,7 @@ export default function UpdateTableAndClub() {
 
       const resolvedClubs = await Promise.all(uploadPromises);
 
-      const clubsRes = await fetch("/api/table/add-clubs", {
+      const clubsRes = await fetch("/api/table/update-clubs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
