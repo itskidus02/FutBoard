@@ -9,7 +9,6 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 
-
 export default function UpdateTableAndClub() {
   const [numTeams, setNumTeams] = useState(0);
   const [tableName, setTableName] = useState("");
@@ -61,6 +60,21 @@ export default function UpdateTableAndClub() {
     setTeamLogos(newTeamLogos);
   };
 
+  const handleAddTeam = () => {
+    setTeamNames([...teamNames, ""]);
+    setTeamLogos([...teamLogos, null]);
+    setExistingTeamLogos([...existingTeamLogos, null]);
+    setNumTeams(numTeams + 1);
+  };
+
+  // const handleRemoveTeam = (index) => {
+  //   setTeamNames(teamNames.filter((_, i) => i !== index));
+  //   setTeamLogos(teamLogos.filter((_, i) => i !== index));
+  //   setExistingTeamLogos(existingTeamLogos.filter((_, i) => i !== index));
+  //   setClubIds(clubIds.filter((_, i) => i !== index));
+  //   setNumTeams(numTeams - 1);
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -106,7 +120,6 @@ export default function UpdateTableAndClub() {
       });
 
       const resolvedClubs = await Promise.all(uploadPromises);
-
 
       const clubsRes = await fetch("/api/table/update-clubs", {
         method: "POST",
@@ -194,8 +207,22 @@ export default function UpdateTableAndClub() {
                 className="border p-3 rounded-lg"
                 onChange={(e) => handleLogoChange(index, e)}
               />
+              {/* <button
+                type="button"
+                onClick={() => handleRemoveTeam(index)}
+                className="p-2 bg-red-500 text-white rounded-lg"
+              >
+                Remove
+              </button> */}
             </div>
           ))}
+          <button
+            type="button"
+            onClick={handleAddTeam}
+            className="p-2 bg-green-500 text-white rounded-lg"
+          >
+            Add Team
+          </button>
         </div>
         {error && <p className="text-red-700 text-sm">{error}</p>}
         <button
