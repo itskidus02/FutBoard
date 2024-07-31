@@ -67,13 +67,7 @@ export default function UpdateTableAndClub() {
     setNumTeams(numTeams + 1);
   };
 
-  // const handleRemoveTeam = (index) => {
-  //   setTeamNames(teamNames.filter((_, i) => i !== index));
-  //   setTeamLogos(teamLogos.filter((_, i) => i !== index));
-  //   setExistingTeamLogos(existingTeamLogos.filter((_, i) => i !== index));
-  //   setClubIds(clubIds.filter((_, i) => i !== index));
-  //   setNumTeams(numTeams - 1);
-  // };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -207,13 +201,7 @@ export default function UpdateTableAndClub() {
                 className="border p-3 rounded-lg"
                 onChange={(e) => handleLogoChange(index, e)}
               />
-              {/* <button
-                type="button"
-                onClick={() => handleRemoveTeam(index)}
-                className="p-2 bg-red-500 text-white rounded-lg"
-              >
-                Remove
-              </button> */}
+          
             </div>
           ))}
           <button
