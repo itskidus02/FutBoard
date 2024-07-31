@@ -10,6 +10,7 @@ import CreateTableAndClub from "./pages/CreateTableAndClub";
 import DisplayTable from "./pages/DisplayTable";
 import ManageMatches from "./pages/ManageMatches";
 import UpdateTableAndClub from "./pages/UpdateTableAndClub";
+import ResultDisplay from "./pages/ResultDisplay";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/display-table/:tableId" element={<DisplayTable />} />
+          <Route path="/display-result" element={<ResultDisplay />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-table-team" element={<CreateTableAndClub />} />

@@ -33,9 +33,12 @@ export default function Home() {
       <h1 className='text-3xl font-bold mb-4 text-slate-800'>
         The new project
       </h1>
-      <div >
+      <div className='flex gap-4' >
         <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
           <Link to="/create-table-team">Create Table</Link>
+        </button>
+        <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
+          <Link to="/display-result">Results</Link>
         </button>
       </div>
       <div className='mt-3'>
