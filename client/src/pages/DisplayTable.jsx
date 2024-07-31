@@ -91,8 +91,10 @@ const DisplayTable = () => {
           <h1 className="text-3xl font-semibold text-center my-7">
             {table.name}
           </h1>
+          <div className="ring-2 p-3 rounded-lg ring-black">
+          <div className="flex justify-between">
           {creator && (
-            <div className="flex ring-2 p-2 ring-[#00ed64] rounded-lg flex-col gap-2">
+            <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
               <p>
                 Listed by{" "}
                 <span className="font-semibold">{creator.username}</span>{" "}
@@ -105,8 +107,9 @@ const DisplayTable = () => {
           >
             Export to Excel
           </button>
+          </div>
           <div className="overflow-x-auto mb-8">
-            <table className="min-w-full bg-white border-collapse">
+            <table className="min-w-full border-collapse">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">Position</th>
@@ -149,12 +152,13 @@ const DisplayTable = () => {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
-          <div className="overflow-x-auto">
-            <h2 className="text-2xl font-semibold text-center my-5">
+          <div className="overflow-x-auto mt-4 rounded-lg ring-2 ring-black ">
+            <h2 className="text-2xl font-semibold underline text-center my-5">
               Matches Played
             </h2>
-            <table className="min-w-full bg-white border-collapse">
+            <table className="min-w-full  border-collapse">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">Match</th>
