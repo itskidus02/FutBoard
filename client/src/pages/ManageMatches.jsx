@@ -90,7 +90,7 @@ export default function ManageMatches() {
     <div className="w-3/4 mx-auto p-6 my-7">
       <h1 className="text-3xl font-semibold text-center mb-8">Manage Matches</h1>
       <DisplayTable />
-      <form onSubmit={handleMatchSubmit} className="mt-8 ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={handleMatchSubmit} className="mt-8 w-2/4 mx-auto ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4 flex justify-between">
           <div className="w-1/2 pr-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeClub">
