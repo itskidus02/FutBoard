@@ -13,8 +13,9 @@ export default function UpdateTableAndClub() {
   const [numTeams, setNumTeams] = useState(0);
   const [tableName, setTableName] = useState("");
   const [teamNames, setTeamNames] = useState([]);
-  const [teamLogos, setTeamLogos] = useState([]); // State for team logos
+  const [teamLogos, setTeamLogos] = useState([]);
   const [existingTeamLogos, setExistingTeamLogos] = useState([]);
+  const [clubIds, setClubIds] = useState([]);
   const [error, setError] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function UpdateTableAndClub() {
         setTeamNames(tableData.clubs.map((club) => club.clubId.name));
         setExistingTeamLogos(tableData.clubs.map((club) => club.clubId.logoUrl));
         setTeamLogos(new Array(tableData.clubs.length).fill(null)); // Initialize logos as null
+        setClubIds(tableData.clubs.map((club) => club.clubId._id)); // Store club IDs
       } catch (error) {
         console.error("Error fetching table data:", error);
         setError("Failed to load table data");
@@ -41,15 +43,6 @@ export default function UpdateTableAndClub() {
     };
     fetchTableData();
   }, [tableId]);
-
-  const handleNumTeamsChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    if (value >= 0) {
-      setNumTeams(value);
-      setTeamNames(new Array(value).fill(""));
-      setTeamLogos(new Array(value).fill(null)); // Initialize logos as null
-    }
-  };
 
   const handleTableNameChange = (e) => {
     setTableName(e.target.value);
@@ -98,6 +91,7 @@ export default function UpdateTableAndClub() {
 
       // Update the clubs and add them to the table
       const clubs = teamNames.map((name, index) => ({
+        clubId: clubIds[index],
         name,
         logoUrl: existingTeamLogos[index], // Keep existing logo URL if no new logo is provided
         logoFile: teamLogos[index], // Pass the logo file
@@ -179,7 +173,6 @@ export default function UpdateTableAndClub() {
             placeholder="Number of Teams"
             className="border p-3 rounded-lg"
             value={numTeams}
-            onChange={handleNumTeamsChange}
             disabled
             required
           />
