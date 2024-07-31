@@ -67,8 +67,6 @@ export default function UpdateTableAndClub() {
     setNumTeams(numTeams + 1);
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -156,7 +154,7 @@ export default function UpdateTableAndClub() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             resolve(downloadURL);
-          });
+          }).catch((error) => reject(error));
         }
       );
     });
