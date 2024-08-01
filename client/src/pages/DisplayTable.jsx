@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const DisplayTable = () => {
   const [table, setTable] = useState(null);
@@ -76,6 +78,44 @@ const DisplayTable = () => {
     saveAs(blob, `${table.name}.xlsx`);
   };
 
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text(table.name, 20, 10);
+
+    const tableData = table.clubs.map((club, index) => [
+      index + 1,
+      club.clubId.name,
+      club.played,
+      club.won,
+      club.lost,
+      club.drawn,
+      club.goalsScored,
+      club.goalsConceded,
+      club.goalDifference,
+      club.points,
+    ]);
+
+    doc.autoTable({
+      head: [
+        [
+          "Position",
+          "Club",
+          "Played",
+          "Won",
+          "Lost",
+          "Drawn",
+          "Goals Scored",
+          "Goals Conceded",
+          "Goal Difference",
+          "Points",
+        ],
+      ],
+      body: tableData,
+    });
+
+    doc.save(`${table.name}.pdf`);
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -92,66 +132,72 @@ const DisplayTable = () => {
             {table.name}
           </h1>
           <div className="ring-2 p-3 rounded-lg ring-black">
-          <div className="flex justify-between">
-          {creator && (
-            <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
-              <p>
-                Listed by{" "}
-                <span className="font-semibold">{creator.username}</span>{" "}
-              </p>
+            <div className="flex justify-between">
+              {creator && (
+                <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
+                  <p>
+                    Listed by{" "}
+                    <span className="font-semibold">{creator.username}</span>{" "}
+                  </p>
+                </div>
+              )}
+              <button
+                onClick={exportToExcel}
+                className="px-4 py-2 bg-black text-white rounded-md mb-4"
+              >
+                Export to Excel
+              </button>
+              <button
+                onClick={exportToPDF}
+                className="px-4 py-2 bg-black text-white rounded-md mb-4"
+              >
+                Export to PDF
+              </button>
             </div>
-          )}
-          <button
-            onClick={exportToExcel}
-            className="px-4 py-2 bg-black text-white rounded-md mb-4"
-          >
-            Export to Excel
-          </button>
-          </div>
-          <div className="overflow-x-auto mb-8">
-            <table className="min-w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b">Position</th>
-                  <th className="py-2 px-4 border-b">Club</th>
-                  <th className="py-2 px-4 border-b">Played</th>
-                  <th className="py-2 px-4 border-b">Won</th>
-                  <th className="py-2 px-4 border-b">Drawn</th>
-                  <th className="py-2 px-4 border-b">Lost</th>
-                  <th className="py-2 px-4 border-b">Goals Scored</th>
-                  <th className="py-2 px-4 border-b">Goals Conceded</th>
-                  <th className="py-2 px-4 border-b">Goal Difference</th>
-                  <th className="py-2 px-4 border-b">Points</th>
-                </tr>
-              </thead>
-              <tbody>
-                {table.clubs.map((club, index) => (
-                  <tr key={index} className="text-center">
-                    <td className="py-2 px-4 border-b">{index + 1}</td>
-                    <td className="py-2 px-4 border-b flex items-center">
-                      {club.clubId.logoUrl && (
-                        <img
-                          src={club.clubId.logoUrl}
-                          alt={`${club.clubId.name} logo`}
-                          className="w-6 h-6 mr-2"
-                        />
-                      )}
-                      {club.clubId.name}
-                    </td>
-                    <td className="py-2 px-4 border-b">{club.played}</td>
-                    <td className="py-2 px-4 border-b">{club.won}</td>
-                    <td className="py-2 px-4 border-b">{club.lost}</td>
-                    <td className="py-2 px-4 border-b">{club.drawn}</td>
-                    <td className="py-2 px-4 border-b">{club.goalsScored}</td>
-                    <td className="py-2 px-4 border-b">{club.goalsConceded}</td>
-                    <td className="py-2 px-4 border-b">
-                      {club.goalDifference}
-                    </td>
-                    <td className="py-2 px-4 border-b">{club.points}</td>
+            <div className="overflow-x-auto mb-8">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-4 border-b">Position</th>
+                    <th className="py-2 px-4 border-b">Club</th>
+                    <th className="py-2 px-4 border-b">Played</th>
+                    <th className="py-2 px-4 border-b">Won</th>
+                    <th className="py-2 px-4 border-b">Drawn</th>
+                    <th className="py-2 px-4 border-b">Lost</th>
+                    <th className="py-2 px-4 border-b">Goals Scored</th>
+                    <th className="py-2 px-4 border-b">Goals Conceded</th>
+                    <th className="py-2 px-4 border-b">Goal Difference</th>
+                    <th className="py-2 px-4 border-b">Points</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {table.clubs.map((club, index) => (
+                    <tr key={index} className="text-center">
+                      <td className="py-2 px-4 border-b">{index + 1}</td>
+                      <td className="py-2 px-4 border-b flex items-center">
+                        {club.clubId.logoUrl && (
+                          <img
+                            src={club.clubId.logoUrl}
+                            alt={`${club.clubId.name} logo`}
+                            className="w-6 h-6 mr-2"
+                          />
+                        )}
+                        {club.clubId.name}
+                      </td>
+                      <td className="py-2 px-4 border-b">{club.played}</td>
+                      <td className="py-2 px-4 border-b">{club.won}</td>
+                      <td className="py-2 px-4 border-b">{club.lost}</td>
+                      <td className="py-2 px-4 border-b">{club.drawn}</td>
+                      <td className="py-2 px-4 border-b">{club.goalsScored}</td>
+                      <td className="py-2 px-4 border-b">{club.goalsConceded}</td>
+                      <td className="py-2 px-4 border-b">
+                        {club.goalDifference}
+                      </td>
+                      <td className="py-2 px-4 border-b">{club.points}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
           <div className="overflow-x-auto mt-4 rounded-lg ring-2 ring-black ">
