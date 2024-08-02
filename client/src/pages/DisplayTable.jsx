@@ -161,7 +161,7 @@ const DisplayTable = () => {
     // Add "made by kid" text at the bottom right of the page
     const pageHeight = doc.internal.pageSize.height;
     const pageWidth = doc.internal.pageSize.width;
-    doc.text("made by SoccerTable", pageWidth - 80, pageHeight - 10);
+    doc.text("made by SoccerBoard", pageWidth - 80, pageHeight - 10);
 
     doc.save(`${table.name}.pdf`);
   };
