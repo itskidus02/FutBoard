@@ -70,16 +70,31 @@ const DisplayTable = () => {
     );
 
     const matchesWorksheet = XLSX.utils.json_to_sheet(
-      table.matches.map((match, index) => ({
-        Match: `${table.clubs.find(club => club.clubId._id === match.homeClubId)?.clubId.name} vs ${table.clubs.find(club => club.clubId._id === match.awayClubId)?.clubId.name}`,
-        "Match Date": new Date(match.matchDate).toLocaleDateString(),
-      }))
+      table.matches.map((match) => {
+        const homeClub = table.clubs.find(
+          (club) => club.clubId._id === match.homeClubId
+        );
+        const awayClub = table.clubs.find(
+          (club) => club.clubId._id === match.awayClubId
+        );
+
+        return {
+          Match: `${homeClub?.clubId.name || "Unknown"} vs ${
+            awayClub?.clubId.name || "Unknown"
+          }`,
+          Result: `${match.homeGoals} - ${match.awayGoals}`,
+          "Match Date": new Date(match.matchDate).toLocaleDateString(),
+        };
+      })
     );
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, tableWorksheet, "Table");
     XLSX.utils.book_append_sheet(workbook, matchesWorksheet, "Matches");
-    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
     saveAs(blob, `${table.name}.xlsx`);
   };
@@ -101,13 +116,20 @@ const DisplayTable = () => {
       club.points,
     ]);
 
-    const matchesData = table.matches.map(match => {
-      const homeClub = table.clubs.find(club => club.clubId._id === match.homeClubId);
-      const awayClub = table.clubs.find(club => club.clubId._id === match.awayClubId);
+    const matchesData = table.matches.map((match) => {
+      const homeClub = table.clubs.find(
+        (club) => club.clubId._id === match.homeClubId
+      );
+      const awayClub = table.clubs.find(
+        (club) => club.clubId._id === match.awayClubId
+      );
 
       return [
-        `${homeClub?.clubId.name || 'Unknown'} vs ${awayClub?.clubId.name || 'Unknown'}`,
-        new Date(match.matchDate).toLocaleDateString()
+        `${homeClub?.clubId.name || "Unknown"} vs ${
+          awayClub?.clubId.name || "Unknown"
+        }`,
+        `${match.homeGoals} - ${match.awayGoals}`,
+        new Date(match.matchDate).toLocaleDateString(),
       ];
     });
 
@@ -127,49 +149,22 @@ const DisplayTable = () => {
         ],
       ],
       body: tableData,
-      startY: 20
+      startY: 20,
     });
 
     doc.autoTable({
-      head: [
-        [
-          "Match",
-          "Match Date",
-        ],
-      ],
+      head: [["Match", "Result", "Match Date"]],
       body: matchesData,
-      startY: doc.lastAutoTable.finalY + 10
+      startY: doc.lastAutoTable.finalY + 10,
     });
+
+    // Add "made by kid" text at the bottom right of the page
+    const pageHeight = doc.internal.pageSize.height;
+    const pageWidth = doc.internal.pageSize.width;
+    doc.text("made by SoccerTable", pageWidth - 80, pageHeight - 10);
 
     doc.save(`${table.name}.pdf`);
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   if (loading) {
     return <p>Loading...</p>;
@@ -244,7 +239,9 @@ const DisplayTable = () => {
                       <td className="py-2 px-4 border-b">{club.lost}</td>
                       <td className="py-2 px-4 border-b">{club.drawn}</td>
                       <td className="py-2 px-4 border-b">{club.goalsScored}</td>
-                      <td className="py-2 px-4 border-b">{club.goalsConceded}</td>
+                      <td className="py-2 px-4 border-b">
+                        {club.goalsConceded}
+                      </td>
                       <td className="py-2 px-4 border-b">
                         {club.goalDifference}
                       </td>
