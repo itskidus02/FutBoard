@@ -54,7 +54,7 @@ const DisplayTable = () => {
   }, [table]);
 
   const exportToExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(
+    const tableWorksheet = XLSX.utils.json_to_sheet(
       table.clubs.map((club, index) => ({
         Position: index + 1,
         Club: club.clubId.name,
@@ -68,12 +68,18 @@ const DisplayTable = () => {
         Points: club.points,
       }))
     );
+
+    const matchesWorksheet = XLSX.utils.json_to_sheet(
+      table.matches.map((match, index) => ({
+        Match: `${table.clubs.find(club => club.clubId._id === match.homeClubId)?.clubId.name} vs ${table.clubs.find(club => club.clubId._id === match.awayClubId)?.clubId.name}`,
+        "Match Date": new Date(match.matchDate).toLocaleDateString(),
+      }))
+    );
+
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Table");
-    const excelBuffer = XLSX.write(workbook, {
-      bookType: "xlsx",
-      type: "array",
-    });
+    XLSX.utils.book_append_sheet(workbook, tableWorksheet, "Table");
+    XLSX.utils.book_append_sheet(workbook, matchesWorksheet, "Matches");
+    const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
     const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
     saveAs(blob, `${table.name}.xlsx`);
   };
@@ -95,6 +101,16 @@ const DisplayTable = () => {
       club.points,
     ]);
 
+    const matchesData = table.matches.map(match => {
+      const homeClub = table.clubs.find(club => club.clubId._id === match.homeClubId);
+      const awayClub = table.clubs.find(club => club.clubId._id === match.awayClubId);
+
+      return [
+        `${homeClub?.clubId.name || 'Unknown'} vs ${awayClub?.clubId.name || 'Unknown'}`,
+        new Date(match.matchDate).toLocaleDateString()
+      ];
+    });
+
     doc.autoTable({
       head: [
         [
@@ -111,10 +127,49 @@ const DisplayTable = () => {
         ],
       ],
       body: tableData,
+      startY: 20
+    });
+
+    doc.autoTable({
+      head: [
+        [
+          "Match",
+          "Match Date",
+        ],
+      ],
+      body: matchesData,
+      startY: doc.lastAutoTable.finalY + 10
     });
 
     doc.save(`${table.name}.pdf`);
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   if (loading) {
     return <p>Loading...</p>;
