@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
-export default function Home() {
+const Home = () => {
   const [tables, setTables] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,7 +14,8 @@ export default function Home() {
         if (!res.ok) {
           throw new Error(data.message || 'Failed to fetch tables');
         }
-        setTables(data); // Assuming 'data' is the array of tables in your response
+        // Update tables state with fetched data
+        setTables(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -23,7 +24,7 @@ export default function Home() {
     };
 
     fetchTables();
-  }, []); // Empty dependency array means this effect runs once on component mount
+  }, []);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -31,9 +32,9 @@ export default function Home() {
   return (
     <div className='px-4 py-12 max-w-2xl mx-auto'>
       <h1 className='text-3xl font-bold mb-4 text-slate-800'>
-        The new project
+        Soccer Tables
       </h1>
-      <div className='flex gap-4' >
+      <div className='flex gap-4'>
         <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
           <Link to="/create-table-team">Create Table</Link>
         </button>
@@ -49,12 +50,26 @@ export default function Home() {
               <Link to={`/display-table/${table._id}`}>
                 <p className='text-blue-500 cursor-pointer'>{table.name}</p>
               </Link>
-             
-              {/* Render other table details as needed */}
+              {/* Display club logos for each table */}
+              <div className="flex flex-wrap gap-2 mt-1">
+                {table.clubs.map((club) => (
+                  <div key={club.clubId._id} className="flex items-center">
+                    {club.clubId.logoUrl && (
+                      <img
+                        src={club.clubId.logoUrl}
+                        alt={`${club.clubId.name} logo`}
+                        className="w-8 h-8 mr-1"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
             </li>
           ))}
         </ul>
       </div>
     </div>
   );
-}
+};
+
+export default Home;
