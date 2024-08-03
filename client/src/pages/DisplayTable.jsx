@@ -177,7 +177,7 @@ const DisplayTable = () => {
   return (
     <main>
       {table && (
-        <div className="w-3/4 mx-auto p-3 my-7">
+        <div className="w-2/4 mx-auto p-3 my-7">
           <h1 className="text-3xl font-semibold text-center my-7">
             {table.name}
           </h1>
@@ -253,9 +253,9 @@ const DisplayTable = () => {
             </div>
           </div>
           <div className="overflow-x-auto mt-4 rounded-lg ring-2 ring-black ">
-            <h2 className="text-2xl font-semibold underline text-center my-5">
+            {/* <h2 className="text-2xl font-semibold underline text-center my-5">
               Matches Played
-            </h2>
+            </h2> */}
             <table className="min-w-full  border-collapse">
               <thead>
                 <tr>
