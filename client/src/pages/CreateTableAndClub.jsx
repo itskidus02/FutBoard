@@ -150,50 +150,55 @@ export default function CreateTableAndClub() {
         Create Table and Clubs
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Table Name"
-            className="border p-3 rounded-lg"
-            value={tableName}
-            onChange={handleTableNameChange}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Number of Teams"
-            className="border p-3 rounded-lg"
-            value={numTeams}
-            onChange={handleNumTeamsChange}
-            required
-          />
-          {teamNames.map((teamName, index) => (
-            <div key={index} className="flex gap-4 items-center">
-              <input
-                type="text"
-                placeholder={`Team ${index + 1} Name`}
-                className="border p-3 rounded-lg"
-                value={teamName}
-                onChange={(e) => handleTeamNameChange(index, e)}
-                required
-              />
-              <input
-                type="file"
-                accept="image/*"
-                className="border p-3 rounded-lg"
-                onChange={(e) => handleLogoChange(index, e)}
-              />
-            </div>
-          ))}
+        <div className="flex justify-between gap-4">
+          <div className="flex flex-col gap-4 w-2/4">
+            <input
+              type="text"
+              placeholder="Table Name"
+              className="border p-3 rounded-lg"
+              value={tableName}
+              onChange={handleTableNameChange}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Number of Teams"
+              className="border p-3 rounded-lg"
+              value={numTeams}
+              onChange={handleNumTeamsChange}
+              required
+            />
+            {teamNames.map((teamName, index) => (
+              <div key={index} className="flex gap-2 items-center">
+                <input
+                  type="text"
+                  placeholder={`Team ${index + 1} Name`}
+                  className="border p-3 rounded-lg"
+                  value={teamName}
+                  onChange={(e) => handleTeamNameChange(index, e)}
+                  required
+                />
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="border p-3 rounded-lg"
+                  onChange={(e) => handleLogoChange(index, e)}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex items-center">
+            <button
+              type="submit"
+              className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95"
+            >
+              Create Table
+            </button>
+          </div>
         </div>
         {error && <p className="text-red-700 text-sm">{error}</p>}
-        <button
-          type="submit"
-          className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95"
-        >
-          Create Table
-        </button>
       </form>
     </main>
   );
+  
 }
