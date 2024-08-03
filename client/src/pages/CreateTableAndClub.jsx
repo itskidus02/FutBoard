@@ -152,6 +152,7 @@ export default function CreateTableAndClub() {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex justify-between gap-4">
           <div className="flex flex-col gap-4 w-2/4">
+            <span>Table name</span>
             <input
               type="text"
               placeholder="Table Name"
@@ -160,6 +161,8 @@ export default function CreateTableAndClub() {
               onChange={handleTableNameChange}
               required
             />
+                        <span>Number of teams</span>
+
             <input
               type="number"
               placeholder="Number of Teams"
@@ -168,6 +171,8 @@ export default function CreateTableAndClub() {
               onChange={handleNumTeamsChange}
               required
             />
+          </div>
+          <div className="flex flex-col gap-4 w-2/4">
             {teamNames.map((teamName, index) => (
               <div key={index} className="flex gap-2 items-center">
                 <input
@@ -186,11 +191,9 @@ export default function CreateTableAndClub() {
                 />
               </div>
             ))}
-          </div>
-          <div className="flex items-center">
             <button
               type="submit"
-              className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95"
+              className="self-end p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 mt-4"
             >
               Create Table
             </button>
@@ -200,5 +203,6 @@ export default function CreateTableAndClub() {
       </form>
     </main>
   );
+  
   
 }
