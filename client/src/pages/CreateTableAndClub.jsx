@@ -150,9 +150,9 @@ export default function CreateTableAndClub() {
         Create Table and Clubs
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex gap-4">
+        <div className="flex gap-4 ">
           <div className="flex flex-col w-1/2">
-            <span>Table Name</span>
+            <span className="mt-4">Table Name</span>
             <input
               type="text"
               placeholder="Table Name"
@@ -163,7 +163,7 @@ export default function CreateTableAndClub() {
             />
           </div>
           <div className="flex flex-col w-1/2">
-            <span>Number of Teams</span>
+            <span className="mt-4">Number of Teams</span>
             <input
               type="number"
               placeholder="Number of Teams"
