@@ -93,9 +93,7 @@ export default function ManageMatches() {
       <form onSubmit={handleMatchSubmit} className="mt-8 w-2/4 mx-auto ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4 flex justify-between">
           <div className="w-1/2 pr-2">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeClub">
-              Home Club
-            </label>
+           
             <div className="flex items-center">
               <select
                 id="homeClub"
@@ -120,9 +118,7 @@ export default function ManageMatches() {
             </div>
           </div>
           <div className="w-1/2 pl-2">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayClub">
-              Away Club
-            </label>
+            
             <div className="flex items-center">
               <select
                 id="awayClub"
