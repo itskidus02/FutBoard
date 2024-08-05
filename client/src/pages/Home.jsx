@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import Spinner from '../components/Spinner';
 
 const Home = () => {
   const [tables, setTables] = useState([]);
@@ -26,7 +27,7 @@ const Home = () => {
     fetchTables();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className='flex justify-center items-center h-screen'><Spinner/></div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
