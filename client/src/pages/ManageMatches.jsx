@@ -96,62 +96,56 @@ export default function ManageMatches() {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeClub">
               Home Club
             </label>
-            <select
-              id="homeClub"
-              value={selectedClubs.homeClub}
-              onChange={(e) => handleClubChange("homeClub", e.target.value)}
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            >
-              <option value="">Select Home Club</option>
-              {filteredHomeClubs.map(club => (
-                <option key={club._id} value={club._id}>
-                  {club.name}
-                </option>
-              ))}
-            </select>
+            <div className="flex items-center">
+              <select
+                id="homeClub"
+                value={selectedClubs.homeClub}
+                onChange={(e) => handleClubChange("homeClub", e.target.value)}
+                className="block appearance-none w-3/4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              >
+                <option value="">Select Home Club</option>
+                {filteredHomeClubs.map((club) => (
+                  <option key={club._id} value={club._id}>
+                    {club.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                id="homeGoals"
+                value={matchResult.homeGoals}
+                onChange={(e) => handleMatchResultChange("homeGoals", e.target.value)}
+                className="appearance-none block w-1/4 ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+            </div>
           </div>
           <div className="w-1/2 pl-2">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayClub">
               Away Club
             </label>
-            <select
-              id="awayClub"
-              value={selectedClubs.awayClub}
-              onChange={(e) => handleClubChange("awayClub", e.target.value)}
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            >
-              <option value="">Select Away Club</option>
-              {filteredAwayClubs.map(club => (
-                <option key={club._id} value={club._id}>
-                  {club.name}
-                </option>
-              ))}
-            </select>
+            <div className="flex items-center">
+              <select
+                id="awayClub"
+                value={selectedClubs.awayClub}
+                onChange={(e) => handleClubChange("awayClub", e.target.value)}
+                className="block appearance-none w-3/4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              >
+                <option value="">Select Away Club</option>
+                {filteredAwayClubs.map((club) => (
+                  <option key={club._id} value={club._id}>
+                    {club.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="number"
+                id="awayGoals"
+                value={matchResult.awayGoals}
+                onChange={(e) => handleMatchResultChange("awayGoals", e.target.value)}
+                className="appearance-none block w-1/4 ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+            </div>
           </div>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="homeGoals">
-            Home Goals
-          </label>
-          <input
-            type="number"
-            id="homeGoals"
-            value={matchResult.homeGoals}
-            onChange={(e) => handleMatchResultChange("homeGoals", e.target.value)}
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="awayGoals">
-            Away Goals
-          </label>
-          <input
-            type="number"
-            id="awayGoals"
-            value={matchResult.awayGoals}
-            onChange={(e) => handleMatchResultChange("awayGoals", e.target.value)}
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="matchDate">
@@ -178,4 +172,6 @@ export default function ManageMatches() {
       <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
+  
+
 }
