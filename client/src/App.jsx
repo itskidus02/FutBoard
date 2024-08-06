@@ -34,8 +34,8 @@ export default function App() {
             <Route path="/update-table/:tableId" element={<UpdateTableAndClub />} />
             
             {/* 404 Page */}
-            <Route path="*" element={<NotFound />} />
           </Route>
+            <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </BrowserRouter>
