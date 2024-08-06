@@ -4,6 +4,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Spinner from "../components/Spinner";
 
 const DisplayTable = () => {
   const [table, setTable] = useState(null);
@@ -167,7 +168,7 @@ const DisplayTable = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div className='flex justify-center items-center h-screen'><Spinner/></div>;
   }
 
   if (error) {
