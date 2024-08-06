@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: { fontFamily: {
+      palanquin: ['Palanquin', 'sans-serif'],
+      montserrat: ['Montserrat', 'sans-serif'],
+      fraunces: ['Fraunces', 'sans-serif'],
+      poppins: ['Poppins', 'sans-serif'],
+    },},
   },
   plugins: [],
 }

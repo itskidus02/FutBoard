@@ -1,35 +1,39 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import logo from "../assets/logo.png";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className="rounded-lg mx-auto backdrop-blur-3xl fixed top-0 left-0 right-0 bg-transparent mt-5 shadow-2xl  z-50 md:w-5/12">
-        <div className="flex justify-between items-center max-w-6xl p-3">
-        <Link to="/">
-          <h1 className="font-bold text-xl md:text-2xl">WAWAWEWA</h1>
-        </Link>
-        <ul className="flex gap-4 text-sm md:text-base">
-          <Link to="/">
-            <li>Home</li>
+    <header>
+      <nav class="bg-white  px-4 lg:px-6 py-2.5 ">
+        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          <Link to="/" class="flex items-center">
+            <img src={logo} class="mr-3 h-6 sm:h-9" />
           </Link>
-          <Link to="/about">
-            <li>About</li>
-          </Link>
-          <Link to="/profile">
-            {currentUser ? (
-              <img
-                src={currentUser.profilePicture}
-                alt="profile"
-                className="h-7 w-7 rounded-full object-cover"
-              />
-            ) : (
-              
-              <li>Sign In</li>
-            )}
-          </Link>
-        </ul>
-      </div>
-    </div>
+          <div class="flex items-center lg:order-2">
+            <Link
+              to="/about"
+              class="font-poppins hover:text-[#00684A] font-bold text-xl px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
+            >
+              FAQs
+            </Link>
+            <Link to="/profile">
+              {currentUser ? (
+                <img
+                  src={currentUser.profilePicture}
+                  alt="profile"
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              ) : (
+                <button class="bg-[#00684A] hover:ring-2 hover:ring-[#00684A] hover:bg-white hover:text-[#00684A] text-xl font-poppins  rounded-lg text-white px-4 lg:px-16 py-2 lg:py-2.5 mr-2 transition-all ">
+                  Sign in
+                </button>
+              )}
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 }
