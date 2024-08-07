@@ -65,7 +65,11 @@ export default function CreateTableAndClub() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: tableName, userRef: currentUser.username, userId: currentUser._id }),
+        body: JSON.stringify({
+          name: tableName,
+          userRef: currentUser.username,
+          userId: currentUser._id,
+        }),
       });
 
       if (!tableRes.ok) {
@@ -81,7 +85,7 @@ export default function CreateTableAndClub() {
         logoUrl: "", // Initialize logoUrl as empty string
         logoFile: teamLogos[index], // Pass the logo file
       }));
-      
+
       // Assuming you have a function to handle image uploads similar to storeImage in CreateListing.jsx
       const uploadPromises = clubs.map(async (club) => {
         if (club.logoFile) {
@@ -146,24 +150,31 @@ export default function CreateTableAndClub() {
 
   return (
     <main className="p-3 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">
-        Create Table and Clubs
+      <h1 className="text-3xl flex ml-4 items-center gap-3 font-semibold text-center my-7">
+        <div className="bg-[#00684A] rounded-lg h-14">.</div>
+        <span className="lg:text-[28.125px] md:text-[20.125px] font-fraunces text-[#00684A] text-[20.125px]">
+          Create Table and Clubs
+        </span>
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex gap-4 ">
-          <div className="flex flex-col w-1/2">
-            <span className="mt-4">Table Name</span>
+          <div className="flex gap-3 flex-col w-1/2">
+            <span className="mt-4 font-poppins font-semibold lg:text-2xl">
+              Table Name
+            </span>
             <input
               type="text"
               placeholder="Table Name"
-              className="border p-3 rounded-lg"
+              className="border p-3 font-poppins font-light rounded-lg"
               value={tableName}
               onChange={handleTableNameChange}
               required
             />
           </div>
-          <div className="flex flex-col w-1/2">
-            <span className="mt-4">Number of Teams</span>
+          <div className="flex flex-col  gap-3 w-1/2">
+            <span className="mt-4 lg:text-2xl font-poppins font-semibold">
+              Number of Teams
+            </span>
             <input
               type="number"
               placeholder="Number of Teams"
@@ -176,15 +187,19 @@ export default function CreateTableAndClub() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {teamNames.map((teamName, index) => (
-            <div key={index} className="flex flex-col gap-2 items-center border p-3 rounded-lg">
+            <div
+              key={index}
+              className="flex flex-col gap-2 items-center border p-3 rounded-lg"
+            >
               <input
                 type="text"
                 placeholder={`Team ${index + 1} Name`}
-                className="border p-3 rounded-lg w-full"
+                className="border p-3 font-poppins font-light rounded-lg w-full"
                 value={teamName}
                 onChange={(e) => handleTeamNameChange(index, e)}
                 required
               />
+
               <input
                 type="file"
                 accept="image/*"
@@ -204,9 +219,4 @@ export default function CreateTableAndClub() {
       </form>
     </main>
   );
-  
-  
-  
-  
-  
 }
