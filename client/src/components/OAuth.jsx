@@ -3,7 +3,7 @@ import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
-
+import google from "../assets/google.svg"
 export default function OAuth() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,8 +36,9 @@ export default function OAuth() {
     <button
       type='button'
       onClick={handleGoogleClick}
-      className='bg-red-700 text-white rounded-lg p-3 uppercase hover:opacity-95'
+      className='bg-[#00684A] flex items-center justify-center gap-6 font-poppins text-white rounded-lg p-3 uppercase hover:opacity-95'
     >
+      <img src={google} className='w-7 h-7' alt="" />
       Continue with google
     </button>
   );
