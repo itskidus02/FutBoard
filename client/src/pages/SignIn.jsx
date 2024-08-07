@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   signInStart,
   signInSuccess,
   signInFailure,
-} from '../redux/user/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import OAuth from '../components/OAuth';
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
+import email from "../assets/email.svg";
+import password from "../assets/password.svg";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
@@ -22,10 +24,10 @@ export default function SignIn() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch('/api/auth/signin', {
-        method: 'POST',
+      const res = await fetch("/api/auth/signin", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -35,53 +37,65 @@ export default function SignIn() {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate('/');
+      navigate("/");
     } catch (error) {
       dispatch(signInFailure(error));
     }
   };
   return (
-    <div className="flex justify-center items-center p-3 max-w-screen-xl mx-auto">
-    <div className="flex-1">
-      <h1 className="lg:text-[140px] md:text-[100px] font-bold">FutBoard.</h1>
-    </div>
-    <div className="flex-1 max-w-lg">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          id="email"
-          className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          className="bg-slate-100 p-3 rounded-lg"
-          onChange={handleChange}
-        />
-        <button
-          disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-        >
-          {loading ? 'Loading...' : 'Sign In'}
-        </button>
-        <OAuth />
-      </form>
-      <div className="flex gap-2 mt-5">
-        <p>Dont Have an account?</p>
-        <Link to="/sign-up">
-          <span className="text-blue-500">Sign up</span>
-        </Link>
+    <div className="flex flex-col md:flex-row justify-center items-center p-3 mt-48 max-w-screen-xl mx-auto">
+      <div className="md:flex-1">
+        <h1 className="lg:text-[105px] text-[70px] md:text-[80px] font-fraunces text-[#00684A] text-center font-extrabold">
+          FutBoard.
+        </h1>
       </div>
-      <p className="text-red-700 mt-5">
-        {error ? error.message || 'Something went wrong!' : ''}
-      </p>
+      <div className="md:flex-1 w-full max-w-lg md:max-w-none">
+        <h1 className="lg:text-xl text-sm font-poppins text-center font-semibold my-7">
+          Sign In
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="relative flex items-center bg-white  ring-2 ring-[#00684A] p-3 rounded-lg">
+            <img src={email} alt="Email icon" className="w-6 h-6 mr-3" />
+            <input
+              type="email"
+              placeholder="Email"
+              id="email"
+              className="bg-swhite outline-none flex-1"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="relative flex items-center bg-white ring-2 ring-[#00684A] p-3 rounded-lg">
+            <img src={password} alt="Email icon" className="w-6 h-6 mr-3" />
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              className=" outline-none flex-1"
+              onChange={handleChange}
+            />
+          </div>
+
+          <OAuth />
+          <button
+            disabled={loading}
+            className="bg-white ring-2 ring-[#00684A] text-black p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? "Loading..." : "Sign In"}
+          </button>
+        </form>
+        <div className="flex justify-between gap-2 mt-5">
+          <p className="lg:text-xl text-sm  font-poppins">Dont Have an account?</p>
+          <Link to="/sign-up">
+            <span className="text-white text-md font-poppins rounded-lg lg:px-8 px-4 lg:py-2 py-1 bg-[#00684A]">
+              Sign up
+            </span>
+          </Link>
+        </div>
+        <p className="text-red-700 mt-5">
+          {error ? error.message || "Something went wrong!" : ""}
+        </p>
+      </div>
     </div>
-  </div>
-  
-  
   );
 }
