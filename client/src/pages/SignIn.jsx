@@ -79,7 +79,7 @@ export default function SignIn() {
           <OAuth />
           <button
             disabled={loading}
-            className="bg-white ring-2 ring-[#00684A] text-black p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+            className="bg-white ring-2 hover:bg-[#00684A] hover:ring-white font-poppins hover:text-white transition-all  ring-[#00684A] text-black p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
           >
             {loading ? "Loading..." : "Sign In"}
           </button>
@@ -87,7 +87,7 @@ export default function SignIn() {
         <div className="flex justify-between gap-2 mt-5">
           <p className="lg:text-xl text-sm  font-poppins">Dont Have an account?</p>
           <Link to="/sign-up">
-            <span className="text-white text-md font-poppins rounded-lg lg:px-8 px-4 lg:py-2 py-1 bg-[#00684A]">
+            <span className="text-white hover:bg-white ring-2 transition-all hover:ring-[#00684A] hover:text-black text-md font-poppins rounded-lg lg:px-8 px-4 lg:py-2 py-1 bg-[#00684A]">
               Sign up
             </span>
           </Link>
