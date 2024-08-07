@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DisplayTable from "./DisplayTable";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -89,7 +88,6 @@ export default function ManageMatches() {
   return (
     <div className="w-3/4 mx-auto p-6 my-7">
       <h1 className="text-3xl font-semibold text-center mb-8">Manage Matches</h1>
-      <DisplayTable />
       <form onSubmit={handleMatchSubmit} className="mt-8 w-2/4 mx-auto ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4 flex justify-between">
           <div className="w-1/2 pr-2">
