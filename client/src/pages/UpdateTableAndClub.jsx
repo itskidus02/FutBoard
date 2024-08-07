@@ -168,7 +168,7 @@ export default function UpdateTableAndClub() {
     <h1 className="text-3xl flex ml-4 items-center gap-3 font-semibold text-center my-7">
       <div className="bg-[#00684A] rounded-lg h-14">.</div>
       <span className="lg:text-[28.125px] md:text-[20.125px] font-fraunces text-[#00684A] text-[20.125px]">
-        Update Table and Clubs
+        Update {tableName}
       </span>
     </h1>
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
