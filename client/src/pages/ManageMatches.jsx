@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import DisplayTable from "./DisplayTable";
 
 export default function ManageMatches() {
   const { tableId } = useParams();
   const [clubs, setClubs] = useState([]);
-  const [selectedClubs, setSelectedClubs] = useState({ homeClub: "", awayClub: "" });
-  const [matchResult, setMatchResult] = useState({ homeGoals: 0, awayGoals: 0 });
+  const [selectedClubs, setSelectedClubs] = useState({
+    homeClub: "",
+    awayClub: "",
+  });
+  const [matchResult, setMatchResult] = useState({
+    homeGoals: 0,
+    awayGoals: 0,
+  });
   const [matchDate, setMatchDate] = useState("");
   const [error, setError] = useState("");
 
@@ -20,7 +27,7 @@ export default function ManageMatches() {
           throw new Error("Failed to fetch clubs");
         }
         const table = await response.json();
-        setClubs(table.clubs.map(c => c.clubId)); // Extract club information
+        setClubs(table.clubs.map((c) => c.clubId)); // Extract club information
       } catch (error) {
         setError("Error fetching clubs: " + error.message);
       }
@@ -30,16 +37,16 @@ export default function ManageMatches() {
   }, [tableId]);
 
   const handleClubChange = (type, clubId) => {
-    setSelectedClubs(prevState => ({
+    setSelectedClubs((prevState) => ({
       ...prevState,
-      [type]: clubId
+      [type]: clubId,
     }));
   };
 
   const handleMatchResultChange = (type, value) => {
-    setMatchResult(prevState => ({
+    setMatchResult((prevState) => ({
       ...prevState,
-      [type]: value
+      [type]: value,
     }));
   };
 
@@ -58,7 +65,7 @@ export default function ManageMatches() {
         awayClubId: selectedClubs.awayClub,
         homeGoals: matchResult.homeGoals,
         awayGoals: matchResult.awayGoals,
-        matchDate: matchDate
+        matchDate: matchDate,
       };
 
       const response = await fetch("/api/table/update-match", {
@@ -71,7 +78,9 @@ export default function ManageMatches() {
 
       if (!response.ok) {
         const responseBody = await response.json();
-        throw new Error(responseBody.message || "Failed to update match result");
+        throw new Error(
+          responseBody.message || "Failed to update match result"
+        );
       }
 
       const updatedTable = await response.json();
@@ -82,24 +91,32 @@ export default function ManageMatches() {
     }
   };
 
-  const filteredHomeClubs = clubs.filter(club => club._id !== selectedClubs.awayClub);
-  const filteredAwayClubs = clubs.filter(club => club._id !== selectedClubs.homeClub);
+  const filteredHomeClubs = clubs.filter(
+    (club) => club._id !== selectedClubs.awayClub
+  );
+  const filteredAwayClubs = clubs.filter(
+    (club) => club._id !== selectedClubs.homeClub
+  );
 
   return (
-    <div className="w-3/4 mx-auto p-6 my-7">
-      <h1 className="text-3xl font-semibold text-center mb-8">Manage Matches</h1>
-      <form onSubmit={handleMatchSubmit} className="mt-8 w-2/4 mx-auto ring-2 ring-blue-600 rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4 flex justify-between">
-          <div className="w-1/2 pr-2">
-           
-            <div className="flex items-center">
+    <div className="w-full sm:w-3/4 mx-auto p-6 my-7">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-center mb-6 sm:mb-8">
+        Manage Matches {}
+      </h1>
+      <form
+        onSubmit={handleMatchSubmit}
+        className="mt-8 w-full sm:w-3/4 lg:w-2/4 mx-auto ring-2 ring-blue-600 rounded px-4 sm:px-8 pt-6 pb-8 mb-4"
+      >
+        <div className="mb-4 flex flex-col sm:flex-row justify-between">
+          <div className="w-full sm:w-1/2 sm:pr-2 mb-4 sm:mb-0">
+            <div className="flex flex-col sm:flex-row items-center">
               <select
                 id="homeClub"
                 value={selectedClubs.homeClub}
                 onChange={(e) => handleClubChange("homeClub", e.target.value)}
-                className="block appearance-none w-3/4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full sm:w-3/4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 mb-4 sm:mb-0"
               >
-                <option value="">Select Home Club</option>
+                <option value="j">Select Home Club</option>
                 {filteredHomeClubs.map((club) => (
                   <option key={club._id} value={club._id}>
                     {club.name}
@@ -110,19 +127,21 @@ export default function ManageMatches() {
                 type="number"
                 id="homeGoals"
                 value={matchResult.homeGoals}
-                onChange={(e) => handleMatchResultChange("homeGoals", e.target.value)}
-                className="appearance-none block w-1/4 ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                onChange={(e) =>
+                  handleMatchResultChange("homeGoals", e.target.value)
+                }
+                className="appearance-none block w-full sm:w-1/4 ml-0 sm:ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               />
             </div>
           </div>
-          <div className="w-1/2 pl-2">
-            
-            <div className="flex items-center">
+          <div className="w-full sm:w-1/2 sm:pl-2">
+            <div className="flex flex-col gap-3 sm:flex-row items-center">
+              
               <select
                 id="awayClub"
                 value={selectedClubs.awayClub}
                 onChange={(e) => handleClubChange("awayClub", e.target.value)}
-                className="block appearance-none w-3/4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full sm:w-3/4 bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               >
                 <option value="">Select Away Club</option>
                 {filteredAwayClubs.map((club) => (
@@ -135,14 +154,19 @@ export default function ManageMatches() {
                 type="number"
                 id="awayGoals"
                 value={matchResult.awayGoals}
-                onChange={(e) => handleMatchResultChange("awayGoals", e.target.value)}
-                className="appearance-none block w-1/4 ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                onChange={(e) =>
+                  handleMatchResultChange("awayGoals", e.target.value)
+                }
+                className="appearance-none block w-full sm:w-1/4 ml-0 sm:ml-2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 mb-4 sm:mb-0"
               />
             </div>
           </div>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="matchDate">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="matchDate"
+          >
             Match Date
           </label>
           <input
@@ -163,9 +187,19 @@ export default function ManageMatches() {
           </button>
         </div>
       </form>
-      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+      <DisplayTable/>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
   
-
 }
