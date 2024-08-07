@@ -14,11 +14,13 @@ import ManageMatches from "./pages/ManageMatches";
 import UpdateTableAndClub from "./pages/UpdateTableAndClub";
 import ResultDisplay from "./pages/ResultDisplay";
 import NotFound from "./pages/NotFound"; // Import the NotFound component
-
+// import { AccordionDemo } from "./components/Demo/AccordionDemo";
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
+      {/* <AccordionDemo /> */}
+
       <div className="mt-16">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,15 +29,22 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/display-table/:tableId" element={<DisplayTable />} />
           <Route path="/display-result" element={<ResultDisplay />} />
+          
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-table-team" element={<CreateTableAndClub />} />
-            <Route path="/manage-matches/:tableId" element={<ManageMatches />} />
-            <Route path="/update-table/:tableId" element={<UpdateTableAndClub />} />
-            
+            <Route
+              path="/manage-matches/:tableId"
+              element={<ManageMatches />}
+            />
+            <Route
+              path="/update-table/:tableId"
+              element={<UpdateTableAndClub />}
+            />
+
             {/* 404 Page */}
           </Route>
-            <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </BrowserRouter>
