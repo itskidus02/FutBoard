@@ -1,12 +1,16 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import OAuth from '../components/OAuth';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
+import email from "../assets/email.svg";
+import password from "../assets/password.svg";
+import username from "../assets/username.svg"; // Assuming you have an icon for username
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -16,66 +20,89 @@ export default function SignUp() {
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
       setLoading(false);
       if (data.success === false) {
         setError(true);
         return;
       }
-      navigate('/sign-in');
+      navigate("/sign-in");
     } catch (error) {
       setLoading(false);
       setError(true);
     }
   };
+
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input
-          type='text'
-          placeholder='Username'
-          id='username'
-          className='bg-slate-100 p-3 rounded-lg'
-          onChange={handleChange}
-        />
-        <input
-          type='email'
-          placeholder='Email'
-          id='email'
-          className='bg-slate-100 p-3 rounded-lg'
-          onChange={handleChange}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          id='password'
-          className='bg-slate-100 p-3 rounded-lg'
-          onChange={handleChange}
-        />
-        <button
-          disabled={loading}
-          className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
-        >
-          {loading ? 'Loading...' : 'Sign Up'}
-        </button>
-        <OAuth />
-      </form>
-      <div className='flex gap-2 mt-5'>
-        <p>Have an account?</p>
-        <Link to='/sign-in'>
-          <span className='text-blue-500'>Sign in</span>
-        </Link>
+    <div className="flex flex-col md:flex-row justify-center items-center p-3 mt-48 max-w-screen-xl mx-auto">
+      <div className="md:flex-1">
+        <h1 className="lg:text-[105px] text-[70px] md:text-[80px] font-fraunces text-[#00684A] text-center font-extrabold">
+          FutBoard.
+        </h1>
       </div>
-      <p className='text-red-700 mt-5'>{error && 'Something went wrong!'}</p>
+      <div className="md:flex-1 w-full max-w-lg md:max-w-none">
+        <h1 className="lg:text-xl text-sm font-poppins text-center font-semibold my-7">
+          Sign Up
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="relative flex items-center bg-white  ring-2 ring-[#00684A] p-3 rounded-lg">
+            <img src={username} alt="Username icon" className="w-6 h-6 mr-3" />
+            <input
+              type="text"
+              placeholder="Username"
+              id="username"
+              className="bg-swhite outline-none flex-1"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="relative flex items-center bg-white  ring-2 ring-[#00684A] p-3 rounded-lg">
+            <img src={email} alt="Email icon" className="w-6 h-6 mr-3" />
+            <input
+              type="email"
+              placeholder="Email"
+              id="email"
+              className="bg-swhite outline-none flex-1"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="relative flex items-center bg-white ring-2 ring-[#00684A] p-3 rounded-lg">
+            <img src={password} alt="Password icon" className="w-6 h-6 mr-3" />
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              className=" outline-none flex-1"
+              onChange={handleChange}
+            />
+          </div>
+
+          <OAuth />
+          <button
+            disabled={loading}
+            className="bg-white ring-2 hover:bg-[#00684A] hover:ring-white font-poppins hover:text-white transition-all  ring-[#00684A] text-black p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          >
+            {loading ? "Loading..." : "Sign Up"}
+          </button>
+        </form>
+        <div className="flex justify-between gap-2 mt-5">
+          <p className="lg:text-xl text-sm font-poppins">Have an account?</p>
+          <Link to="/sign-in">
+            <span className="text-white hover:bg-white ring-2 transition-all hover:ring-[#00684A] hover:text-black text-md font-poppins rounded-lg lg:px-8 px-4 lg:py-2 py-1 bg-[#00684A]">
+              Sign in
+            </span>
+          </Link>
+        </div>
+        <p className="text-red-700 mt-5">
+          {error && "Something went wrong!"}
+        </p>
+      </div>
     </div>
   );
 }
