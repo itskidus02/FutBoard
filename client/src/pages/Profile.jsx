@@ -31,6 +31,7 @@ export default function Profile() {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [userTables, setUserTables] = useState([]);
   const [deleteError, setDeleteError] = useState("");
+  const [imageSize, setImageSize] = useState(100); // Initial size percentage
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -153,115 +154,126 @@ export default function Profile() {
   };
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-        <input
-          type='file'
-          ref={fileRef}
-          hidden
-          accept='image/*'
-          onChange={(e) => setImage(e.target.files[0])}
-        />
-        {/* 
-      firebase storage rules:  
-      allow read;
-      allow write: if
-      request.resource.size < 2 * 1024 * 1024 &&
-      request.resource.contentType.matches('image/.*') */}
-        <img
-          src={formData.profilePicture || currentUser.profilePicture}
-          alt='profile'
-          className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
-          onClick={() => fileRef.current.click()}
-        />
-        <p className='text-sm self-center'>
-          {imageError ? (
-            <span className='text-red-700'>
-              Error uploading image (file size must be less than 2 MB)
+    <div className='bg-white px-4 lg:px-6 py-2.5'>
+      <div className='flex flex-col ring lg:flex-row justify-center items-start mx-auto max-w-screen-xl'>
+        <div className='w-full lg:w-1/3 flex flex-col items-center'>
+          <input
+            type='file'
+            ref={fileRef}
+            hidden
+            accept='image/*'
+            onChange={(e) => setImage(e.target.files[0])}
+          />
+          <img
+            src={formData.profilePicture || currentUser.profilePicture}
+            alt='profile'
+            className='cursor-pointer w-[250px] rounded-full object-cover mb-4'
+            onClick={() => fileRef.current.click()}
+          />
+          <h2>Joined date</h2>
+          <p className='text-sm text-center'>
+            {imageError ? (
+              <span className='text-red-700'>
+                Error uploading image (file size must be less than 2 MB)
+              </span>
+            ) : imagePercent > 0 && imagePercent < 100 ? (
+              <span className='text-slate-700'>{`Uploading: ${imagePercent} %`}</span>
+            ) : imagePercent === 100 ? (
+              <span className='text-green-700'>Image uploaded successfully</span>
+            ) : (
+              ''
+            )}
+          </p>
+        </div>
+  
+        <form onSubmit={handleSubmit} className='w-full lg:w-1/3 flex flex-col gap-4'>
+          <input
+            defaultValue={currentUser.username}
+            type='text'
+            id='username'
+            placeholder='Username'
+            className='bg-slate-100 rounded-lg p-3'
+            onChange={handleChange}
+          />
+          <input
+            defaultValue={currentUser.email}
+            type='email'
+            id='email'
+            placeholder='Email'
+            className='bg-slate-100 rounded-lg p-3'
+            onChange={handleChange}
+          />
+          <input
+            type='password'
+            id='password'
+            placeholder='Password'
+            className='bg-slate-100 rounded-lg p-3'
+            onChange={handleChange}
+          />
+          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
+            {loading ? 'Loading...' : 'Update profile'}
+          </button>
+  
+          <div className='flex justify-between gap-4 mt-4'>
+            <span
+              onClick={handleDeleteAccount}
+              className='text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900'
+            >
+              Delete Account
             </span>
-          ) : imagePercent > 0 && imagePercent < 100 ? (
-            <span className='text-slate-700'>{`Uploading: ${imagePercent} %`}</span>
-          ) : imagePercent === 100 ? (
-            <span className='text-green-700'>Image uploaded successfully</span>
-          ) : (
-            ''
-          )}
-        </p>
-        <input
-          defaultValue={currentUser.username}
-          type='text'
-          id='username'
-          placeholder='Username'
-          className='bg-slate-100 rounded-lg p-3'
-          onChange={handleChange}
-        />
-        <input
-          defaultValue={currentUser.email}
-          type='email'
-          id='email'
-          placeholder='Email'
-          className='bg-slate-100 rounded-lg p-3'
-          onChange={handleChange}
-        />
-        <input
-          type='password'
-          id='password'
-          placeholder='Password'
-          className='bg-slate-100 rounded-lg p-3'
-          onChange={handleChange}
-        />
-        <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-          {loading ? 'Loading...' : 'Update profile'}
-        </button>
-      </form>
-      <div className='flex justify-between mt-5'>
-        <span
-          onClick={handleDeleteAccount}
-          className='text-red-700 cursor-pointer'
-        >
-          Delete Account
-        </span>
-        <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>
-          Sign out
-        </span>
+            <span
+              onClick={handleSignOut}
+              className='text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900'
+            >
+              Sign out
+            </span>
+          </div>
+        </form>
       </div>
+  
       <p className='text-red-700 mt-5'>{error && 'Something went wrong!'}</p>
       <p className='text-green-700 mt-5'>
         {updateSuccess && 'User is updated successfully!'}
       </p>
-      <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
+  
+      {/* New Div for Create Table Button and Table List */}
+      <div className='mt-6 max-w-screen-xl mx-auto'>
+        <button className='ring-2 mr-3  ring-green-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
+         Your Table
+        </button>
+        <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
           <Link to="/create-table-team">Create Table</Link>
-      </button>
-      {/* Displaying user tables */}
-      <h2 className='text-2xl font-semibold text-center my-5'>My Tables</h2>
-      {userTables.length > 0 ? (
-        userTables.map((table) => (
-          <div key={table._id} className='bg-slate-100 flex justify-evenly p-3 rounded-lg mb-4'>
-            <h3 className='text-xl font-semibold'>{table.name}</h3>
-            {/* Display more table details as needed */}
-            <button>
-            <Link to={`/manage-matches/${table._id}`}>
-                <p className='text-blue-500 cursor-pointer'>Manage matches</p>
-              </Link>
-            </button>
-            <button>
-            <Link to={`/update-table/${table._id}`}>
-                <p className='text-green-500 cursor-pointer'>Update table </p>
-              </Link>
-            </button>
-            <button
+        </button>
+       
+        {userTables.length > 0 ? (
+          userTables.map((table) => (
+            <div key={table._id} className='bg-slate-100 max-w-screen-xl mt-4 flex justify-evenly mx-auto p-3 rounded-lg mb-4'>
+              <h3 className='text-xl font-semibold'>{table.name}</h3>
+              <button>
+                <Link to={`/manage-matches/${table._id}`}>
+                  <p className='text-blue-500 cursor-pointer'>Manage matches</p>
+                </Link>
+              </button>
+              <button>
+                <Link to={`/update-table/${table._id}`}>
+                  <p className='text-green-500 cursor-pointer'>Update table</p>
+                </Link>
+              </button>
+              <button
                 onClick={() => handleTableDelete(table._id)}
-                className="text-red-700 uppercase"
+                className='text-red-700 uppercase'
               >
                 Delete
               </button>
-          </div>
-        ))
-      ) : (
-        <p className='text-center'>You haven't created any tables yet.</p>
-      )}
-      {deleteError && <p className='text-red-700 mt-5'>{deleteError}</p>}
+            </div>
+          ))
+        ) : (
+          <p className='text-center'>You haven't created any tables yet.</p>
+        )}
+        {deleteError && <p className='text-red-700 mt-5'>{deleteError}</p>}
+      </div>
     </div>
   );
+  
+  
 }
