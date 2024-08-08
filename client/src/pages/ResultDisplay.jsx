@@ -50,22 +50,21 @@ const ResultDisplay = () => {
         tables.map((table) => {
           const matchesByDate = organizeMatchesByDate(table.matches);
           return (
-            <div key={table._id} className="w-3/4 mx-auto p-3 my-7">
-              <h1 className="text-3xl font-semibold text-center my-7">
-                {table.name}
-              </h1>
+            <div key={table._id} className="w-2/6 mx-auto p-3 my-7">
               <div className="overflow-x-auto flex flex-col items-start pl-3 mt-4 rounded-lg ring-2 ring-black">
-                <h2 className="text-2xl font-semibold underline text-center my-5">
-                  Matches Played
-                </h2>
                 {Object.keys(matchesByDate).length === 0 ? (
                   <p>No matches found</p>
                 ) : (
                   Object.keys(matchesByDate).map((date) => (
-                    <div key={date} className="my-5">
-                      <h3 className="text-xl font-semibold text-center my-3">
-                        {date}
-                      </h3>
+                    <div key={date} className="my-5 w-full">
+                      <div className="text-xl font-semibold flex justify-between items-center my-3">
+                        <div className="flex items-center gap-4">
+                          <div className="bg-green-600 w-1 h-full rounded"></div>
+                          <span className="text-green-800">{date}</span>
+                        </div>
+                        <span className="bg-green-600 text-white px-3 py-1 rounded">{table.name}</span>
+                      </div>
+  
                       {matchesByDate[date].map((match, index) => {
                         const homeClub = table.clubs.find(
                           (club) => club.clubId._id === match.homeClubId
@@ -73,32 +72,40 @@ const ResultDisplay = () => {
                         const awayClub = table.clubs.find(
                           (club) => club.clubId._id === match.awayClubId
                         );
-
+  
                         return (
-                          <div key={index} className="flex items-center justify-between my-3">
-                            <div className="flex items-center">
+                          <div
+                            key={index}
+                            className="flex items-center justify-between my-2 p-2 ring-2 ring-gray-300 rounded-lg"
+                          >
+                            <div className="flex items-center w-1/3">
+                              <span className="mx-2 font-semibold">
+                                {homeClub?.clubId.name}
+                              </span>
                               {homeClub?.clubId.logoUrl && (
                                 <img
                                   src={homeClub.clubId.logoUrl}
                                   alt={`${homeClub.clubId.name} logo`}
-                                  className="w-8 h-8 mx-2"
+                                  className="w-6 h-6 mx-2"
                                 />
                               )}
-                              <span className="mx-2">{homeClub?.clubId.name}</span>
-                              <span className="font-bold mx-2">
+                            </div>
+                            <div className="flex items-center justify-center">
+                              <span className="font-bold bg-green-600 text-white px-4 py-1 rounded">
                                 {match.homeGoals} - {match.awayGoals}
                               </span>
-                              <span className="mx-2">{awayClub?.clubId.name}</span>
+                            </div>
+                            <div className="flex items-center justify-end w-1/3">
                               {awayClub?.clubId.logoUrl && (
                                 <img
                                   src={awayClub.clubId.logoUrl}
                                   alt={`${awayClub.clubId.name} logo`}
-                                  className="w-8 h-8 mx-2"
+                                  className="w-6 h-6 mx-2"
                                 />
                               )}
-                            </div>
-                            <div className="flex items-center">
-                              <span className="mx-2">{match.stadium}</span>
+                              <span className="mx-2 font-semibold">
+                                {awayClub?.clubId.name}
+                              </span>
                             </div>
                           </div>
                         );
@@ -113,6 +120,7 @@ const ResultDisplay = () => {
       )}
     </main>
   );
+  ;
 };
 
 export default ResultDisplay;
