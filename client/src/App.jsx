@@ -14,6 +14,7 @@ import ManageMatches from "./pages/ManageMatches";
 import UpdateTableAndClub from "./pages/UpdateTableAndClub";
 import ResultDisplay from "./pages/ResultDisplay";
 import NotFound from "./pages/NotFound"; // Import the NotFound component
+import Footer from "./components/Footer";
 // import { AccordionDemo } from "./components/Demo/AccordionDemo";
 export default function App() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+      <Footer/>
     </BrowserRouter>
   );
 }
