@@ -1,15 +1,15 @@
 // Profile.jsx
 
-import { useSelector } from 'react-redux';
-import { useRef, useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { useRef, useState, useEffect } from "react";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
-import { useDispatch } from 'react-redux';
+} from "firebase/storage";
+import { app } from "../firebase";
+import { useDispatch } from "react-redux";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -18,8 +18,8 @@ import {
   deleteUserSuccess,
   deleteUserFailure,
   signOut,
-} from '../redux/user/userSlice';
-import { Link } from 'react-router-dom';
+} from "../redux/user/userSlice";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export default function Profile() {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -87,9 +87,9 @@ export default function Profile() {
     try {
       dispatch(updateUserStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -109,7 +109,7 @@ export default function Profile() {
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       const data = await res.json();
       if (data.success === false) {
@@ -124,7 +124,7 @@ export default function Profile() {
 
   const handleSignOut = async () => {
     try {
-      await fetch('/api/auth/signout');
+      await fetch("/api/auth/signout");
       dispatch(signOut());
     } catch (error) {
       console.log(error);
@@ -136,9 +136,9 @@ export default function Profile() {
     if (window.confirm("Are you sure you want to delete this table?")) {
       try {
         const res = await fetch(`/api/table/delete/${tableId}`, {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
         const data = await res.json();
@@ -154,76 +154,81 @@ export default function Profile() {
   };
 
   return (
-    <div className='bg-white px-4 lg:px-6 py-2.5'>
-      <div className='flex flex-col ring lg:flex-row justify-center items-start mx-auto max-w-screen-xl'>
-        <div className='w-full lg:w-1/3 flex flex-col items-center'>
+    <div className="bg-white px-4 lg:px-6 py-2.5">
+      <div className="flex flex-col ring lg:flex-row justify-center items-start mx-auto max-w-screen-xl">
+        <div className="w-full lg:w-1/3 flex flex-col items-center">
           <input
-            type='file'
+            type="file"
             ref={fileRef}
             hidden
-            accept='image/*'
+            accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
           />
           <img
             src={formData.profilePicture || currentUser.profilePicture}
-            alt='profile'
-            className='cursor-pointer w-[250px] rounded-full object-cover mb-4'
+            alt="profile"
+            className="cursor-pointer w-[250px] rounded-full object-cover mb-4"
             onClick={() => fileRef.current.click()}
           />
           <h2>Joined date</h2>
-          <p className='text-sm text-center'>
+          <p className="text-sm text-center">
             {imageError ? (
-              <span className='text-red-700'>
+              <span className="text-red-700">
                 Error uploading image (file size must be less than 2 MB)
               </span>
             ) : imagePercent > 0 && imagePercent < 100 ? (
-              <span className='text-slate-700'>{`Uploading: ${imagePercent} %`}</span>
+              <span className="text-slate-700">{`Uploading: ${imagePercent} %`}</span>
             ) : imagePercent === 100 ? (
-              <span className='text-green-700'>Image uploaded successfully</span>
+              <span className="text-green-700">
+                Image uploaded successfully
+              </span>
             ) : (
-              ''
+              ""
             )}
           </p>
         </div>
   
-        <form onSubmit={handleSubmit} className='w-full lg:w-1/3 flex flex-col gap-4'>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full lg:w-1/3 flex flex-col gap-4"
+        >
           <input
             defaultValue={currentUser.username}
-            type='text'
-            id='username'
-            placeholder='Username'
-            className='bg-slate-100 rounded-lg p-3'
+            type="text"
+            id="username"
+            placeholder="Username"
+            className="bg-slate-100 rounded-lg p-3"
             onChange={handleChange}
           />
           <input
             defaultValue={currentUser.email}
-            type='email'
-            id='email'
-            placeholder='Email'
-            className='bg-slate-100 rounded-lg p-3'
+            type="email"
+            id="email"
+            placeholder="Email"
+            className="bg-slate-100 rounded-lg p-3"
             onChange={handleChange}
           />
           <input
-            type='password'
-            id='password'
-            placeholder='Password'
-            className='bg-slate-100 rounded-lg p-3'
+            type="password"
+            id="password"
+            placeholder="Password"
+            className="bg-slate-100 rounded-lg p-3"
             onChange={handleChange}
           />
-          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-            {loading ? 'Loading...' : 'Update profile'}
+          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+            {loading ? "Loading..." : "Update profile"}
           </button>
   
-          <div className='flex justify-between gap-4 mt-4'>
+          <div className="flex justify-between gap-4 mt-4">
             <span
               onClick={handleDeleteAccount}
-              className='text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900'
+              className="text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900"
             >
               Delete Account
             </span>
             <span
               onClick={handleSignOut}
-              className='text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900'
+              className="text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900"
             >
               Sign out
             </span>
@@ -231,49 +236,61 @@ export default function Profile() {
         </form>
       </div>
   
-      <p className='text-red-700 mt-5'>{error && 'Something went wrong!'}</p>
-      <p className='text-green-700 mt-5'>
-        {updateSuccess && 'User is updated successfully!'}
+      <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
+      <p className="text-green-700 mt-5">
+        {updateSuccess && "User is updated successfully!"}
       </p>
   
       {/* New Div for Create Table Button and Table List */}
-      <div className='mt-6 max-w-screen-xl mx-auto'>
-        <button className='ring-2 mr-3  ring-green-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
-         Your Table
+      <div className="mt-6 max-w-screen-xl ring py-4 p-3 mx-auto">
+        <button className="ring-2 mr-3 ring-green-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded">
+          Your Table
         </button>
-        <button className='ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded'>
+        <button className="ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded">
           <Link to="/create-table-team">Create Table</Link>
         </button>
-       
+  
         {userTables.length > 0 ? (
-          userTables.map((table) => (
-            <div key={table._id} className='bg-slate-100 max-w-screen-xl mt-4 flex justify-evenly mx-auto p-3 rounded-lg mb-4'>
-              <h3 className='text-xl font-semibold'>{table.name}</h3>
-              <button>
-                <Link to={`/manage-matches/${table._id}`}>
-                  <p className='text-blue-500 cursor-pointer'>Manage matches</p>
-                </Link>
-              </button>
-              <button>
-                <Link to={`/update-table/${table._id}`}>
-                  <p className='text-green-500 cursor-pointer'>Update table</p>
-                </Link>
-              </button>
-              <button
-                onClick={() => handleTableDelete(table._id)}
-                className='text-red-700 uppercase'
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
+            {userTables.map((table) => (
+              <div
+                key={table._id}
+                className="bg-slate-100 w-full sm:w-[48%] lg:w-[48%] flex justify-between items-center p-3 rounded-lg"
               >
-                Delete
-              </button>
-            </div>
-          ))
+                <div>
+                  <h3 className="text-xl font-semibold">{table.name}</h3>
+                  <button>
+                    <Link to={`/manage-matches/${table._id}`}>
+                      <p className="text-blue-500 cursor-pointer">
+                        Manage matches
+                      </p>
+                    </Link>
+                  </button>
+                </div>
+                <div className="flex flex-col items-end">
+                  <button>
+                    <Link to={`/update-table/${table._id}`}>
+                      <p className="text-green-500 cursor-pointer">
+                        Update table
+                      </p>
+                    </Link>
+                  </button>
+                  <button
+                    onClick={() => handleTableDelete(table._id)}
+                    className="text-red-700 uppercase"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
-          <p className='text-center'>You haven't created any tables yet.</p>
+          <p className="text-center">You haven't created any tables yet.</p>
         )}
-        {deleteError && <p className='text-red-700 mt-5'>{deleteError}</p>}
+        {deleteError && <p className="text-red-700 mt-5">{deleteError}</p>}
       </div>
     </div>
   );
-  
   
 }
