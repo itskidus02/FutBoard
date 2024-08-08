@@ -11,6 +11,7 @@ const DisplayTable = () => {
   const [creator, setCreator] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -167,6 +168,10 @@ const DisplayTable = () => {
     doc.save(`${table.name}.pdf`);
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   if (loading) {
     return <div className='flex justify-center items-center h-screen'><Spinner/></div>;
   }
@@ -179,15 +184,11 @@ const DisplayTable = () => {
     <main>
       {table && (
         <div className="w-2/4 mx-auto p-3 my-7">
-         
           <h1 className="text-3xl text-[#00684A] font-fraunces gap-2 flex font-semibold text-center my-7">
-            <div className="bg-[#00684A] rounded-xl">
-              .
-            </div>
+            <div className="bg-[#00684A] rounded-xl">.</div>
             {table.name}
           </h1>
           <div className="ring-2 p-3 rounded-lg ring-red-800">
-          
             <div className="overflow-x-auto mb-8">
               <table className="min-w-full border-collapse">
                 <thead>
@@ -237,18 +238,22 @@ const DisplayTable = () => {
             </div>
           </div>
           <div className="flex mt-3 justify-between">
-              {creator && (
-                <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
-                  <p>
-                    Listed by{" "}
-                    <span className="font-semibold">{creator.username}</span>{" "}
-                  </p>
-                </div>
-              )}
-              <div className="relative">
-                <button className="px-4 py-2 bg-black text-white rounded-md mb-4">
-                  Export
-                </button>
+            {creator && (
+              <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
+                <p>
+                  Listed by{" "}
+                  <span className="font-semibold">{creator.username}</span>{" "}
+                </p>
+              </div>
+            )}
+            <div className="relative">
+              <button
+                className="px-4 py-2 bg-black text-white rounded-md mb-4"
+                onClick={toggleDropdown}
+              >
+                Export
+              </button>
+              {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
                   <button
                     onClick={exportToExcel}
@@ -263,13 +268,11 @@ const DisplayTable = () => {
                     Export to PDF
                   </button>
                 </div>
-              </div>
+              )}
             </div>
+          </div>
           <div className="overflow-x-auto mt-4 rounded-lg ring-2 ring-black ">
-            {/* <h2 className="text-2xl font-semibold underline text-center my-5">
-              Matches Played
-            </h2> */}
-            <table className="min-w-full  border-collapse">
+            <table className="min-w-full border-collapse">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">Match</th>
