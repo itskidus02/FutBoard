@@ -159,7 +159,7 @@ const DisplayTable = () => {
       startY: doc.lastAutoTable.finalY + 10,
     });
 
-    // Add "made by kid" text at the bottom right of the page
+    // Add "made by SoccerBoard" text at the bottom right of the page
     const pageHeight = doc.internal.pageSize.height;
     const pageWidth = doc.internal.pageSize.width;
     doc.text("made by SoccerBoard", pageWidth - 80, pageHeight - 10);
@@ -179,32 +179,15 @@ const DisplayTable = () => {
     <main>
       {table && (
         <div className="w-2/4 mx-auto p-3 my-7">
-          <h1 className="text-3xl font-semibold text-center my-7">
+         
+          <h1 className="text-3xl text-[#00684A] font-fraunces gap-2 flex font-semibold text-center my-7">
+            <div className="bg-[#00684A] rounded-xl">
+              .
+            </div>
             {table.name}
           </h1>
-          <div className="ring-2 p-3 rounded-lg ring-black">
-            <div className="flex justify-between">
-              {creator && (
-                <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
-                  <p>
-                    Listed by{" "}
-                    <span className="font-semibold">{creator.username}</span>{" "}
-                  </p>
-                </div>
-              )}
-              <button
-                onClick={exportToExcel}
-                className="px-4 py-2 bg-black text-white rounded-md mb-4"
-              >
-                Export to Excel
-              </button>
-              <button
-                onClick={exportToPDF}
-                className="px-4 py-2 bg-black text-white rounded-md mb-4"
-              >
-                Export to PDF
-              </button>
-            </div>
+          <div className="ring-2 p-3 rounded-lg ring-red-800">
+          
             <div className="overflow-x-auto mb-8">
               <table className="min-w-full border-collapse">
                 <thead>
@@ -253,6 +236,35 @@ const DisplayTable = () => {
               </table>
             </div>
           </div>
+          <div className="flex mt-3 justify-between">
+              {creator && (
+                <div className="flex p-2 pt-2 ring-[#00ed64] px-4 py-2 bg-black text-white rounded-md mb-4 flex-col gap-">
+                  <p>
+                    Listed by{" "}
+                    <span className="font-semibold">{creator.username}</span>{" "}
+                  </p>
+                </div>
+              )}
+              <div className="relative">
+                <button className="px-4 py-2 bg-black text-white rounded-md mb-4">
+                  Export
+                </button>
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
+                  <button
+                    onClick={exportToExcel}
+                    className="block w-full px-4 py-2 text-left text-black hover:bg-gray-100"
+                  >
+                    Export to Excel
+                  </button>
+                  <button
+                    onClick={exportToPDF}
+                    className="block w-full px-4 py-2 text-left text-black hover:bg-gray-100"
+                  >
+                    Export to PDF
+                  </button>
+                </div>
+              </div>
+            </div>
           <div className="overflow-x-auto mt-4 rounded-lg ring-2 ring-black ">
             {/* <h2 className="text-2xl font-semibold underline text-center my-5">
               Matches Played
