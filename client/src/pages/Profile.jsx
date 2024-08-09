@@ -20,6 +20,8 @@ import {
   signOut,
 } from "../redux/user/userSlice";
 import { Link } from "react-router-dom";
+import whistle from "../assets/whistle.svg"
+import pen from "../assets/pen.svg"
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -258,28 +260,46 @@ export default function Profile() {
                 className="bg-slate-100 w-full sm:w-[48%] lg:w-[48%] flex justify-between items-center p-3 rounded-lg"
               >
                 <div>
-                  <h3 className="text-xl font-semibold">{table.name}</h3>
-                  <button>
+                  <div className="flex justify-center bg-green-500 py-1">
+                    <h3 className="text-xl font-semibold">{table.name}</h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {table.clubs.map((club) => (
+                      <div key={club.clubId._id} className="flex items-center">
+                        {club.clubId.logoUrl && (
+                          <img
+                            src={club.clubId.logoUrl}
+                            alt={`${club.clubId.name} logo`}
+                            className="w-8 h-8 mr-2"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-2">
+                  <button className="flex items-center gap-3 py-2 px-3 bg-red-400 rounded">
                     <Link to={`/manage-matches/${table._id}`}>
                       <p className="text-blue-500 cursor-pointer">
                         Manage matches
                       </p>
                     </Link>
+                    <img src={whistle} className="w-8 h-8" alt="" />
                   </button>
-                </div>
-                <div className="flex flex-col items-end">
-                  <button>
+                  <button className="flex items-center gap-3 py-2 px-3 bg-red-400 rounded">
                     <Link to={`/update-table/${table._id}`}>
                       <p className="text-green-500 cursor-pointer">
                         Update table
                       </p>
                     </Link>
+                    <img src={pen} className="w-8 h-8" alt="" />
                   </button>
                   <button
                     onClick={() => handleTableDelete(table._id)}
-                    className="text-red-700 uppercase"
+                    className="flex items-center gap-3 py-2 px-3 bg-green-400 rounded"
                   >
-                    Delete
+                    <p className="text-red-700">Delete Table</p>
+                    <img src={pen} className="w-8 h-8" alt="" />
                   </button>
                 </div>
               </div>
@@ -292,5 +312,6 @@ export default function Profile() {
       </div>
     </div>
   );
+  
   
 }
