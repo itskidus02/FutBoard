@@ -23,6 +23,10 @@ import { Link } from "react-router-dom";
 import whistle from "../assets/whistle.svg";
 import pen from "../assets/pen.svg";
 import deletee from "../assets/delete.svg";
+import userpen from "../assets/userpen.svg";
+import userdel from "../assets/userdel.svg";
+import signout from "../assets/signout.svg";
+import pensq from "../assets/pensq.svg";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -158,7 +162,7 @@ export default function Profile() {
 
   return (
     <div className="bg-white px-4 lg:px-6 py-2.5">
-      <div className="flex flex-col ring lg:flex-row justify-center items-start mx-auto max-w-screen-xl">
+      <div className="flex flex-col lg:flex-row justify-center items-start mx-auto max-w-screen-xl">
         <div className="w-full lg:w-1/3 flex flex-col items-center">
           <input
             type="file"
@@ -173,7 +177,16 @@ export default function Profile() {
             className="cursor-pointer lg:w-[250px] md:w-[200px] rounded-full object-cover mb-4"
             onClick={() => fileRef.current.click()}
           />
-          <h2>Joined date</h2>
+<p className="font-poppins font-semibold">
+
+  <span className="font-poppins font-semibold">joined on </span>
+  {new Date(currentUser.createdAt).toLocaleDateString("en-US", {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  })}
+</p>
           <p className="text-sm text-center">
             {imageError ? (
               <span className="text-red-700">
@@ -200,7 +213,7 @@ export default function Profile() {
             type="text"
             id="username"
             placeholder="Username"
-            className="bg-slate-100 rounded-lg p-3"
+            className="bg-white ring-2 ring-[#00684A]  font-poppins font-semibold text-center rounded-lg p-3"
             onChange={handleChange}
           />
           <input
@@ -208,32 +221,36 @@ export default function Profile() {
             type="email"
             id="email"
             placeholder="Email"
-            className="bg-slate-100 rounded-lg p-3"
+            className="bg-white ring-2 ring-[#00684A]  font-poppins font-semibold text-center rounded-lg p-3"
             onChange={handleChange}
           />
           <input
             type="password"
             id="password"
             placeholder="Password"
-            className="bg-slate-100 rounded-lg p-3"
+            className="bg-white ring-2 ring-[#00684A]  font-poppins font-semibold text-center rounded-lg p-3"
             onChange={handleChange}
           />
-          <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+          <button className=" bg-[#00684A] flex justify-center gap-3 text-white font-poppins font-semibold p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+          
             {loading ? "Loading..." : "Update profile"}
+          <img src={userpen} className="w-6 h-6 fill-white" alt="" />
           </button>
 
-          <div className="flex justify-between gap-4 mt-4">
+          <div className="flex justify-between gap-4">
             <span
               onClick={handleDeleteAccount}
-              className="text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900"
+              className=" cursor-pointer font-poppins font-semibold flex gap-3 ring ring-red-600 rounded-md p-2"
             >
               Delete Account
+              <img src={userdel} className="w-6 h-6" alt="" />
             </span>
             <span
               onClick={handleSignOut}
-              className="text-red-700 cursor-pointer border-b border-red-700 hover:text-red-900"
+              className="ring justify-center items-center font-poppins font-semibold px-3 flex gap-3 cursor-pointer ring-[#00684A] rounded-md"
             >
               Sign out
+              <img src={signout} className="w-6 h-6" alt="" />
             </span>
           </div>
         </form>
@@ -246,11 +263,13 @@ export default function Profile() {
 
       {/* New Div for Create Table Button and Table List */}
       <div className="mt-6 max-w-screen-xl ring py-4 p-3 mx-auto">
-        <button className="ring-2 mr-3 ring-green-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded">
-          Your Table
+        <button className="ring-2 mr-3 ring-green-700 text-black font-bold py-2 px-4 rounded">
+          Your Tables
         </button>
-        <button className="ring-2 ring-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded">
+        <button className="text-white bg-[#00684A]  font-bold py-2 px-6 rounded">
           <Link to="/create-table-team">Create Table</Link>
+
+          <img src={pensq} className="w-6 h-6" alt="" />
         </button>
 
         {userTables.length > 0 ? (
