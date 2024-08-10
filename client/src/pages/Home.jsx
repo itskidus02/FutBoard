@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import hero from "../assets/hero.png"
+import Marquee from "react-fast-marquee";
+import prem from "../assets/prem.svg"
 
 const Home = () => {
   const [tables, setTables] = useState([]);
@@ -67,6 +69,19 @@ const Home = () => {
           <BorderBeam size={250} duration={12} delay={9} />
         </div>
       </div>
+      <div className="mt-44 flex gap-12 flex-col justify-center items-center"> 
+  <h1 className="text-3xl font-semibold font-poppins">Having minimal features like the following companies</h1>
+  <Marquee>
+    <img src={prem} className="w-29 h-20 mx-20" alt="" />
+    <img src={prem} className="w-29 h-20 mx-20" alt="" />
+    <img src={prem} className="w-29 h-20 mx-20" alt="" />
+    <img src={prem} className="w-29 h-20 mx-20" alt="" />
+    <img src={prem} className="w-29 h-20 mx-20" alt="" />
+   
+
+  </Marquee>
+</div>
+
     </div>
   
   
