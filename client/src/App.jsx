@@ -14,12 +14,14 @@ import ManageMatches from "./pages/ManageMatches";
 import UpdateTableAndClub from "./pages/UpdateTableAndClub";
 import ResultDisplay from "./pages/ResultDisplay";
 import NotFound from "./pages/NotFound"; // Import the NotFound component
+import { BorderBeam } from "./components/magicui/border-beam";
 // import Footer from "./components/Footer";
 // import { AccordionDemo } from "./components/Demo/AccordionDemo";
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
+    
       {/* <AccordionDemo /> */}
 
       <div className="mt-16">

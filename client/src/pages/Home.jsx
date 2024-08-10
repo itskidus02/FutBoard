@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { BorderBeam } from "@/components/magicui/border-beam";
+import hero from "../assets/hero.png"
 
 const Home = () => {
   const [tables, setTables] = useState([]);
@@ -36,27 +38,38 @@ const Home = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="relative p-2 max-w-5xl mx-auto pt-20 sm:pt-24 lg:pt-32">
-    <div className="tracking-tight text-center">
-      <h1 className="font-extrabold text-4xl text-[#00684A] sm:text-5xl lg:text-7xl font-fraunces">
-        Track, Manage, and Export your Local Leagues
-      </h1>
-      <div className="mt-6 text-lg text-center max-w-3xl mx-auto">
-        <p className="font-liht text-xl sm:text-3xl lg:text-3xl font-fraunces">
-          Replace the old ways of tracking, managing, and recording football
-          tournament’s results by FutBoard
-        </p>
-        <div className="mt-8 flex justify-center space-x-4">
-          <button className="bg-[#00684A] hover:bg-white hover:ring font-fraunces hover:ring-[#00684A] hover:text-black text-white font-semibold py-2 px-6 rounded-lg text-lg sm:text-xl lg:text-lg transition duration-300">
-            Create Table
-          </button>
-          <button className="bg-white ring-2 hover:text-white font-fraunces hover:bg-[#00684A] ring-[#00684A] font-bold py-2 px-6 rounded-lg text-lg sm:text-xl lg:text-lg transition duration-300">
-            Match Results
-          </button>
+    <div className="relative p-2 max-w-screen-xl mx-auto pt-20 sm:pt-24 lg:pt-32">
+      <div className="tracking-tight text-center">
+        <h1 className="font-extrabold text-4xl text-[#00684A] sm:text-5xl lg:text-9xl font-fraunces">
+          Track, Manage, and Export your Local Leagues
+        </h1>
+        <div className="mt-6 text-lg text-center max-w-3xl mx-auto">
+          <p className=" text-xl sm:text-3xl lg:text-3xl font-fraunces">
+            Replace the old ways of tracking, managing, and recording football tournament’s results by FutBoard
+          </p>
+          <div className="mt-8 flex justify-center space-x-4">
+            <button className="bg-[#00684A] hover:bg-white hover:ring font-fraunces hover:ring-[#00684A] hover:text-black text-white font-semibold py-2 px-6 rounded-lg text-lg sm:text-xl lg:text-lg transition duration-300">
+              Create Table
+            </button>
+            <button className="bg-white ring-2 hover:text-white font-fraunces hover:bg-[#00684A] ring-[#00684A] font-bold py-2 px-6 rounded-lg text-lg sm:text-xl lg:text-lg transition duration-300">
+              Match Results
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Render BorderBeam component below other content */}
+      <div className="max-w-screen-xl flex justify-center mt-32 mx-auto">
+        <div className="relative lg:h-[500px] w-full flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
+          <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
+            <img src={hero} alt="" />
+          </span>
+          <BorderBeam size={250} duration={12} delay={9} />
         </div>
       </div>
     </div>
-  </div>
+  
+  
   
     // <div className='px-4 py-12 max-w-2xl mx-auto'>
     //   <h1 className='text-3xl font-bold mb-4 text-slate-800'>
