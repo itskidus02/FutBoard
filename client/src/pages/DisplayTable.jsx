@@ -183,28 +183,42 @@ const DisplayTable = () => {
   return (
     <main>
       {table && (
-        <div className="w-2/4 mx-auto p-3 my-7">
-          <h1 className="text-3xl text-[#00684A] font-fraunces gap-2 flex font-semibold text-center my-7">
-            <div className="bg-[#00684A] rounded-xl">.</div>
+        <div className="max-w-screen-xl mx-auto p-3 my-7">
+          <h1 className="text-xl text-[#00684A] font-fraunces gap-2 lg:text-3xl flex font-semibold text-center my-7">
+            <div className="bg-[#00684A]  rounded-xl">.</div>
             {table.name}
           </h1>
           <div className="ring-2 p-3 rounded-lg ring-red-800">
             <div className="overflow-x-auto mb-8">
               <table className="min-w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th className="py-2 px-4 border-b">Position</th>
-                    <th className="py-2 px-4 border-b">Club</th>
-                    <th className="py-2 px-4 border-b">Played</th>
-                    <th className="py-2 px-4 border-b">Won</th>
-                    <th className="py-2 px-4 border-b">Drawn</th>
-                    <th className="py-2 px-4 border-b">Lost</th>
-                    <th className="py-2 px-4 border-b">Goals Scored</th>
-                    <th className="py-2 px-4 border-b">Goals Conceded</th>
-                    <th className="py-2 px-4 border-b">Goal Difference</th>
-                    <th className="py-2 px-4 border-b">Points</th>
-                  </tr>
-                </thead>
+              <thead>
+  <tr>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Position</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Club</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Played</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Won</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Drawn</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Lost</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Goals Scored</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Goals Conceded</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Goal Difference</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Points</th>
+  </tr>
+  <tr className="text-center sm:hidden">
+    <th className="py-2 px-4 border-b">P</th>
+    <th className="py-2 px-4 border-b">C</th>
+    <th className="py-2 px-4 border-b">P</th>
+    <th className="py-2 px-4 border-b">W</th>
+    <th className="py-2 px-4 border-b">D</th>
+    <th className="py-2 px-4 border-b">L</th>
+    <th className="py-2 px-4 border-b">GS</th>
+    <th className="py-2 px-4 border-b">GC</th>
+    <th className="py-2 px-4 border-b">GD</th>
+    <th className="py-2 px-4 border-b">Pts</th>
+  </tr>
+</thead>
+
+
                 <tbody>
                   {table.clubs.map((club, index) => (
                     <tr key={index} className="text-center">
