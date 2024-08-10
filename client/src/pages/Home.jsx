@@ -5,6 +5,7 @@ import { BorderBeam } from "@/components/magicui/border-beam";
 import hero from "../assets/hero.png"
 import Marquee from "react-fast-marquee";
 import prem from "../assets/prem.svg"
+import laliga from "../assets/laliga.svg"
 
 const Home = () => {
   const [tables, setTables] = useState([]);
@@ -73,10 +74,8 @@ const Home = () => {
   <h1 className="text-3xl font-semibold font-poppins">Having minimal features like the following companies</h1>
   <Marquee>
     <img src={prem} className="w-29 h-20 mx-20" alt="" />
-    <img src={prem} className="w-29 h-20 mx-20" alt="" />
-    <img src={prem} className="w-29 h-20 mx-20" alt="" />
-    <img src={prem} className="w-29 h-20 mx-20" alt="" />
-    <img src={prem} className="w-29 h-20 mx-20" alt="" />
+    <img src={laliga} className="w-29 h-20 mx-20" alt="" />
+   
    
 
   </Marquee>
