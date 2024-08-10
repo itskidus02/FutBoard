@@ -177,16 +177,15 @@ export default function Profile() {
             className="cursor-pointer lg:w-[250px] md:w-[200px] rounded-full object-cover mb-4"
             onClick={() => fileRef.current.click()}
           />
-<p className="font-poppins font-semibold">
-
-  <span className="font-poppins font-semibold">joined on </span>
-  {new Date(currentUser.createdAt).toLocaleDateString("en-US", {
-    weekday: "short",
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  })}
-</p>
+          <p className="font-poppins font-semibold">
+            <span className="font-poppins font-semibold">joined on </span>
+            {new Date(currentUser.createdAt).toLocaleDateString("en-US", {
+              weekday: "short",
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            })}
+          </p>
           <p className="text-sm text-center">
             {imageError ? (
               <span className="text-red-700">
@@ -232,9 +231,8 @@ export default function Profile() {
             onChange={handleChange}
           />
           <button className=" bg-[#00684A] flex justify-center gap-3 text-white font-poppins font-semibold p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          
             {loading ? "Loading..." : "Update profile"}
-          <img src={userpen} className="w-6 h-6 fill-white" alt="" />
+            <img src={userpen} className="w-6 h-6 fill-white" alt="" />
           </button>
 
           <div className="flex justify-between gap-4">
@@ -263,86 +261,84 @@ export default function Profile() {
 
       {/* New Div for Create Table Button and Table List */}
       <div className="mt-6 max-w-screen-xl  py-4 p-3 mx-auto">
-  <div className="flex space-x-3">
-    <button className="ring-2 font-poppins ring-[#00684A] text-black font-bold py-2 px-4 rounded">
-      Your Tables
-    </button>
-    <button className="text-white  bg-[#00684A] font-bold gap-2 py-2 px-9 flex rounded">
-      <Link to="/create-table-team">Create Table</Link>
-      <img src={pensq} className="w-6 h-6" alt="" />
-    </button>
-  </div>
-  
-  {userTables.length > 0 ? (
-    <div className="flex flex-wrap justify-center gap-4 mt-4">
-      {userTables.map((table) => (
-        <div
-          key={table._id}
-          className="ring-2 ring-[#00684A] w-full sm:w-[48%] lg:w-[48%] flex justify-between items-center p-3 rounded-lg"
-        >
-          <div>
-            <div className="flex justify-center text-white  bg-[#00684A] font-bold rounded-md font-poppins py-1">
-              <h3 className="text-lg lg:text-xl font-semibold lg:mt-0">
-                {table.name.substring(0, 4)}
-                {table.name.length > 4 ? "..." : ""}
-              </h3>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-4">
-              {table.clubs.slice(0, 3).map((club) => (
-                <div key={club.clubId._id} className="flex items-center">
-                  {club.clubId.logoUrl && (
-                    <img
-                      src={club.clubId.logoUrl}
-                      alt={`${club.clubId.name} logo`}
-                      className="lg:w-6 lg:h-6 w-4 h-4 mr-2"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col items-end gap-2">
-            <button className="flex items-center gap-3 py-1 lg:px-3 px-1 bg-white ring-2 ring-[#00684A]  rounded">
-              <Link to={`/manage-matches/${table._id}`}>
-                <p className="font-poppins cursor-pointer">
-                  Manage matches
-                </p>
-              </Link>
-              <img
-                src={whistle}
-                className="lg:w-6 lg:h-6 w-4 h-4"
-                alt=""
-              />
-            </button>
-            <button className="flex items-center gap-3 py-1 lg:px-3 px-1 text-white  bg-[#00684A] font-bold rounded-md font-poppins">
-              <Link to={`/update-table/${table._id}`}>
-                <p className=" cursor-pointer">
-                  Update table
-                </p>
-              </Link>
-              <img src={pen} className="lg:w-6 lg:h-6 w-4 h-4" alt="" />
-            </button>
-            <button
-              onClick={() => handleTableDelete(table._id)}
-              className="flex items-center gap-3 py-1 px-3 bg-red-600 rounded"
-            >
-              <p className="text-white font-poppins">Delete Table</p>
-              <img
-                src={deletee}
-                className="lg:w-6 lg:h-6 w-4 h-4"
-                alt=""
-              />
-            </button>
-          </div>
+        <div className="flex space-x-3">
+          <button className="ring-2 font-poppins ring-[#00684A] text-black font-bold lg:py-2 lg:px-4 py-1 px-2 rounded">
+            Your Tables
+          </button>
+          <button className="text-white  bg-[#00684A] font-bold gap-2 lg:py-2 lg:px-9 py-1 px-6 flex rounded">
+            <Link to="/create-table-team">Create Table</Link>
+            <img src={pensq} className="w-6 h-6" alt="" />
+          </button>
         </div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-center">You haven't created any tables yet.</p>
-  )}
-  {deleteError && <p className="text-red-700 mt-5">{deleteError}</p>}
-</div>
 
+        {userTables.length > 0 ? (
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
+            {userTables.map((table) => (
+              <div
+                key={table._id}
+                className="ring-2 ring-[#00684A] w-full sm:w-[48%] lg:w-[48%] flex justify-between items-center p-3 rounded-lg"
+              >
+                <div>
+                  <div className="flex justify-center items-center text-white bg-[#00684A] font-bold rounded-md font-poppins py-1 w-32">
+                    <h3 className="text-lg lg:text-xl font-semibold text-center">
+                      {table.name.substring(0, 4)}
+                      {table.name.length > 4 ? "..." : ""}
+                    </h3>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {table.clubs.slice(0, 3).map((club) => (
+                      <div key={club.clubId._id} className="flex items-center">
+                        {club.clubId.logoUrl && (
+                          <img
+                            src={club.clubId.logoUrl}
+                            alt={`${club.clubId.name} logo`}
+                            className="lg:w-6 lg:h-6 w-4 h-4 mr-2"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-end gap-3">
+                  <button className="flex items-center justify-between gap-3 py-1 lg:px-3 bg-white ring-2 ring-[#00684A] rounded min-w-full flex-1 text-center">
+                    <Link to={`/manage-matches/${table._id}`}>
+                      <p className="font-poppins cursor-pointer">
+                        Manage matches
+                      </p>
+                    </Link>
+                    <img
+                      src={whistle}
+                      className="lg:w-6 lg:h-6 w-4 h-4"
+                      alt=""
+                    />
+                  </button>
+                  <button className="flex items-center justify-between  gap-3 py-1 lg:px-3 px-1 text-white bg-[#00684A] font-bold rounded-md font-poppins min-w-full flex-1 text-center">
+                    <Link to={`/update-table/${table._id}`}>
+                      <p className="cursor-pointer">Update table</p>
+                    </Link>
+                    <img src={pen} className="lg:w-6 lg:h-6 w-4 h-4" alt="" />
+                  </button>
+                  <button
+                    onClick={() => handleTableDelete(table._id)}
+                    className="flex items-center justify-between  gap-3 py-1 px-3 bg-red-600 rounded min-w-full flex-1 text-center"
+                  >
+                    <p className="text-white font-poppins">Delete Table</p>
+                    <img
+                      src={deletee}
+                      className="lg:w-6 lg:h-6 w-4 h-4"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center">You haven't created any tables yet.</p>
+        )}
+        {deleteError && <p className="text-red-700 mt-5">{deleteError}</p>}
+      </div>
     </div>
   );
 }
