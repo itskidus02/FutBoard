@@ -5,7 +5,7 @@ import { saveAs } from "file-saver";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Spinner from "../components/Spinner";
-import arrowdown from "../assets/arrowdown.svg"
+import arrowdown from "../assets/arrowdown.svg";
 
 const DisplayTable = () => {
   const [table, setTable] = useState(null);
@@ -174,7 +174,11 @@ const DisplayTable = () => {
   };
 
   if (loading) {
-    return <div className='flex justify-center items-center h-screen'><Spinner/></div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner />
+      </div>
+    );
   }
 
   if (error) {
@@ -182,163 +186,184 @@ const DisplayTable = () => {
   }
 
   return (
-    <main>
-      {table && (
-        <div className="max-w-screen-xl mx-auto p-3 my-7">
-          <h1 className="text-xl text-[#00684A] font-fraunces gap-2 lg:text-3xl flex font-semibold text-center my-7">
-            <div className="bg-[#00684A] rounded-xl">.</div>
-            {table.name}
-          </h1>
-          <div className="ring-2 p-3 rounded-lg ring-[#00684A]">
-            <div className="overflow-x-auto mb-8">
-              <table className="min-w-full gap-3 border-collapse">
-                <thead className="gap-3">
-                  {/* This row will only appear on large screens and up */}
-                  <tr className="hidden md:table-row ">
-                    <th className="lg:py-1 bg-[#00684A] text-white rounded-md md:py-0 md:px-2 lg:px-2 border-b text-center">Position</th>
-                    <th className="py-2 px-4 border-b text-left">Club</th>
-                    <th className="py-2 px-4 border-b text-left">Played</th>
-                    <th className="py-2 px-4 border-b text-left">Won</th>
-                    <th className="py-2 px-4 border-b text-left">Lost</th>
-                    <th className="py-2 px-4 border-b text-left">Drawn</th>
-                    <th className="py-2 px-4 border-b text-left">Goal Scored</th>
-                    <th className="py-2 px-4 border-b text-left">Goal Conceded</th>
-                    <th className="py-2 px-4 border-b text-left">Goal Difference</th>
-                    <th className="py-2 px-4 border-b text-left">Points</th>
-                  </tr>
-                  {/* This row will appear on medium screens and down */}
-                  <tr className="table-row md:hidden text-center">
-                    <th className="py-2 px-4 border-b">P</th>
-                    <th className="py-2 px-4 border-b">C</th>
-                    <th className="py-2 px-4 border-b">P</th>
-                    <th className="py-2 px-4 border-b">W</th>
-                    <th className="py-2 px-4 border-b">L</th>
-                    <th className="py-2 px-4 border-b">D</th>
-                    <th className="py-2 px-4 border-b">GS</th>
-                    <th className="py-2 px-4 border-b">GC</th>
-                    <th className="py-2 px-4 border-b">GD</th>
-                    <th className="py-2 px-4 border-b">Pts</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {table.clubs.map((club, index) => (
-                    <tr key={index} className="text-center">
-                      <td className="py-2 px-4 border-b">{index + 1}</td>
-                      <td className="py-2 px-4 border-b flex items-center">
-                        {club.clubId.logoUrl && (
-                          <img
-                            src={club.clubId.logoUrl}
-                            alt={`${club.clubId.name} logo`}
-                            className="w-6 h-6 mr-2"
-                          />
-                        )}
-                        <span className="hidden font-bold uppercase md:block">{club.clubId.name}</span>
-                        <span className="md:hidden font-bold uppercase">
-                          {club.clubId.name.slice(0, 3)}
-                        </span>
-                      </td>
-                      <td className="py-2 px-4 border-b">{club.played}</td>
-                      <td className="py-2 px-4 border-b">{club.won}</td>
-                      <td className="py-2 px-4 border-b">{club.lost}</td>
-                      <td className="py-2 px-4 border-b">{club.drawn}</td>
-                      <td className="py-2 px-4 border-b">{club.goalsScored}</td>
-                      <td className="py-2 px-4 border-b">{club.goalsConceded}</td>
-                      <td className="py-2 px-4 border-b">{club.goalDifference}</td>
-                      <td className="py-2 px-4 border-b">{club.points}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div className="flex mt-3 justify-between">
-            {creator && (
-              <div className="flex p-2 pt-2 bg-[#00684A] text-white rounded-md px-4 py-2  mb-4 flex-col gap-">
-                <p>
-                  Listed by{" "}
-                  <span className="font-semibold">{creator.username}</span>{" "}
-                </p>
-              </div>
-            )}
-            <div className="relative">
-              <button
-                className="px-4 py-2 flex gap-2 bg-white text-[#00684A] ring-2 ring-[#00684A] rounded-md mb-4"
-                onClick={toggleDropdown}
-              >
-                Export As
-                <img src={arrowdown} className="w-6 h-6" alt="" />
-              </button>
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
-                  <button
-                    onClick={exportToExcel}
-                    className="block w-full px-4 py-2 text-left text-black hover:bg-gray-100"
-                  >
-                    Export to Excel
-                  </button>
-                  <button
-                    onClick={exportToPDF}
-                    className="block w-full px-4 py-2 text-left text-black hover:bg-gray-100"
-                  >
-                    Export to PDF
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="overflow-x-auto mt-4 rounded-lg ring-2 ring-black ">
-            <table className="min-w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="py-2 px-4 border-b">Match</th>
-                  <th className="py-2 px-4 border-b">Match Date</th>
+  <main>
+    {table && (
+      <div className="max-w-screen-xl mx-auto p-3 my-7">
+        <h1 className="text-xl text-[#00684A] font-fraunces gap-2 lg:text-3xl flex font-semibold text-center my-7">
+          <div className="bg-[#00684A] rounded-xl">.</div>
+          {table.name}
+        </h1>
+        <div className="ring-2 p-3 rounded-lg ring-[#00684A]">
+          <div className="overflow-x-auto mb-8">
+            <table className="min-w-full gap-3 border-collapse">
+              <thead className="gap-3">
+                <tr className="hidden md:table-row">
+                  <th className="lg:py-1 bg-[#00684A] text-white rounded-md md:py-0 md:px-2 lg:px-2 border-b text-center">
+                    Position
+                  </th>
+                  <th className="py-2 px-4 border-b text-left">Club</th>
+                  <th className="py-2 px-4 border-b text-left">Played</th>
+                  <th className="py-2 px-4 border-b text-left">Won</th>
+                  <th className="py-2 px-4 border-b text-left">Lost</th>
+                  <th className="py-2 px-4 border-b text-left">Drawn</th>
+                  <th className="py-2 px-4 border-b text-left">Goal Scored</th>
+                  <th className="py-2 px-4 border-b text-left">Goal Conceded</th>
+                  <th className="py-2 px-4 border-b text-left">Goal Difference</th>
+                  <th className="py-2 px-4 border-b text-left">Points</th>
+                </tr>
+                <tr className="table-row md:hidden text-center">
+                  <th className="py-2 px-4 border-b">P</th>
+                  <th className="py-2 px-4 border-b">C</th>
+                  <th className="py-2 px-4 border-b">P</th>
+                  <th className="py-2 px-4 border-b">W</th>
+                  <th className="py-2 px-4 border-b">L</th>
+                  <th className="py-2 px-4 border-b">D</th>
+                  <th className="py-2 px-4 border-b">GS</th>
+                  <th className="py-2 px-4 border-b">GC</th>
+                  <th className="py-2 px-4 border-b">GD</th>
+                  <th className="py-2 px-4 border-b">Pts</th>
                 </tr>
               </thead>
               <tbody>
-                {table.matches.map((match, index) => {
-                  const homeClub = table.clubs.find(
-                    (club) => club.clubId._id === match.homeClubId
-                  );
-                  const awayClub = table.clubs.find(
-                    (club) => club.clubId._id === match.awayClubId
-                  );
-  
-                  return (
-                    <tr key={index} className="text-center">
-                      <td className="py-2 px-4 border-b flex items-center justify-center">
-                        <span className="hidden md:block">{homeClub?.clubId.name}</span>
-                        <span className="md:hidden">{homeClub?.clubId.name.slice(0, 3)}</span>
-                        {homeClub?.clubId.logoUrl && (
-                          <img
-                            src={homeClub.clubId.logoUrl}
-                            alt={`${homeClub.clubId.name} logo`}
-                            className="w-6 h-6 mx-2"
-                          />
-                        )}
-                        {match.homeGoals} - {match.awayGoals}
-                        {awayClub?.clubId.logoUrl && (
-                          <img
-                            src={awayClub.clubId.logoUrl}
-                            alt={`${awayClub.clubId.name} logo`}
-                            className="w-6 h-6 mx-2"
-                          />
-                        )}
-                        <span className="hidden md:block">{awayClub?.clubId.name}</span>
-                        <span className="md:hidden">{awayClub?.clubId.name.slice(0, 3)}</span>
-                      </td>
-                      <td className="py-2 px-4 border-b">
-                        {new Date(match.matchDate).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {table.clubs.map((club, index) => (
+                  <tr key={index} className="text-center">
+                    <td className="py-2 px-4 border-b">{index + 1}</td>
+                    <td className="py-2 px-4 border-b flex items-center">
+                      {club.clubId.logoUrl && (
+                        <img
+                          src={club.clubId.logoUrl}
+                          alt={`${club.clubId.name} logo`}
+                          className="w-6 h-6 mr-2"
+                        />
+                      )}
+                      <span className="hidden font-bold uppercase md:block">
+                        {club.clubId.name}
+                      </span>
+                      <span className="md:hidden font-bold uppercase">
+                        {club.clubId.name.slice(0, 3)}
+                      </span>
+                    </td>
+                    <td className="py-2 px-4 border-b">{club.played}</td>
+                    <td className="py-2 px-4 border-b">{club.won}</td>
+                    <td className="py-2 px-4 border-b">{club.lost}</td>
+                    <td className="py-2 px-4 border-b">{club.drawn}</td>
+                    <td className="py-2 px-4 border-b">{club.goalsScored}</td>
+                    <td className="py-2 px-4 border-b">{club.goalsConceded}</td>
+                    <td className="py-2 px-4 border-b">{club.goalDifference}</td>
+                    <td className="py-2 px-4 border-b">{club.points}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
-      )}
-    </main>
-  );
+        <div className="flex mt-3 justify-between">
+          {creator && (
+            <div className="flex p-2 pt-2 bg-[#00684A] text-white rounded-md px-4 py-2 mb-4 flex-col gap-">
+              <p>
+                Listed by{" "}
+                <span className="font-semibold">{creator.username}</span>{" "}
+              </p>
+            </div>
+          )}
+          <div className="relative">
+            <button
+              className="px-4 py-2 flex gap-2 bg-white text-[#00684A] ring-2 ring-[#00684A] rounded-md mb-4"
+              onClick={toggleDropdown}
+            >
+              Export As
+              <img src={arrowdown} className="w-6 h-6" alt="" />
+            </button>
+            {dropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg">
+                <button
+                  onClick={exportToExcel}
+                  className="block w-full px-4 py-2 text-left text-black hover:bg-gray-100"
+                >
+                  Export to Excel
+                </button>
+                <button
+                  onClick={exportToPDF}
+                  className="block w-full px-4 py-2 text-left text-black hover:bg-gray-100"
+                >
+                  Export to PDF
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex mb-3 justify-center">
+          <h1 className="text-center text-4xl text-[#00684A] font-fraunces inline-block border-b-2 border-black pb-2">
+            Matches played
+          </h1>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {table.matches.map((match, index) => {
+            const homeClub = table.clubs.find(
+              (club) => club.clubId._id === match.homeClubId
+            );
+            const awayClub = table.clubs.find(
+              (club) => club.clubId._id === match.awayClubId
+            );
+
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-lg p-3"
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <div className="text-[#00684A] text-xs sm:text-sm">
+                    {new Date(match.matchDate).toLocaleDateString(undefined, {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </div>
+                  <div className="bg-[#00684A] text-white text-xs sm:text-sm rounded-md px-2 py-1">
+                    {table.name}
+                  </div>
+                </div>
+                <div className="flex justify-evenly ring py-1 px-2 items-center">
+                  <div className="flex items-center">
+                    <span className="font-bold md:text-xs sm:text-sm uppercase">
+                      {homeClub?.clubId.name}
+                    </span>
+                    {homeClub?.clubId.logoUrl && (
+                      <img
+                        src={homeClub.clubId.logoUrl}
+                        alt={`${homeClub.clubId.name} logo`}
+                        className="w-6 h-6 mx-2"
+                      />
+                    )}
+                  </div>
+                  <div className="bg-[#00684A] text-white text-xs sm:text-sm rounded-md px-4 py-1">
+                    {match.homeGoals} - {match.awayGoals}
+                  </div>
+                  <div className="flex items-center">
+                    {awayClub?.clubId.logoUrl && (
+                      <img
+                        src={awayClub.clubId.logoUrl}
+                        alt={`${awayClub.clubId.name} logo`}
+                        className="w-6 h-6 mx-2"
+                      />
+                    )}
+                    <span className="font-bold text-xs sm:text-sm uppercase">
+                      {awayClub?.clubId.name}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    )}
+  </main>
+);
+
   
   
 };
