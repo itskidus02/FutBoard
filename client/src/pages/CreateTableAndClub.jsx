@@ -168,7 +168,7 @@ export default function CreateTableAndClub() {
   className="border ring-2 ring-[#00684A] p-3 font-poppins font-light rounded-lg"
   value={tableName}
   onChange={handleTableNameChange}
-  maxLength={9}
+  maxLength={10}
   required
 />
 
