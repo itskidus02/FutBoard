@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 const ResultDisplay = () => {
   const [tables, setTables] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -71,9 +71,11 @@ const ResultDisplay = () => {
                           <div className="bg-[#00684A] rounded-lg">.</div>
                           {formatDate(date)}
                         </div>
+                        <Link to={`/display-table/${table._id}`}>
                         <div className="bg-[#00684A] uppercase font-fraunces text-white text-xs lg:text-2xl rounded-md px-5 py-1">
                           {table.name.substring(0, 3)}
                         </div>
+                          </Link>
                       </div>
   
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
