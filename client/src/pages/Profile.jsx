@@ -335,7 +335,7 @@ export default function Profile() {
             ))}
           </div>
         ) : (
-          <p className="text-center">You haven't created any tables yet.</p>
+          <p className="text-center mt-9 font-fraunces text-xl">You haven't created any tables yet.</p>
         )}
         {deleteError && <p className="text-red-700 mt-5">{deleteError}</p>}
       </div>
