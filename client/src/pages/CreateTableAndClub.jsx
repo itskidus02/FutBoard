@@ -163,13 +163,15 @@ export default function CreateTableAndClub() {
             Table Name
           </span>
           <input
-            type="text"
-            placeholder="Table Name"
-            className="border ring-2 ring-[#00684A] p-3 font-poppins font-light rounded-lg"
-            value={tableName}
-            onChange={handleTableNameChange}
-            required
-          />
+  type="text"
+  placeholder="Table Name"
+  className="border ring-2 ring-[#00684A] p-3 font-poppins font-light rounded-lg"
+  value={tableName}
+  onChange={handleTableNameChange}
+  maxLength={9}
+  required
+/>
+
         </div>
         <div className="flex flex-col gap-3 w-1/2">
           <span className="mt-4 lg:text-2xl font-poppins font-semibold">
@@ -198,6 +200,8 @@ export default function CreateTableAndClub() {
               value={teamName}
               onChange={(e) => handleTeamNameChange(index, e)}
               required
+              maxLength={9}
+
             />
   
             <div className="relative flex w-full max-w-sm flex-col gap-1">
