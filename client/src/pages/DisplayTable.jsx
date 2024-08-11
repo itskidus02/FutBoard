@@ -197,8 +197,8 @@ const DisplayTable = () => {
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Club</th>
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Played</th>
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Won</th>
-    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Drawn</th>
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Lost</th>
+    <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Drawn</th>
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Goals Scored</th>
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Goals Conceded</th>
     <th className="py-2 px-4 border-b text-left hidden sm:table-cell">Goal Difference</th>
@@ -209,8 +209,8 @@ const DisplayTable = () => {
     <th className="py-2 px-4 border-b">C</th>
     <th className="py-2 px-4 border-b">P</th>
     <th className="py-2 px-4 border-b">W</th>
-    <th className="py-2 px-4 border-b">D</th>
     <th className="py-2 px-4 border-b">L</th>
+    <th className="py-2 px-4 border-b">D</th>
     <th className="py-2 px-4 border-b">GS</th>
     <th className="py-2 px-4 border-b">GC</th>
     <th className="py-2 px-4 border-b">GD</th>
