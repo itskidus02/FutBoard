@@ -235,6 +235,8 @@ export default function UpdateTableAndClub() {
               value={teamName}
               onChange={(e) => handleTeamNameChange(index, e)}
               required
+              maxLength={9}
+minLength={3}
             />
             <div className="relative flex w-full max-w-sm flex-col gap-1">
               <input

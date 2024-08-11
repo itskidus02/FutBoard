@@ -201,7 +201,7 @@ export default function CreateTableAndClub() {
               onChange={(e) => handleTeamNameChange(index, e)}
               required
               maxLength={9}
-
+              minLength={3}
             />
   
             <div className="relative flex w-full max-w-sm flex-col gap-1">
@@ -212,6 +212,7 @@ export default function CreateTableAndClub() {
                 accept="image/*"
                 className="w-full max-w-md rounded-lg text-black font-poppins file:mr-4 file:cursor-pointer file:border-none file:bg-[#00684A] hover:file:bg-white file:px-4 file:py-2 file:font-semibold file:text-white hover:file:text-[#00684A]  file:font-poppins ring-2 ring-[#00684A] transition-all "
                 onChange={(e) => handleLogoChange(index, e)}
+                required
               />
             </div>
           </div>
