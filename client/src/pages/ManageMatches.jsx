@@ -125,16 +125,20 @@ export default function ManageMatches() {
                   </option>
                 ))}
               </select>
+              
               <input
                 type="number"
                 id="homeGoals"
+                min={0}
                 value={matchResult.homeGoals}
                 onChange={(e) =>
                   handleMatchResultChange("homeGoals", e.target.value)
                 }
                 className="appearance-none block ring-2 ring-[#00684A] font-poppins w-full sm:w-1/4 ml-0 sm:ml-2 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               />
+              <h1 className="text-center pl-3 font-poppins font-bold">Vs</h1>
             </div>
+            
           </div>
           <div className="w-full sm:w-1/2 sm:pl-2">
             <div className="flex flex-col gap-3 sm:flex-row items-center">
@@ -155,6 +159,8 @@ export default function ManageMatches() {
                 type="number"
                 id="awayGoals"
                 value={matchResult.awayGoals}
+                min={0}
+
                 onChange={(e) =>
                   handleMatchResultChange("awayGoals", e.target.value)
                 }
@@ -168,7 +174,7 @@ export default function ManageMatches() {
             className="block text-gray-700 font-poppins text-sm font-bold mb-2"
             htmlFor="matchDate"
           >
-            Pick a Date
+            Pick a match Date
           </label>
           <input
             type="date"
