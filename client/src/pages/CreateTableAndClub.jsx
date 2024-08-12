@@ -172,6 +172,7 @@ export default function CreateTableAndClub() {
               value={tableName}
               onChange={handleTableNameChange}
               maxLength={10}
+              minLength={3}
               required
             />
           </div>
@@ -186,6 +187,7 @@ export default function CreateTableAndClub() {
               value={numTeams}
               onChange={handleNumTeamsChange}
               required
+              min={2}
             />
           </div>
         </div>
