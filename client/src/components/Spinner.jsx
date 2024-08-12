@@ -6,8 +6,8 @@ const Spinner = () => {
       <div className="spinner"></div>
       <style jsx>{`
         .spinner {
-          width: 56px;
-          height: 56px;
+          width: 36px;
+          height: 36px;
           display: grid;
           border: 4.5px solid transparent;
           border-radius: 50%;

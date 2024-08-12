@@ -227,7 +227,7 @@ export default function CreateTableAndClub() {
           } ring-2 hover:ring-[#00684A] font-semibold font-poppins text-white rounded-lg uppercase hover:opacity-95 mt-4 transition-all`}
           disabled={isCreating}
         >
-          {isCreating ? "Creating..." : "Create Table"}
+          {isCreating ? <Spinner/> : "Create Table"}
         </button>
         {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
