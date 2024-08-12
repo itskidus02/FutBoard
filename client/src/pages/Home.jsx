@@ -9,6 +9,7 @@ import laliga from "../assets/laliga.svg";
 import arrow from "../assets/arrowright.svg";
 import user from "../assets/user.svg";
 import uefa from "../assets/uefa.svg";
+import efl from "../assets/efl.svg";
 
 const Home = () => {
   const [tables, setTables] = useState([]);
@@ -86,6 +87,7 @@ const Home = () => {
           <img src={prem} className="w-29 h-20 mx-20" alt="" />
           <img src={laliga} className="w-29 h-20 mx-20" alt="" />
           <img src={uefa} className="w-29 h-20 mx-20" alt="" />
+          <img src={efl} className="w-29 h-20 mx-20" alt="" />
         </Marquee>
       </div>
 
