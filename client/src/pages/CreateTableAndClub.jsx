@@ -9,6 +9,8 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import Spinner from "@/components/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateTableAndClub() {
   const [numTeams, setNumTeams] = useState(0);
@@ -16,7 +18,8 @@ export default function CreateTableAndClub() {
   const [teamNames, setTeamNames] = useState([]);
   const [teamLogos, setTeamLogos] = useState([]);
   const [error, setError] = useState("");
-  const [isCreating, setIsCreating] = useState(false); // New state for button disable and loading
+  const [uploadProgress, setUploadProgress] = useState({});
+  const [isCreating, setIsCreating] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -47,17 +50,17 @@ export default function CreateTableAndClub() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsCreating(true); // Disable the button when the process starts
+    setIsCreating(true);
 
     if (!tableName) {
-      setError("Table name is required");
-      setIsCreating(false); // Re-enable the button if there is an error
+      toast.error("Table name is required");
+      setIsCreating(false);
       return;
     }
 
     if (teamNames.some((name) => !name)) {
-      setError("All team names are required");
-      setIsCreating(false); // Re-enable the button if there is an error
+      toast.error("All team names are required");
+      setIsCreating(false);
       return;
     }
 
@@ -89,9 +92,9 @@ export default function CreateTableAndClub() {
         logoFile: teamLogos[index],
       }));
 
-      const uploadPromises = clubs.map(async (club) => {
+      const uploadPromises = clubs.map(async (club, index) => {
         if (club.logoFile) {
-          club.logoUrl = await storeImage(club.logoFile);
+          club.logoUrl = await storeImage(club.logoFile, index);
         }
         return club;
       });
@@ -111,33 +114,36 @@ export default function CreateTableAndClub() {
       }
 
       const updatedTable = await clubsRes.json();
-      console.log("Table and clubs created successfully:", updatedTable);
-
+      toast.success("Table and clubs created successfully");
       setNumTeams(0);
       setTableName("");
       setTeamNames([]);
       setTeamLogos([]);
       navigate(`/manage-matches/${tableId}`);
     } catch (error) {
-      setError(error.message);
+      toast.error(`Error: ${error.message}`);
       console.error("Error creating table and clubs:", error);
     } finally {
-      setIsCreating(false); // Re-enable the button when the process is complete
+      setIsCreating(false);
     }
   };
 
-  const storeImage = async (file) => {
+  const storeImage = (file, index) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
       const fileName = new Date().getTime() + file.name;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          setUploadProgress((prevProgress) => ({
+            ...prevProgress,
+            [index]: progress,
+          }));
         },
         (error) => {
           reject(error);
@@ -153,6 +159,7 @@ export default function CreateTableAndClub() {
 
   return (
     <main className="p-3 max-w-6xl mx-auto">
+      <ToastContainer />
       <h1 className="text-3xl flex ml-4 items-center gap-3 font-semibold text-center my-7">
         <div className="bg-[#00684A] rounded-lg h-14">.</div>
         <span className="lg:text-[28.125px] md:text-[20.125px] font-fraunces text-[#00684A] text-[20.125px]">
@@ -207,7 +214,7 @@ export default function CreateTableAndClub() {
                 maxLength={9}
                 minLength={3}
               />
-              <div className="relative flex w-full max-w-sm flex-col gap-1">
+              <div className="relative flex w-full max-w-sm flex-col gap-2">
                 <input
                   id={`fileInput-${index}`}
                   type="file"
@@ -216,6 +223,17 @@ export default function CreateTableAndClub() {
                   onChange={(e) => handleLogoChange(index, e)}
                   required
                 />
+                {uploadProgress[index] !== undefined && (
+                  <div className="w-full mt-2">
+                    <div
+                      className="bg-[#00684A] h-1 rounded"
+                      style={{ width: `${uploadProgress[index]}%` }}
+                    />
+                    <span className="text-sm text-center mt-1">{`${
+                      Math.round(uploadProgress[index])
+                    }%`}</span>
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -229,7 +247,7 @@ export default function CreateTableAndClub() {
           } ring-2 hover:ring-[#00684A] font-semibold font-poppins text-white rounded-lg uppercase hover:opacity-95 mt-4 transition-all`}
           disabled={isCreating}
         >
-          {isCreating ? <Spinner/> : "Create Table"}
+          {isCreating ? <Spinner /> : "Create Table"}
         </button>
         {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
