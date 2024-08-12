@@ -17,6 +17,7 @@ export default function ManageMatches() {
   });
   const [matchDate, setMatchDate] = useState("");
   const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false); // New state to track saving status
 
   useEffect(() => {
     const fetchTableDetails = async () => {
@@ -57,6 +58,7 @@ export default function ManageMatches() {
   const handleMatchSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsSaving(true); // Start saving
 
     try {
       const matchData = {
@@ -82,12 +84,22 @@ export default function ManageMatches() {
           responseBody.message || "Failed to update match result"
         );
       }
-
+     setSelectedClubs({
+        homeClub: "",
+        awayClub: "",
+      });
+      setMatchResult({
+        homeGoals: 0,
+        awayGoals: 0,
+      });
+      setMatchDate("");
       const updatedTable = await response.json();
       toast.success("Match result updated successfully!");
     } catch (error) {
       setError("Error updating match result: " + error.message);
       toast.error("Error updating match result: " + error.message);
+    } finally {
+      setIsSaving(false); // Stop saving
     }
   };
 
@@ -98,7 +110,7 @@ export default function ManageMatches() {
     (club) => club._id !== selectedClubs.homeClub
   );
 
-  return  (
+  return (
     <div className="w-full sm:w-3/4 mx-auto p-6 my-7">
       {table && (
         <h1 className="text-2xl text-[#00684A] font-fraunces sm:text-3xl font-semibold text-center mb-6 sm:mb-8">
@@ -109,6 +121,7 @@ export default function ManageMatches() {
         onSubmit={handleMatchSubmit}
         className="mt-8 w-full sm:w-3/4 lg:w-2/4 mx-auto ring-2 ring-[#00684A] rounded px-4 sm:px-8 pt-6 pb-8 mb-4"
       >
+        {/* Club selection and goals input fields */}
         <div className="mb-4 flex flex-col sm:flex-row justify-between">
           <div className="w-full sm:w-1/2 sm:pr-2 mb-4 sm:mb-0">
             <div className="flex flex-col sm:flex-row items-center">
@@ -125,7 +138,7 @@ export default function ManageMatches() {
                   </option>
                 ))}
               </select>
-              
+
               <input
                 type="number"
                 id="homeGoals"
@@ -138,7 +151,6 @@ export default function ManageMatches() {
               />
               <h1 className="text-center pl-3 font-poppins font-bold">Vs</h1>
             </div>
-            
           </div>
           <div className="w-full sm:w-1/2 sm:pl-2">
             <div className="flex flex-col gap-3 sm:flex-row items-center">
@@ -146,7 +158,7 @@ export default function ManageMatches() {
                 id="awayClub"
                 value={selectedClubs.awayClub}
                 onChange={(e) => handleClubChange("awayClub", e.target.value)}
-                className="block appearance-none w-full sm:w-3/4 ring-2 ring-[#00684A] font-poppins   py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full sm:w-3/4 ring-2 ring-[#00684A] font-poppins py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               >
                 <option value="">Select Away Club</option>
                 {filteredAwayClubs.map((club) => (
@@ -160,7 +172,6 @@ export default function ManageMatches() {
                 id="awayGoals"
                 value={matchResult.awayGoals}
                 min={0}
-
                 onChange={(e) =>
                   handleMatchResultChange("awayGoals", e.target.value)
                 }
@@ -169,6 +180,8 @@ export default function ManageMatches() {
             </div>
           </div>
         </div>
+
+        {/* Match Date input field */}
         <div className="mb-4 flex flex-col items-center">
           <label
             className="block text-gray-700 font-poppins text-sm font-bold mb-2"
@@ -182,15 +195,21 @@ export default function ManageMatches() {
             value={matchDate}
             onChange={handleMatchDateChange}
             className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          required
           />
         </div>
         {error && <p className="text-red-500 text-xs italic">{error}</p>}
+        
+        {/* Submit button with loading state */}
         <div className="flex items-center justify-end">
           <button
             type="submit"
-            className="bg-[#00684A] hover:text-[#00684A] hover:bg-white hover:ring-2 hover:ring-[#00684A] transition-all text-white font-semibold py-2 px-4 rounded-lg"
+            disabled={isSaving} // Disable button while saving
+            className={`bg-[#00684A] hover:text-[#00684A] hover:bg-white hover:ring-2 hover:ring-[#00684A] transition-all text-white font-semibold py-2 px-4 rounded-lg ${
+              isSaving ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Save Match Result
+            {isSaving ? "Saving..." : "Save Match Result"} {/* Change button text while saving */}
           </button>
         </div>
       </form>
