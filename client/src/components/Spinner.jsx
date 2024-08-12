@@ -1,30 +1,42 @@
 import React from 'react';
 
 const Spinner = () => {
-  const divStyle = {
-    backgroundColor: 'rgba(0,104,74,0.2)',
-    height: '100%',
-    position: 'absolute',
-    width: '100%',
-    border: '2.2px solid #00684a',
-  };
-
-  const containerStyle = {
-    width: '44.8px',
-    height: '44.8px',
-    animation: 'spinner-y0fdc1 2s infinite ease',
-    transformStyle: 'preserve-3d',
-  };
-
   return (
-    <div style={containerStyle} className="relative">
-      <div style={{ ...divStyle, transform: 'translateZ(-22.4px) rotateY(180deg)' }}></div>
-      <div style={{ ...divStyle, transform: 'rotateY(-270deg) translateX(50%)', transformOrigin: 'top right' }}></div>
-      <div style={{ ...divStyle, transform: 'rotateY(270deg) translateX(-50%)', transformOrigin: 'center left' }}></div>
-      <div style={{ ...divStyle, transform: 'rotateX(90deg) translateY(-50%)', transformOrigin: 'top center' }}></div>
-      <div style={{ ...divStyle, transform: 'rotateX(-90deg) translateY(50%)', transformOrigin: 'bottom center' }}></div>
-      <div style={{ ...divStyle, transform: 'translateZ(22.4px)' }}></div>
-    </div>
+    <>
+      <div className="spinner"></div>
+      <style jsx>{`
+        .spinner {
+          width: 56px;
+          height: 56px;
+          display: grid;
+          border: 4.5px solid transparent;
+          border-radius: 50%;
+          border-right-color: #00684a;
+          animation: spinner-a4dj62 1s infinite linear;
+        }
+
+        .spinner::before,
+        .spinner::after {
+          content: "";
+          grid-area: 1/1;
+          margin: 2.2px;
+          border: inherit;
+          border-radius: 50%;
+          animation: spinner-a4dj62 2s infinite;
+        }
+
+        .spinner::after {
+          margin: 8.9px;
+          animation-duration: 3s;
+        }
+
+        @keyframes spinner-a4dj62 {
+          100% {
+            transform: rotate(1turn);
+          }
+        }
+      `}</style>
+    </>
   );
 };
 
