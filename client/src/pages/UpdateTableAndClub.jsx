@@ -184,6 +184,8 @@ export default function UpdateTableAndClub() {
             value={tableName}
             onChange={handleTableNameChange}
             required
+            maxLength={10}
+            minLength={3}
           />
         </div>
         <div className="flex flex-col gap-3 lg:w-1/2 w-full">
@@ -198,6 +200,8 @@ export default function UpdateTableAndClub() {
               value={numTeams}
               disabled
               required
+              min={2}
+
             />
             <button
               type="button"
