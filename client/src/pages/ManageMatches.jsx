@@ -114,7 +114,7 @@ export default function ManageMatches() {
     <div className="w-full sm:w-3/4 mx-auto p-6 my-7">
       {table && (
         <h1 className="text-2xl text-[#00684A] font-fraunces sm:text-3xl font-semibold text-center mb-6 sm:mb-8">
-          {table.name}
+        Create matches under  {table.name}
         </h1>
       )}
       <form
