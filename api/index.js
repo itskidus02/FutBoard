@@ -27,9 +27,9 @@ const __dirname = path.resolve();
 const app = express();
 
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
 
 app.use(express.json());
 
