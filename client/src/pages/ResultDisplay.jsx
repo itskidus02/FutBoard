@@ -69,7 +69,8 @@ const ResultDisplay = () => {
           const matchesByDate = organizeMatchesByDate(table.matches);
 
           return (
-            <div key={table._id} className="max-w-screen-xl mx-auto p-3 my-7">
+            <div key={table._id} className="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 p-3 my-7">
+              <div className="">
               <div className="p-3 rounded-lg">
                 {Object.keys(matchesByDate).map((date) => (
                   <div key={date} className="mb-8">
@@ -85,7 +86,7 @@ const ResultDisplay = () => {
                       </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                    <div className="">
                       {matchesByDate[date].map((match, index) => {
                         const homeClub = table.clubs.find(
                           (club) => club.clubId._id === match.homeClubId
@@ -131,6 +132,7 @@ const ResultDisplay = () => {
                     </div>
                   </div>
                 ))}
+                </div>
               </div>
             </div>
           );
