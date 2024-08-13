@@ -73,8 +73,8 @@ const Home = () => {
       </div>
 
       <div className="max-w-screen-xl flex justify-center mt-32 mx-auto">
-        <div className="relative lg:h-[500px] w-full flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
-          <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
+        <div className="relative lg:h-[500px] w-full flex flex-col items-center justify-center overflow-hidden rounded-lg border bg-background lg:shadow-2xl">
+          <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent">
             <img src={hero} alt="" />
           </span>
           <BorderBeam size={250} duration={12} delay={9} />
