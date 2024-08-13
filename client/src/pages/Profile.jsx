@@ -39,6 +39,7 @@ export default function Profile() {
   const [userTables, setUserTables] = useState([]);
   const [deleteError, setDeleteError] = useState("");
   const [imageSize, setImageSize] = useState(100); // Initial size percentage
+  const [showPopover, setShowPopover] = useState(null); // For managing popover visibility
 
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
@@ -140,23 +141,29 @@ export default function Profile() {
 
   const handleTableDelete = async (tableId) => {
     setDeleteError(""); // Clear previous error messages
-    if (window.confirm("Are you sure you want to delete this table?")) {
-      try {
-        const res = await fetch(`/api/table/delete/${tableId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.message || "Failed to delete table");
-        }
-        // Remove deleted table from state
-        setUserTables(userTables.filter((table) => table._id !== tableId));
-      } catch (error) {
-        setDeleteError(error.message);
+    try {
+      const res = await fetch(`/api/table/delete/${tableId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to delete table");
       }
+      // Remove deleted table from state
+      setUserTables(userTables.filter((table) => table._id !== tableId));
+    } catch (error) {
+      setDeleteError(error.message);
+    }
+  };
+  
+  const togglePopover = (tableId) => {
+    if (showPopover === tableId) {
+      setShowPopover(null); // Close popover if already open
+    } else {
+      setShowPopover(tableId); // Open popover for this table
     }
   };
 
@@ -320,8 +327,8 @@ export default function Profile() {
                     <img src={pen} className="lg:w-6 lg:h-6 w-4 h-4" alt="" />
                   </button>
                   <button
-                    onClick={() => handleTableDelete(table._id)}
-                    className="flex items-center justify-between  gap-3 py-1 px-3 bg-red-600 rounded min-w-full flex-1 text-center"
+                onClick={() => togglePopover(table._id)}
+                className="flex items-center justify-between  gap-3 py-1 px-3 bg-red-600 rounded min-w-full flex-1 text-center"
                   >
                     <p className="text-white font-poppins">Delete Table</p>
                     <img
@@ -330,6 +337,25 @@ export default function Profile() {
                       alt=""
                     />
                   </button>
+                  {showPopover === table._id && (
+                <div className="absolute bg-[#00684A] shadow-lg p-3 rounded-lg z-50">
+                  <p className="text-white font-poppins">Are you sure you want to delete this table?</p>
+                  <div className="flex justify-end mt-3 gap-2">
+                    <button
+                      onClick={() => handleTableDelete(table._id)}
+                      className="bg-red-500 hover:bg-red-800  text-white font-poppins p-2 rounded-lg"
+                    >
+                      Yes, Delete
+                    </button>
+                    <button
+                      onClick={() => togglePopover(null)}
+                      className="bg-white hover:bg-slate-300 text-black font-poppins p-2 rounded-lg"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
                 </div>
               </div>
             ))}
