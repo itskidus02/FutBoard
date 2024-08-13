@@ -1,3 +1,4 @@
+import Spinner from "@/components/Spinner";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -27,7 +28,7 @@ const ResultDisplay = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p>Loading...</p>
+       <Spinner/>
       </div>
     );
   }
@@ -69,7 +70,7 @@ const ResultDisplay = () => {
 
           return (
             <div key={table._id} className="max-w-screen-xl mx-auto p-3 my-7">
-              <div className="rng-2 p-3 rounded-lg ing-[#00684A]">
+              <div className="p-3 rounded-lg">
                 {Object.keys(matchesByDate).map((date) => (
                   <div key={date} className="mb-8">
                     <div className="flex mb-3 justify-between items-center">
