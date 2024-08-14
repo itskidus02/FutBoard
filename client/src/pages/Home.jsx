@@ -110,7 +110,7 @@ const Home = () => {
               <div className="flex justify-between">
                 <div className="flex flex-col gap-3">
                   <div className="ring-2 gap-2 flex ring-[#00684A] font-bold rounded-md font-poppins py-1 px-2 text-center">
-                    <h4 className="text-md font-light">by <span className="font-bold">{table.creator.username}</span></h4>
+                    <h4 className="text-md font-light">by <span className="font-bold">{table.creator.username.substring(0, 10)}</span></h4>
                   <img src={user} className="w-6 h-6" alt="" />
                   </div>
                   <div className="text-white bg-[#00684A] font-bold rounded-md font-poppins py-1 px-2 text-center">
