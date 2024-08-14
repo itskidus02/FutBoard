@@ -1,7 +1,9 @@
 ![Screenshot 2024-08-14 123220](https://github.com/user-attachments/assets/7f2789f6-c5fd-40fa-a84d-3faa32fb2f2b)
 
 
-# FutBoard
+![FutBoard](https://example.com/path-to-your-image.png)
+
+<h1 align="center">FutBoard</h1>
 
 FutBoard is a web application designed to manage soccer league tables, matches, and standings with ease.
 
