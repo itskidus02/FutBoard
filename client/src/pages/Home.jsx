@@ -53,7 +53,7 @@ const Home = () => {
   return (
     <div className="relative p-3 max-w-screen-xl mx-auto pt-20 sm:pt-24 lg:pt-32">
       <div className="tracking-tight text-center">
-        <h1 className="font-extrabold text-4xl  text-[#00684A] sm:text-5xl lg:text-9xl font-fraunces">
+        <h1 className="font-extrabold text-4xl  text-[#00684A sm:text-5xl lg:text-9xl font-fraunces">
           Track, Manage, and Export your Local Leagues
         </h1>
         <div className="mt-6 text-lg text-center max-w-3xl mx-auto">
