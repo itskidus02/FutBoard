@@ -63,7 +63,7 @@ const MatchDisplay = () => {
       <div className="flex justify-center items-center py-4">
         <div className="text-lg font-semibold text-purple-900">FT</div>
       </div>
-      <div className="px-6 flex justify-between pb-6">
+      <div className="px-6 ring-2 ring-red-400 flex justify-between pb-6">
         <div className="border-t border-gray-200 pt-4">
           {match.homeScorers.length ? (
             <ul className="list-none">
