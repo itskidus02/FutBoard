@@ -24,9 +24,22 @@ const matchSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    homeScorers: [
+      {
+        scorer: { type: String },
+        assistor: { type: String },
+      }
+    ],
+    awayScorers: [
+      {
+        scorer: { type: String },
+        assistor: { type: String },
+      }
+    ],
   },
   { timestamps: true }
 );
+
 
 const tableSchema = new mongoose.Schema(
   {

@@ -127,19 +127,17 @@ export const getTablesByUser = async (req, res, next) => {
 
 export const updateMatchResult = async (req, res, next) => {
   try {
-    const { tableId, homeClubId, awayClubId, homeGoals, awayGoals, matchDate } = req.body;
+    const { tableId, homeClubId, awayClubId, homeGoals, awayGoals, matchDate, homeScorers, awayScorers } = req.body;
     const table = await Table.findById(tableId);
 
     if (!table) {
       return next(errorHandler(404, "Table not found!"));
     }
 
-    // Check if the authenticated user is the creator of the table
     if (req.user.id !== table.userId.toString()) {
       return next(errorHandler(401, "You can only update the match result for your own tables!"));
     }
 
-    // Find clubs in the table and update their stats based on match result
     const homeClub = table.clubs.find(club => club.clubId.toString() === homeClubId);
     const awayClub = table.clubs.find(club => club.clubId.toString() === awayClubId);
 
@@ -147,7 +145,6 @@ export const updateMatchResult = async (req, res, next) => {
       return next(errorHandler(404, "Clubs not found in the table!"));
     }
 
-    // Update match stats
     homeClub.played++;
     awayClub.played++;
     homeClub.goalsScored += parseInt(homeGoals);
@@ -155,7 +152,6 @@ export const updateMatchResult = async (req, res, next) => {
     awayClub.goalsScored += parseInt(awayGoals);
     awayClub.goalsConceded += parseInt(homeGoals);
 
-    // Determine match result (win, lose, draw) and update points
     if (homeGoals > awayGoals) {
       homeClub.won++;
       awayClub.lost++;
@@ -171,20 +167,19 @@ export const updateMatchResult = async (req, res, next) => {
       awayClub.points++;
     }
 
-    // Update goal difference
     homeClub.goalDifference = homeClub.goalsScored - homeClub.goalsConceded;
     awayClub.goalDifference = awayClub.goalsScored - awayClub.goalsConceded;
 
-    // Add match to matches array
     table.matches.push({
       homeClubId,
       awayClubId,
       homeGoals,
       awayGoals,
-      matchDate: new Date(matchDate)
+      matchDate: new Date(matchDate),
+      homeScorers,
+      awayScorers,
     });
 
-    // Save table updates
     await table.save();
 
     res.status(200).json(table);
@@ -192,6 +187,7 @@ export const updateMatchResult = async (req, res, next) => {
     next(error);
   }
 };
+
 
 
 
