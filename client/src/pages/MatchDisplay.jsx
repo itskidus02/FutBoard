@@ -31,11 +31,10 @@ const MatchDisplay = () => {
       <div className="flex items-center justify-between p-6 ring">
         <div className="flex items-center">
           <img src={match.homeClubId.logoUrl} alt={match.homeClubId.name} className="h-16 w-16 mr-4" />
-          <span className="text-2xl font-bold text-white">{match.homeClubId.name}</span>
+          <span className="text-2xl font-bold">{match.homeClubId.name}</span>
         </div>
         <div className="flex flex-col items-center">
           <div className="text-5xl font-bold ring p-2 m-2 text-purple-900">{match.homeGoals} - {match.awayGoals}</div>
-          <div className="text-md text-white">Half Time: {match.halfTimeScore}</div>
         </div>
         <div className="flex items-center">
           <span className="text-2xl font-bold text-gray-800 mr-4">{match.awayClubId.name}</span>
