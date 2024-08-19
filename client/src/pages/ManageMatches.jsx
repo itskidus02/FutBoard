@@ -58,16 +58,18 @@ export default function ManageMatches() {
   };
 
   const handleScorerChange = (index, type, value, team) => {
-    const updateScorers = (scorers) => {
-      const updatedScorers = [...scorers];
-      updatedScorers[index][type] = value;
-      return updatedScorers;
-    };
-
     if (team === "home") {
-      setHomeScorers((prevScorers) => updateScorers(prevScorers));
+      setHomeScorers((prevScorers) => {
+        const updatedScorers = [...prevScorers];
+        updatedScorers[index] = { ...updatedScorers[index], [type]: value };
+        return updatedScorers;
+      });
     } else if (team === "away") {
-      setAwayScorers((prevScorers) => updateScorers(prevScorers));
+      setAwayScorers((prevScorers) => {
+        const updatedScorers = [...prevScorers];
+        updatedScorers[index] = { ...updatedScorers[index], [type]: value };
+        return updatedScorers;
+      });
     }
   };
 
