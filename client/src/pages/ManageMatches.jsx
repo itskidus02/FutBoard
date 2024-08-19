@@ -16,8 +16,8 @@ export default function ManageMatches() {
     awayGoals: 0,
   });
   const [matchDate, setMatchDate] = useState("");
-  const [homeScorers, setHomeScorers] = useState([{ scorer: "", assistor: "" }]);
-  const [awayScorers, setAwayScorers] = useState([{ scorer: "", assistor: "" }]);
+  const [homeScorers, setHomeScorers] = useState([{ scorer: "", assistor: "", goalTime: "" }]);
+  const [awayScorers, setAwayScorers] = useState([{ scorer: "", assistor: "", goalTime: "" }]);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -74,11 +74,11 @@ export default function ManageMatches() {
   };
 
   useEffect(() => {
-    setHomeScorers(Array(matchResult.homeGoals).fill({ scorer: "", assistor: "" }));
+    setHomeScorers(Array(matchResult.homeGoals).fill({ scorer: "", assistor: "", goalTime: "" }));
   }, [matchResult.homeGoals]);
 
   useEffect(() => {
-    setAwayScorers(Array(matchResult.awayGoals).fill({ scorer: "", assistor: "" }));
+    setAwayScorers(Array(matchResult.awayGoals).fill({ scorer: "", assistor: "", goalTime: "" }));
   }, [matchResult.awayGoals]);
 
   const handleMatchSubmit = async (e) => {
@@ -122,8 +122,8 @@ export default function ManageMatches() {
         awayGoals: 0,
       });
       setMatchDate("");
-      setHomeScorers([{ scorer: "", assistor: "" }]);
-      setAwayScorers([{ scorer: "", assistor: "" }]);
+      setHomeScorers([{ scorer: "", assistor: "", goalTime: "" }]);
+      setAwayScorers([{ scorer: "", assistor: "", goalTime: "" }]);
       toast.success("Match result updated successfully!");
     } catch (error) {
       setError("Error updating match result: " + error.message);
@@ -214,7 +214,7 @@ export default function ManageMatches() {
         {homeScorers.map((scorer, index) => (
           <div key={index} className="mb-4">
             <h2 className="font-bold mb-2">Home Goal {index + 1}</h2>
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-4">
               <input
                 type="text"
                 placeholder="Scorer"
@@ -222,16 +222,25 @@ export default function ManageMatches() {
                 onChange={(e) =>
                   handleScorerChange(index, "scorer", e.target.value, "home")
                 }
-                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+                className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
               />
               <input
                 type="text"
-                placeholder="Assistor"
+                placeholder="Assistor (if any)"
                 value={scorer.assistor}
                 onChange={(e) =>
                   handleScorerChange(index, "assistor", e.target.value, "home")
                 }
-                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+                className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
+              />
+              <input
+                type="number"
+                placeholder="Goal Time (min)"
+                value={scorer.goalTime}
+                onChange={(e) =>
+                  handleScorerChange(index, "goalTime", e.target.value, "home")
+                }
+                className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
               />
             </div>
           </div>
@@ -241,7 +250,7 @@ export default function ManageMatches() {
         {awayScorers.map((scorer, index) => (
           <div key={index} className="mb-4">
             <h2 className="font-bold mb-2">Away Goal {index + 1}</h2>
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 mb-4">
               <input
                 type="text"
                 placeholder="Scorer"
@@ -249,62 +258,59 @@ export default function ManageMatches() {
                 onChange={(e) =>
                   handleScorerChange(index, "scorer", e.target.value, "away")
                 }
-                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+                className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
               />
               <input
                 type="text"
-                placeholder="Assistor"
+                placeholder="Assistor (if any)"
                 value={scorer.assistor}
                 onChange={(e) =>
                   handleScorerChange(index, "assistor", e.target.value, "away")
                 }
-                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+                className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
+              />
+              <input
+                type="number"
+                placeholder="Goal Time (min)"
+                value={scorer.goalTime}
+                onChange={(e) =>
+                  handleScorerChange(index, "goalTime", e.target.value, "away")
+                }
+                className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
               />
             </div>
           </div>
         ))}
 
-        <div className="mb-4 flex flex-col items-center">
+        <div className="mb-4">
           <label
-            className="block text-gray-700 font-poppins text-sm font-bold mb-2"
             htmlFor="matchDate"
+            className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Pick a match Date
+            Match Date
           </label>
           <input
             type="date"
             id="matchDate"
             value={matchDate}
             onChange={handleMatchDateChange}
-            className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            required
+            className="block appearance-none w-full ring-2 ring-[#00684A] font-poppins border border-gray-200 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
         </div>
-        {error && <p className="text-red-500 text-xs italic">{error}</p>}
-
-        <div className="flex items-center justify-end">
+        <div className="flex justify-between items-center">
           <button
             type="submit"
             disabled={isSaving}
-            className={`bg-[#00684A] hover:text-[#00684A] hover:bg-white hover:ring-2 hover:ring-[#00684A] transition-all text-white font-semibold py-2 px-4 rounded-lg ${
-              isSaving ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`${
+              isSaving ? "bg-gray-400" : "bg-[#00684A]"
+            } hover:bg-[#1F7555] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
           >
             {isSaving ? "Saving..." : "Save Match Result"}
           </button>
         </div>
+        {error && <p className="text-red-500 text-xs italic mt-4">{error}</p>}
       </form>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
     </div>
   );
 }

@@ -28,17 +28,20 @@ const matchSchema = new mongoose.Schema(
       {
         scorer: { type: String },
         assistor: { type: String },
+        time: { type: Number }  // Add the goal time here
       }
     ],
     awayScorers: [
       {
         scorer: { type: String },
         assistor: { type: String },
+        time: { type: Number }  // Add the goal time here
       }
     ],
   },
   { timestamps: true }
 );
+
 
 
 const tableSchema = new mongoose.Schema(

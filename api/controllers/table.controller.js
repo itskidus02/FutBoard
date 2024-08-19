@@ -170,6 +170,7 @@ export const updateMatchResult = async (req, res, next) => {
     homeClub.goalDifference = homeClub.goalsScored - homeClub.goalsConceded;
     awayClub.goalDifference = awayClub.goalsScored - awayClub.goalsConceded;
 
+    // Include the time field in the scorers data
     table.matches.push({
       homeClubId,
       awayClubId,
@@ -187,6 +188,7 @@ export const updateMatchResult = async (req, res, next) => {
     next(error);
   }
 };
+
 
 
 

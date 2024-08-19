@@ -70,7 +70,7 @@ const MatchDisplay = () => {
               ))}
             </ul>
           ) : (
-            <p>.</p>
+            <p>No scorers for {match.awayClubId.name}.</p>
           )}
         </div>
       </div>
