@@ -16,8 +16,8 @@ export default function ManageMatches() {
     awayGoals: 0,
   });
   const [matchDate, setMatchDate] = useState("");
-  const [homeScorers, setHomeScorers] = useState([{ scorer: "", assistor: "", goalTime: "" }]);
-  const [awayScorers, setAwayScorers] = useState([{ scorer: "", assistor: "", goalTime: "" }]);
+  const [homeScorers, setHomeScorers] = useState([{ scorer: "", assistor: "", time: "" }]);
+  const [awayScorers, setAwayScorers] = useState([{ scorer: "", assistor: "", time: "" }]);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -74,11 +74,11 @@ export default function ManageMatches() {
   };
 
   useEffect(() => {
-    setHomeScorers(Array(matchResult.homeGoals).fill({ scorer: "", assistor: "", goalTime: "" }));
+    setHomeScorers(Array(matchResult.homeGoals).fill({ scorer: "", assistor: "", time: "" }));
   }, [matchResult.homeGoals]);
 
   useEffect(() => {
-    setAwayScorers(Array(matchResult.awayGoals).fill({ scorer: "", assistor: "", goalTime: "" }));
+    setAwayScorers(Array(matchResult.awayGoals).fill({ scorer: "", assistor: "", time: "" }));
   }, [matchResult.awayGoals]);
 
   const handleMatchSubmit = async (e) => {
@@ -122,8 +122,8 @@ export default function ManageMatches() {
         awayGoals: 0,
       });
       setMatchDate("");
-      setHomeScorers([{ scorer: "", assistor: "", goalTime: "" }]);
-      setAwayScorers([{ scorer: "", assistor: "", goalTime: "" }]);
+      setHomeScorers([{ scorer: "", assistor: "", time: "" }]);
+      setAwayScorers([{ scorer: "", assistor: "", time: "" }]);
       toast.success("Match result updated successfully!");
     } catch (error) {
       setError("Error updating match result: " + error.message);
@@ -236,9 +236,9 @@ export default function ManageMatches() {
               <input
                 type="number"
                 placeholder="Goal Time (min)"
-                value={scorer.goalTime}
+                value={scorer.time}
                 onChange={(e) =>
-                  handleScorerChange(index, "goalTime", e.target.value, "home")
+                  handleScorerChange(index, "time", e.target.value, "home")
                 }
                 className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
               />
@@ -272,9 +272,9 @@ export default function ManageMatches() {
               <input
                 type="number"
                 placeholder="Goal Time (min)"
-                value={scorer.goalTime}
+                value={scorer.time}
                 onChange={(e) =>
-                  handleScorerChange(index, "goalTime", e.target.value, "away")
+                  handleScorerChange(index, "time", e.target.value, "away")
                 }
                 className="w-full sm:w-1/3 ring-2 ring-[#00684A] font-poppins border border-gray-200 rounded py-2 px-4"
               />
