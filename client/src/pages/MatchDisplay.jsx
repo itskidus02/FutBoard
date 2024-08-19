@@ -27,42 +27,53 @@ const MatchDisplay = () => {
   if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">Match Details</h1>
-      <div className="mb-4">
-        <p className="text-lg font-semibold"><strong>Date:</strong> {new Date(match.matchDate).toLocaleDateString()}</p>
+    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg">
+      <div className="flex items-center justify-between p-6 ring">
+        <div className="flex items-center">
+          <img src={match.homeClubId.logoUrl} alt={match.homeClubId.name} className="h-16 w-16 mr-4" />
+          <span className="text-2xl font-bold text-white">{match.homeClubId.name}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="text-5xl font-bold ring p-2 m-2 text-purple-900">{match.homeGoals} - {match.awayGoals}</div>
+          <div className="text-md text-white">Half Time: {match.halfTimeScore}</div>
+        </div>
+        <div className="flex items-center">
+          <span className="text-2xl font-bold text-gray-800 mr-4">{match.awayClubId.name}</span>
+          <img src={match.awayClubId.logoUrl} alt={match.awayClubId.name} className="h-16 w-16" />
+        </div>
       </div>
-      <div className="mb-4 flex gap-3 border-t border-gray-200 pt-4">
-        <p className="text-xl font-semibold mb-2"><strong>Home Club:</strong> {match.homeClubId.name} ({match.homeGoals} goals)</p>
-        <p className="text-xl font-semibold mb-2"><strong>Away Club:</strong> {match.awayClubId.name} ({match.awayGoals} goals)</p>
+      <div className="flex justify-center items-center py-4">
+        <div className="text-lg font-semibold text-purple-900">
+          FT
+        </div>
       </div>
-      <div className="mb-4 border-t border-gray-200 pt-4">
-        <p className="text-lg font-semibold mb-2"><strong>Home Scorers:</strong></p>
-        {match.homeScorers.length ? (
-          <ul className="list-disc list-inside pl-5">
-            {match.homeScorers.map(scorer => (
-              <li key={scorer.scorer} className="mb-1">
-                {scorer.scorer} (Assisted by: {scorer.assistor})
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No scorers for home team.</p>
-        )}
-      </div>
-      <div className="border-t border-gray-200 pt-4">
-        <p className="text-lg font-semibold mb-2"><strong>Away Scorers:</strong></p>
-        {match.awayScorers.length ? (
-          <ul className="list-disc list-inside pl-5">
-            {match.awayScorers.map(scorer => (
-              <li key={scorer.scorer} className="mb-1">
-                {scorer.scorer} (Assisted by: {scorer.assistor})
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No scorers for away team.</p>
-        )}
+      <div className="px-6 flex justify-between pb-6">
+        <div className="border-t border-gray-200 pt-4">
+          {match.homeScorers.length ? (
+            <ul className="list-none">
+              {match.homeScorers.map((scorer, index) => (
+                <li key={index} className="mb-2">
+                  <span className="font-bold">{scorer.time}'</span> - {scorer.scorer} {scorer.assistor ? `(Assist: ${scorer.assistor})` : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No scorers for {match.homeClubId.name}.</p>
+          )}
+        </div>
+        <div className="border-t border-gray-200 pt-4">
+          {match.awayScorers.length ? (
+            <ul className="list-none">
+              {match.awayScorers.map((scorer, index) => (
+                <li key={index} className="mb-2">
+                  <span className="font-bold">{scorer.time}'</span> - {scorer.scorer} {scorer.assistor ? `(Assist: ${scorer.assistor})` : null}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>.</p>
+          )}
+        </div>
       </div>
     </div>
   );
