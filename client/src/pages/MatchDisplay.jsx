@@ -29,6 +29,7 @@ const MatchDisplay = () => {
     fetchMatch();
   }, [matchId]);
 
+  
   if (loading)
     return <div className="text-center text-gray-500">Loading...</div>;
   if (error) return <div className="text-center text-red-500">{error}</div>;
