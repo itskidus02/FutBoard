@@ -16,8 +16,10 @@ export default function ManageMatches() {
     awayGoals: 0,
   });
   const [matchDate, setMatchDate] = useState("");
+  const [homeScorers, setHomeScorers] = useState([{ scorer: "", assistor: "" }]);
+  const [awayScorers, setAwayScorers] = useState([{ scorer: "", assistor: "" }]);
   const [error, setError] = useState("");
-  const [isSaving, setIsSaving] = useState(false); // New state to track saving status
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchTableDetails = async () => {
@@ -27,8 +29,8 @@ export default function ManageMatches() {
           throw new Error("Failed to fetch table details");
         }
         const tableData = await response.json();
-        setTable(tableData); // Set table details including name
-        setClubs(tableData.clubs.map((c) => c.clubId)); // Extract club information
+        setTable(tableData);
+        setClubs(tableData.clubs.map((c) => c.clubId));
       } catch (error) {
         setError("Error fetching table details: " + error.message);
       }
@@ -47,7 +49,7 @@ export default function ManageMatches() {
   const handleMatchResultChange = (type, value) => {
     setMatchResult((prevState) => ({
       ...prevState,
-      [type]: value,
+      [type]: parseInt(value) || 0,
     }));
   };
 
@@ -55,10 +57,32 @@ export default function ManageMatches() {
     setMatchDate(e.target.value);
   };
 
+  const handleScorerChange = (index, type, value, team) => {
+    const updateScorers = (scorers) => {
+      const updatedScorers = [...scorers];
+      updatedScorers[index][type] = value;
+      return updatedScorers;
+    };
+
+    if (team === "home") {
+      setHomeScorers((prevScorers) => updateScorers(prevScorers));
+    } else if (team === "away") {
+      setAwayScorers((prevScorers) => updateScorers(prevScorers));
+    }
+  };
+
+  useEffect(() => {
+    setHomeScorers(Array(matchResult.homeGoals).fill({ scorer: "", assistor: "" }));
+  }, [matchResult.homeGoals]);
+
+  useEffect(() => {
+    setAwayScorers(Array(matchResult.awayGoals).fill({ scorer: "", assistor: "" }));
+  }, [matchResult.awayGoals]);
+
   const handleMatchSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setIsSaving(true); // Start saving
+    setIsSaving(true);
 
     try {
       const matchData = {
@@ -68,6 +92,8 @@ export default function ManageMatches() {
         homeGoals: matchResult.homeGoals,
         awayGoals: matchResult.awayGoals,
         matchDate: matchDate,
+        homeScorers: homeScorers,
+        awayScorers: awayScorers,
       };
 
       const response = await fetch("/api/table/update-match", {
@@ -84,7 +110,8 @@ export default function ManageMatches() {
           responseBody.message || "Failed to update match result"
         );
       }
-     setSelectedClubs({
+
+      setSelectedClubs({
         homeClub: "",
         awayClub: "",
       });
@@ -93,13 +120,14 @@ export default function ManageMatches() {
         awayGoals: 0,
       });
       setMatchDate("");
-      const updatedTable = await response.json();
+      setHomeScorers([{ scorer: "", assistor: "" }]);
+      setAwayScorers([{ scorer: "", assistor: "" }]);
       toast.success("Match result updated successfully!");
     } catch (error) {
       setError("Error updating match result: " + error.message);
       toast.error("Error updating match result: " + error.message);
     } finally {
-      setIsSaving(false); // Stop saving
+      setIsSaving(false);
     }
   };
 
@@ -114,14 +142,13 @@ export default function ManageMatches() {
     <div className="w-full sm:w-3/4 mx-auto p-6 my-7">
       {table && (
         <h1 className="text-2xl text-[#00684A] font-fraunces sm:text-3xl font-semibold text-center mb-6 sm:mb-8">
-        Create matches under  {table.name}
+          Create matches under {table.name}
         </h1>
       )}
       <form
         onSubmit={handleMatchSubmit}
         className="mt-8 w-full sm:w-3/4 lg:w-2/4 mx-auto ring-2 ring-[#00684A] rounded px-4 sm:px-8 pt-6 pb-8 mb-4"
       >
-        {/* Club selection and goals input fields */}
         <div className="mb-4 flex flex-col sm:flex-row justify-between">
           <div className="w-full sm:w-1/2 sm:pr-2 mb-4 sm:mb-0">
             <div className="flex flex-col sm:flex-row items-center">
@@ -181,7 +208,60 @@ export default function ManageMatches() {
           </div>
         </div>
 
-        {/* Match Date input field */}
+        {/* Home Scorers and Assistors */}
+        {homeScorers.map((scorer, index) => (
+          <div key={index} className="mb-4">
+            <h2 className="font-bold mb-2">Home Goal {index + 1}</h2>
+            <div className="flex flex-col sm:flex-row items-center gap-3">
+              <input
+                type="text"
+                placeholder="Scorer"
+                value={scorer.scorer}
+                onChange={(e) =>
+                  handleScorerChange(index, "scorer", e.target.value, "home")
+                }
+                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+              <input
+                type="text"
+                placeholder="Assistor"
+                value={scorer.assistor}
+                onChange={(e) =>
+                  handleScorerChange(index, "assistor", e.target.value, "home")
+                }
+                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+            </div>
+          </div>
+        ))}
+
+        {/* Away Scorers and Assistors */}
+        {awayScorers.map((scorer, index) => (
+          <div key={index} className="mb-4">
+            <h2 className="font-bold mb-2">Away Goal {index + 1}</h2>
+            <div className="flex flex-col sm:flex-row items-center gap-3">
+              <input
+                type="text"
+                placeholder="Scorer"
+                value={scorer.scorer}
+                onChange={(e) =>
+                  handleScorerChange(index, "scorer", e.target.value, "away")
+                }
+                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+              <input
+                type="text"
+                placeholder="Assistor"
+                value={scorer.assistor}
+                onChange={(e) =>
+                  handleScorerChange(index, "assistor", e.target.value, "away")
+                }
+                className="block w-full ring-2 ring-[#00684A] font-poppins rounded py-2 px-3 focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+            </div>
+          </div>
+        ))}
+
         <div className="mb-4 flex flex-col items-center">
           <label
             className="block text-gray-700 font-poppins text-sm font-bold mb-2"
@@ -195,21 +275,20 @@ export default function ManageMatches() {
             value={matchDate}
             onChange={handleMatchDateChange}
             className="appearance-none block w-1/2 bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          required
+            required
           />
         </div>
         {error && <p className="text-red-500 text-xs italic">{error}</p>}
-        
-        {/* Submit button with loading state */}
+
         <div className="flex items-center justify-end">
           <button
             type="submit"
-            disabled={isSaving} // Disable button while saving
+            disabled={isSaving}
             className={`bg-[#00684A] hover:text-[#00684A] hover:bg-white hover:ring-2 hover:ring-[#00684A] transition-all text-white font-semibold py-2 px-4 rounded-lg ${
               isSaving ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
-            {isSaving ? "Saving..." : "Save Match Result"} {/* Change button text while saving */}
+            {isSaving ? "Saving..." : "Save Match Result"}
           </button>
         </div>
       </form>

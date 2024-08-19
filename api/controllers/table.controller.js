@@ -235,3 +235,27 @@ export const updateClubsInTable = async (req, res, next) => {
     next(err);
   }
 };
+
+
+export const getMatchById = async (req, res, next) => {
+  try {
+    const { matchId } = req.params;
+    const table = await Table.findOne({ "matches._id": matchId })
+      .populate("matches.homeClubId")
+      .populate("matches.awayClubId");
+
+    if (!table) {
+      return next(errorHandler(404, "Match not found!"));
+    }
+
+    const match = table.matches.id(matchId);
+
+    if (!match) {
+      return next(errorHandler(404, "Match not found!"));
+    }
+
+    res.status(200).json(match);
+  } catch (error) {
+    next(error);
+  }
+};
