@@ -41,7 +41,6 @@ const MatchDisplay = () => {
     <div className="flex max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-6">
       {/* Left Sidebar - Other Matches */}
       <div className="w-1/3 bg-gray-100 p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold text-gray-700 mb-4">Matchweek 1</h2>
         <div>
           {tableMatches && tableMatches.length > 0 ? (
             <div className="space-y-4">
