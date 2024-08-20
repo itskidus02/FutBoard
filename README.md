@@ -2,6 +2,7 @@
 
 
 
+
 <h1 align="center">FutBoard</h1>
 
 FutBoard is a web application designed to manage soccer league tables, matches, and standings with ease.
