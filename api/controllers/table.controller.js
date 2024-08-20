@@ -252,10 +252,16 @@ export const getMatchById = async (req, res, next) => {
       return next(errorHandler(404, "Match not found!"));
     }
 // console.log(table.matches);
+// table.matches.forEach(match => {
+//   console.log(`Match ID: ${match._id}`);
+//   console.log(`Match Created At: ${new Date(match.createdAt).toLocaleString()}`);
+//   console.log('---------------------');
+// });
     res.status(200).json({
       match,
       tableName: table.name, 
       tableMatches: table.matches,  // Return the table name along with the match
+   
     });
   } catch (error) {
     next(error);

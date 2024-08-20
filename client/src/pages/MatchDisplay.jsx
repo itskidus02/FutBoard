@@ -33,9 +33,22 @@ const MatchDisplay = () => {
     fetchMatch();
   }, [matchId]);
 
+  const groupMatchesByDate = (matches) => {
+    return matches.reduce((groups, matchItem) => {
+      const date = new Date(matchItem.matchDate).toLocaleDateString();
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(matchItem);
+      return groups;
+    }, {});
+  };
+
   if (loading)
     return <div className="text-center text-gray-500">Loading...</div>;
   if (error) return <div className="text-center text-red-500">{error}</div>;
+
+  const groupedMatches = tableMatches ? groupMatchesByDate(tableMatches) : {};
 
   return (
     <div className="flex max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-6">
@@ -43,39 +56,42 @@ const MatchDisplay = () => {
       <div className="w-1/3 bg-gray-100 p-4 rounded-lg shadow-md">
         <div>
           {tableMatches && tableMatches.length > 0 ? (
-            <div className="space-y-4">
-              {tableMatches.map((matchItem, index) => (
-                <Link to={`/match/${matchItem._id}`} key={index}>
-                  <div
-                    className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out"
-                  >
-                    <div className="flex items-center">
-                      <img
-                        src={matchItem.homeClubId.logoUrl}
-                        alt={matchItem.homeClubId.name}
-                        className="h-12 w-12 mr-4"
-                      />
-                      <span className="text-lg font-semibold text-gray-800">
-                        {matchItem.homeClubId.name}
-                      </span>
+            Object.keys(groupedMatches).map((date) => (
+              <div key={date} className="space-y-4 mb-6">
+                <h3 className="text-lg font-semibold text-gray-700">{date}</h3>
+                {groupedMatches[date].map((matchItem) => (
+                  <Link to={`/match/${matchItem._id}`} key={matchItem._id}>
+                    <div
+                      className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out"
+                    >
+                      <div className="flex items-center">
+                        <img
+                          src={matchItem.homeClubId.logoUrl}
+                          alt={matchItem.homeClubId.name}
+                          className="h-12 w-12 mr-4"
+                        />
+                        <span className="text-lg font-semibold text-gray-800">
+                          {matchItem.homeClubId.name}
+                        </span>
+                      </div>
+                      <div className="text-lg font-bold text-gray-800">
+                        {matchItem.homeGoals} - {matchItem.awayGoals}
+                      </div>
+                      <div className="flex items-center">
+                        <span className="text-lg font-semibold text-gray-800 mr-4">
+                          {matchItem.awayClubId.name}
+                        </span>
+                        <img
+                          src={matchItem.awayClubId.logoUrl}
+                          alt={matchItem.awayClubId.name}
+                          className="h-12 w-12"
+                        />
+                      </div>
                     </div>
-                    <div className="text-lg font-bold text-gray-800">
-                      {matchItem.homeGoals} - {matchItem.awayGoals}
-                    </div>
-                    <div className="flex items-center">
-                      <span className="text-lg font-semibold text-gray-800 mr-4">
-                        {matchItem.awayClubId.name}
-                      </span>
-                      <img
-                        src={matchItem.awayClubId.logoUrl}
-                        alt={matchItem.awayClubId.name}
-                        className="h-12 w-12"
-                      />
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            ))
           ) : (
             <p className="text-center text-gray-500">No matches found.</p>
           )}
