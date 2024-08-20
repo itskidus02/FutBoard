@@ -8,6 +8,7 @@ const MatchDisplay = () => {
   const { matchId } = useParams();
   const [match, setMatch] = useState(null);
   const [tableName, setTableName] = useState(null);  // State for table name
+  const [tableMatches, setTableMatches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -17,6 +18,7 @@ const MatchDisplay = () => {
         const response = await axios.get(`/api/table/match/${matchId}`);
         setMatch(response.data.match);
         setTableName(response.data.tableName);  // Set the table name
+        setTableMatches(response.data.tableMatches);
       } catch (err) {
         setError(
           err.response
@@ -41,6 +43,37 @@ const MatchDisplay = () => {
       <div className="text-center text-3xl font-bold text-gray-800 mb-4">
         {tableName}
       </div>
+      {tableMatches && tableMatches.length > 0 ? (
+  <div className="mt-4">
+    {tableMatches.map((matchItem, index) => (
+      <div key={index} className="flex justify-between items-center p-4 border-b border-gray-300">
+        <div className="flex items-center">
+          <img
+            src={matchItem.homeClubId.logoUrl}
+            alt={matchItem.homeClubId.name}
+            className="h-16 w-16 mr-4"
+          />
+          <span className="text-2xl font-bold">{matchItem.homeClubId.name}</span>
+        </div>
+        <div className="text-2xl font-semibold text-gray-800">
+          {matchItem.homeGoals} - {matchItem.awayGoals}
+        </div>
+        <div className="flex items-center">
+          <span className="text-2xl font-bold text-gray-800 mr-4">
+            {matchItem.awayClubId.name}
+          </span>
+          <img
+            src={matchItem.awayClubId.logoUrl}
+            alt={matchItem.awayClubId.name}
+            className="h-16 w-16"
+          />
+        </div>
+      </div>
+    ))}
+  </div>
+) : (
+  <p className="text-center text-gray-500">No matches found.</p>
+)}
       <div className="flex ring-2 ring-red-400 justify-between items-center p-4 border-b border-gray-300">
         <div className="flex items-center">
           <img

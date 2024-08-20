@@ -251,10 +251,11 @@ export const getMatchById = async (req, res, next) => {
     if (!match) {
       return next(errorHandler(404, "Match not found!"));
     }
-
+// console.log(table.matches);
     res.status(200).json({
       match,
-      tableName: table.name,  // Return the table name along with the match
+      tableName: table.name, 
+      tableMatches: table.matches,  // Return the table name along with the match
     });
   } catch (error) {
     next(error);
