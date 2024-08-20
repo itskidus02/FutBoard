@@ -36,12 +36,12 @@ const MatchDisplay = () => {
   if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <div className="max-w-4xl mx-auto ring bg-white shadow-lg rounded-lg p-6">
       {/* Display the table name at the top */}
       <div className="text-center text-3xl font-bold text-gray-800 mb-4">
         {tableName}
       </div>
-      <div className="flex justify-between items-center p-4 border-b border-gray-300">
+      <div className="flex ring-2 ring-red-400 justify-between items-center p-4 border-b border-gray-300">
         <div className="flex items-center">
           <img
             src={match.homeClubId.logoUrl}
@@ -64,7 +64,7 @@ const MatchDisplay = () => {
           />
         </div>
       </div>
-      <div className="px-6 flex justify-between py-6">
+      <div className="px-6 ring-2 ring-green-300 mt-4 flex justify-between py-6">
         <div className="border-t border-gray-200 pt-4 w-1/2">
           {match.homeScorers.length ? (
             <ul className="list-none">
