@@ -45,34 +45,35 @@ const MatchDisplay = () => {
           {tableMatches && tableMatches.length > 0 ? (
             <div className="space-y-4">
               {tableMatches.map((matchItem, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out"
-                >
-                  <div className="flex items-center">
-                    <img
-                      src={matchItem.homeClubId.logoUrl}
-                      alt={matchItem.homeClubId.name}
-                      className="h-12 w-12 mr-4"
-                    />
-                    <span className="text-lg font-semibold text-gray-800">
-                      {matchItem.homeClubId.name}
-                    </span>
+                <Link to={`/match/${matchItem._id}`} key={index}>
+                  <div
+                    className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out"
+                  >
+                    <div className="flex items-center">
+                      <img
+                        src={matchItem.homeClubId.logoUrl}
+                        alt={matchItem.homeClubId.name}
+                        className="h-12 w-12 mr-4"
+                      />
+                      <span className="text-lg font-semibold text-gray-800">
+                        {matchItem.homeClubId.name}
+                      </span>
+                    </div>
+                    <div className="text-lg font-bold text-gray-800">
+                      {matchItem.homeGoals} - {matchItem.awayGoals}
+                    </div>
+                    <div className="flex items-center">
+                      <span className="text-lg font-semibold text-gray-800 mr-4">
+                        {matchItem.awayClubId.name}
+                      </span>
+                      <img
+                        src={matchItem.awayClubId.logoUrl}
+                        alt={matchItem.awayClubId.name}
+                        className="h-12 w-12"
+                      />
+                    </div>
                   </div>
-                  <div className="text-lg font-bold text-gray-800">
-                    {matchItem.homeGoals} - {matchItem.awayGoals}
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-lg font-semibold text-gray-800 mr-4">
-                      {matchItem.awayClubId.name}
-                    </span>
-                    <img
-                      src={matchItem.awayClubId.logoUrl}
-                      alt={matchItem.awayClubId.name}
-                      className="h-12 w-12"
-                    />
-                  </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
@@ -84,7 +85,7 @@ const MatchDisplay = () => {
       {/* Right Side - Match Details */}
       <div className="w-2/3 pl-6">
         <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-          <div className="flex justify-between ring items-center border-b border-gray-200 pb-4 mb-4">
+          <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
             <div className="flex items-center">
               <img
                 src={match.homeClubId.logoUrl}
@@ -111,7 +112,7 @@ const MatchDisplay = () => {
           </div>
 
           <div className="flex justify-between">
-            <div className="border-b ring  border-gray-200 pb-4">
+            <div className="border-b ring border-gray-200 pb-4">
               {match.homeScorers.length ? (
                 <ul className="list-none space-y-3">
                   {match.homeScorers.map((scorer, index) => (
