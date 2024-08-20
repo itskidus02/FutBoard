@@ -6,15 +6,15 @@ export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   return (
     <header>
-      <nav class="bg-white  px-4 lg:px-6 py-2.5 ">
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" class="flex items-center">
-            <img src={logo} class="mr-3 h-6 sm:h-9" />
+      <nav className="bg-white  px-4 lg:px-6 py-2.5 ">
+        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+          <Link to="/" className="flex items-center">
+            <img src={logo} className="mr-3 h-6 sm:h-9" />
           </Link>
-          <div class="flex items-center lg:order-2">
+          <div className="flex items-center lg:order-2">
             <Link
               to="/about"
-              class="font-poppins hover:text-[#00684A] font-bold text-xl px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
+              className="font-poppins hover:text-[#00684A] font-bold text-xl px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
             >
               FAQs
             </Link>
@@ -26,7 +26,7 @@ export default function Header() {
                   className="h-10 w-10 rounded-full object-cover"
                 />
               ) : (
-                <button class="bg-[#00684A] hover:ring-2 hover:ring-[#00684A] hover:bg-white hover:text-[#00684A] text-xl font-poppins  rounded-lg text-white px-4 lg:px-16 py-2 lg:py-2.5 mr-2 transition-all ">
+                <button className="bg-[#00684A] hover:ring-2 hover:ring-[#00684A] hover:bg-white hover:text-[#00684A] text-xl font-poppins  rounded-lg text-white px-4 lg:px-16 py-2 lg:py-2.5 mr-2 transition-all ">
                   Sign in
                 </button>
               )}
