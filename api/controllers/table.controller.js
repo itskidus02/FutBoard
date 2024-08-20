@@ -252,8 +252,12 @@ export const getMatchById = async (req, res, next) => {
       return next(errorHandler(404, "Match not found!"));
     }
 
-    res.status(200).json(match);
+    res.status(200).json({
+      match,
+      tableName: table.name,  // Return the table name along with the match
+    });
   } catch (error) {
     next(error);
   }
 };
+
