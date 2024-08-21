@@ -24,7 +24,10 @@ export const addClubsToTable = async (req, res, next) => {
 
     const clubIds = [];
     for (const clubData of clubs) {
-      const club = await Club.create({ name: clubData.name, logoUrl: clubData.logoUrl });
+      const club = await Club.create({
+        name: clubData.name,
+        logoUrl: clubData.logoUrl,
+      });
       clubIds.push({ clubId: club._id });
     }
 
@@ -36,7 +39,6 @@ export const addClubsToTable = async (req, res, next) => {
     next(error);
   }
 };
-
 
 // Delete a table by ID
 export const deleteTable = async (req, res, next) => {
@@ -50,15 +52,18 @@ export const deleteTable = async (req, res, next) => {
     // Check if the requester is the owner of the table or an admin
     if (req.user.id === table.userId.toString()) {
       await Table.findByIdAndDelete(req.params.id);
-      res.status(200).json({ success: true, message: "Table has been deleted!" });
+      res
+        .status(200)
+        .json({ success: true, message: "Table has been deleted!" });
     } else {
-      return next(errorHandler(401, "You are not authorized to delete this table!"));
+      return next(
+        errorHandler(401, "You are not authorized to delete this table!")
+      );
     }
   } catch (error) {
     next(error);
   }
 };
-
 
 // Update a table by ID
 export const updateTable = async (req, res, next) => {
@@ -71,7 +76,11 @@ export const updateTable = async (req, res, next) => {
       return next(errorHandler(401, "You can only update your own tables!"));
     }
 
-    const updatedTable = await Table.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedTable = await Table.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
     res.status(200).json(updatedTable);
   } catch (error) {
     next(error);
@@ -81,7 +90,9 @@ export const updateTable = async (req, res, next) => {
 // Get a table by ID
 export const getTable = async (req, res, next) => {
   try {
-    const table = await Table.findById(req.params.id).populate('userId').populate('clubs.clubId');
+    const table = await Table.findById(req.params.id)
+      .populate("userId")
+      .populate("clubs.clubId");
     if (!table) {
       return next(errorHandler(404, "Table not found!"));
     }
@@ -98,8 +109,8 @@ export const getTables = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const tables = await Table.find()
-      .populate('userId')
-      .populate('clubs.clubId')
+      .populate("userId")
+      .populate("clubs.clubId")
       .limit(limit)
       .skip(startIndex);
 
@@ -109,13 +120,14 @@ export const getTables = async (req, res, next) => {
   }
 };
 
-
 // table.controller.js
 
 // Get tables by user ID
 export const getTablesByUser = async (req, res, next) => {
   try {
-    const tables = await Table.find({ userId: req.params.userId }).populate('userId').populate('clubs.clubId');
+    const tables = await Table.find({ userId: req.params.userId })
+      .populate("userId")
+      .populate("clubs.clubId");
     if (!tables) {
       return next(errorHandler(404, "Tables not found!"));
     }
@@ -127,7 +139,17 @@ export const getTablesByUser = async (req, res, next) => {
 
 export const updateMatchResult = async (req, res, next) => {
   try {
-    const { tableId, homeClubId, awayClubId, homeGoals, awayGoals, matchDate, homeScorers, awayScorers } = req.body;
+    const {
+      tableId,
+      homeClubId,
+      awayClubId,
+      homeGoals,
+      awayGoals,
+      matchDate,
+      homeScorers,
+      awayScorers,
+      manOfMatch,
+    } = req.body;
     const table = await Table.findById(tableId);
 
     if (!table) {
@@ -135,11 +157,20 @@ export const updateMatchResult = async (req, res, next) => {
     }
 
     if (req.user.id !== table.userId.toString()) {
-      return next(errorHandler(401, "You can only update the match result for your own tables!"));
+      return next(
+        errorHandler(
+          401,
+          "You can only update the match result for your own tables!"
+        )
+      );
     }
 
-    const homeClub = table.clubs.find(club => club.clubId.toString() === homeClubId);
-    const awayClub = table.clubs.find(club => club.clubId.toString() === awayClubId);
+    const homeClub = table.clubs.find(
+      (club) => club.clubId.toString() === homeClubId
+    );
+    const awayClub = table.clubs.find(
+      (club) => club.clubId.toString() === awayClubId
+    );
 
     if (!homeClub || !awayClub) {
       return next(errorHandler(404, "Clubs not found in the table!"));
@@ -179,6 +210,7 @@ export const updateMatchResult = async (req, res, next) => {
       matchDate: new Date(matchDate),
       homeScorers,
       awayScorers,
+      manOfMatch,
     });
 
     await table.save();
@@ -188,10 +220,6 @@ export const updateMatchResult = async (req, res, next) => {
     next(error);
   }
 };
-
-
-
-
 
 // Update clubs in a table
 // Update clubs in a table
@@ -210,12 +238,17 @@ export const updateClubsInTable = async (req, res, next) => {
 
     // Remove existing clubs that are not in the updated list
     const updatedClubIds = clubs.map((club) => club.clubId);
-    table.clubs = table.clubs.filter((club) => updatedClubIds.includes(club.clubId.toString()));
+    table.clubs = table.clubs.filter((club) =>
+      updatedClubIds.includes(club.clubId.toString())
+    );
 
     for (const clubData of clubs) {
       if (clubData.clubId) {
         // Update existing club
-        await Club.findByIdAndUpdate(clubData.clubId, { name: clubData.name, logoUrl: clubData.logoUrl });
+        await Club.findByIdAndUpdate(clubData.clubId, {
+          name: clubData.name,
+          logoUrl: clubData.logoUrl,
+        });
       } else {
         // Add new club
         const newClub = await Club.create({
@@ -234,7 +267,6 @@ export const updateClubsInTable = async (req, res, next) => {
   }
 };
 
-
 export const getMatchById = async (req, res, next) => {
   try {
     const { matchId } = req.params;
@@ -251,20 +283,18 @@ export const getMatchById = async (req, res, next) => {
     if (!match) {
       return next(errorHandler(404, "Match not found!"));
     }
-// console.log(table.matches);
-// table.matches.forEach(match => {
-//   console.log(`Match ID: ${match._id}`);
-//   console.log(`Match Created At: ${new Date(match.createdAt).toLocaleString()}`);
-//   console.log('---------------------');
-// });
+    //  console.log(table.matches);
+    // table.matches.forEach(match => {
+    //   console.log(`Match ID: ${match._id}`);
+    //   console.log(`Match Created At: ${new Date(match.createdAt).toLocaleString()}`);
+    //   console.log('---------------------');
+    // });
     res.status(200).json({
       match,
-      tableName: table.name, 
-      tableMatches: table.matches,  // Return the table name along with the match
-   
+      tableName: table.name,
+      tableMatches: table.matches, // Return the table name along with the match
     });
   } catch (error) {
     next(error);
   }
 };
-

@@ -7,6 +7,8 @@ export default function ManageMatches() {
   const { tableId } = useParams();
   const [table, setTable] = useState(null);
   const [clubs, setClubs] = useState([]);
+  const [manOfMatch, setManOfMatch] = useState("");
+
   const [selectedClubs, setSelectedClubs] = useState({
     homeClub: "",
     awayClub: "",
@@ -16,8 +18,12 @@ export default function ManageMatches() {
     awayGoals: 0,
   });
   const [matchDate, setMatchDate] = useState("");
-  const [homeScorers, setHomeScorers] = useState([{ scorer: "", assistor: "", time: "" }]);
-  const [awayScorers, setAwayScorers] = useState([{ scorer: "", assistor: "", time: "" }]);
+  const [homeScorers, setHomeScorers] = useState([
+    { scorer: "", assistor: "", time: "" },
+  ]);
+  const [awayScorers, setAwayScorers] = useState([
+    { scorer: "", assistor: "", time: "" },
+  ]);
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -44,6 +50,10 @@ export default function ManageMatches() {
       ...prevState,
       [type]: clubId,
     }));
+  };
+
+  const handleManofMatch = (e) => {
+    setManOfMatch(e.target.value);
   };
 
   const handleMatchResultChange = (type, value) => {
@@ -74,11 +84,15 @@ export default function ManageMatches() {
   };
 
   useEffect(() => {
-    setHomeScorers(Array(matchResult.homeGoals).fill({ scorer: "", assistor: "", time: "" }));
+    setHomeScorers(
+      Array(matchResult.homeGoals).fill({ scorer: "", assistor: "", time: "" })
+    );
   }, [matchResult.homeGoals]);
 
   useEffect(() => {
-    setAwayScorers(Array(matchResult.awayGoals).fill({ scorer: "", assistor: "", time: "" }));
+    setAwayScorers(
+      Array(matchResult.awayGoals).fill({ scorer: "", assistor: "", time: "" })
+    );
   }, [matchResult.awayGoals]);
 
   const handleMatchSubmit = async (e) => {
@@ -96,6 +110,7 @@ export default function ManageMatches() {
         matchDate: matchDate,
         homeScorers: homeScorers,
         awayScorers: awayScorers,
+        manOfMatch: manOfMatch,
       };
 
       const response = await fetch("/api/table/update-match", {
@@ -122,6 +137,7 @@ export default function ManageMatches() {
         awayGoals: 0,
       });
       setMatchDate("");
+      setManOfMatch("");
       setHomeScorers([{ scorer: "", assistor: "", time: "" }]);
       setAwayScorers([{ scorer: "", assistor: "", time: "" }]);
       toast.success("Match result updated successfully!");
@@ -282,7 +298,7 @@ export default function ManageMatches() {
           </div>
         ))}
 
-        <div className="mb-4">
+        <div className="mb-4 gap-4 flex">
           <label
             htmlFor="matchDate"
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -296,7 +312,20 @@ export default function ManageMatches() {
             onChange={handleMatchDateChange}
             className="block appearance-none w-full ring-2 ring-[#00684A] font-poppins border border-gray-200 text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
+
+          <input
+            type="text"
+            placeholder="man of the match"
+            className="border ring-2 ring-[#00684A] p-3 font-poppins font-light rounded-lg"
+            id="manOfMatch"
+            value={manOfMatch}
+            onChange={handleManofMatch}
+            maxLength={10}
+            minLength={3}
+            required
+          />
         </div>
+
         <div className="flex justify-between items-center">
           <button
             type="submit"

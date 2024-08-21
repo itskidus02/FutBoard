@@ -61,9 +61,7 @@ const MatchDisplay = () => {
                 <h3 className="text-lg font-semibold text-gray-700">{date}</h3>
                 {groupedMatches[date].map((matchItem) => (
                   <Link to={`/match/${matchItem._id}`} key={matchItem._id}>
-                    <div
-                      className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out"
-                    >
+                    <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out">
                       <div className="flex items-center">
                         <img
                           src={matchItem.homeClubId.logoUrl}
@@ -71,7 +69,7 @@ const MatchDisplay = () => {
                           className="h-12 w-12 mr-4"
                         />
                         <span className="text-lg font-semibold text-gray-800">
-                          {matchItem.homeClubId.name}
+                          {matchItem.homeClubId.name.substring(0, 3)}
                         </span>
                       </div>
                       <div className="text-lg font-bold text-gray-800">
@@ -79,7 +77,7 @@ const MatchDisplay = () => {
                       </div>
                       <div className="flex items-center">
                         <span className="text-lg font-semibold text-gray-800 mr-4">
-                          {matchItem.awayClubId.name}
+                          {matchItem.awayClubId.name.substring(0, 3)}
                         </span>
                         <img
                           src={matchItem.awayClubId.logoUrl}
@@ -162,7 +160,7 @@ const MatchDisplay = () => {
                 <p>No scorers for {match.homeClubId.name}.</p>
               )}
             </div>
-
+            {match.manOfMatch}
             <div className="border-b ring border-gray-200 pb-4">
               {match.awayScorers.length ? (
                 <ul className="list-none space-y-3">

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 const matchSchema = new mongoose.Schema(
   {
@@ -24,25 +24,27 @@ const matchSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    manOfMatch: {
+      type: String,
+      // required: true,
+    },
     homeScorers: [
       {
         scorer: { type: String },
         assistor: { type: String },
-        time: { type: Number }  // Add the goal time here
-      }
+        time: { type: Number }, // Add the goal time here
+      },
     ],
     awayScorers: [
       {
         scorer: { type: String },
         assistor: { type: String },
-        time: { type: Number }  // Add the goal time here
-      }
+        time: { type: Number }, // Add the goal time here
+      },
     ],
   },
   { timestamps: true }
 );
-
-
 
 const tableSchema = new mongoose.Schema(
   {
