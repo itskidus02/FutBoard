@@ -10,6 +10,8 @@ const MatchDisplay = () => {
   const [match, setMatch] = useState(null);
   const [tableName, setTableName] = useState(null);
   const [matchDate, setMatchDate] = useState(null);
+  const [manOfMatch, setManOfMatch] = useState(null);
+  
   const [tableMatches, setTableMatches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,6 +22,7 @@ const MatchDisplay = () => {
         const response = await axios.get(`/api/table/match/${matchId}`);
         setMatch(response.data.match);
         setTableName(response.data.tableName);
+        setManOfMatch(response.data.manOfMatch);
         setMatchDate(response.data.matchDate);
         setTableMatches(response.data.tableMatches);
       } catch (err) {
@@ -70,7 +73,7 @@ const MatchDisplay = () => {
         <div className="flex items-center justify-center p-4 text-xl lg:text-2xl text-white font-extrabold tracking-widest bg-[#00684A]">
           {tableName}
         </div>
-        <div className="ring ring-[#00684A] rounded-lg p-4">
+        <div className=" rounded-lg p-4">
           {tableMatches && tableMatches.length > 0 ? (
             Object.keys(groupedMatches).map((date) => (
               <div key={date} className="space-y-4 mb-4">
@@ -176,7 +179,7 @@ const MatchDisplay = () => {
                       <span className="text-sm md:text-lg flex flex-col text-gray-600">
                         <div>
                           <span className="font-bold font-poppins">
-                          {scorer.time}'{" "}
+                            {scorer.time}'{" "}
                           </span>
                           <img
                             src={football}
@@ -202,9 +205,7 @@ const MatchDisplay = () => {
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm md:text-base">
-                 
-                </p>
+                <p className="text-sm md:text-base"></p>
               )}
             </div>
 
@@ -230,7 +231,9 @@ const MatchDisplay = () => {
                         </span>
                         {scorer.assistor && (
                           <div className="text-sm flex gap-2 text-gray-600">
-                            <span className="ml-1 lowercase">{scorer.assistor}</span>
+                            <span className="ml-1 lowercase">
+                              {scorer.assistor}
+                            </span>
                             <img
                               src={boots}
                               alt="assist"
@@ -243,11 +246,17 @@ const MatchDisplay = () => {
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm md:text-base">
-                </p>
+                <p className="text-sm md:text-base"></p>
               )}
             </div>
           </div>
+        </div>
+
+        <div className="flex justify-center items-center">
+          <div className="bg-[#00684A] px-4 py-1 font-poppins text-xl font-bold text-white rounded-md">Player of the match</div>
+          <img src={arrowright} alt="" className="h-12 w-12" />
+
+          <div className="bg-[#EDE4E4] text-[#00684A] px-4 py-1 font-poppins text-xl font-bold uppercase rounded-md">{manOfMatch}</div>
         </div>
       </div>
     </div>
