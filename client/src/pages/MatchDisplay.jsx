@@ -3,11 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import football from "../assets/football.svg";
 import boots from "../assets/boots.svg";
+import arrowright from "../assets/arrowright.svg";
 
 const MatchDisplay = () => {
   const { matchId } = useParams();
   const [match, setMatch] = useState(null);
-  const [tableName, setTableName] = useState(null); // State for table name
+  const [tableName, setTableName] = useState(null);
   const [tableMatches, setTableMatches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +18,7 @@ const MatchDisplay = () => {
       try {
         const response = await axios.get(`/api/table/match/${matchId}`);
         setMatch(response.data.match);
-        setTableName(response.data.tableName); // Set the table name
+        setTableName(response.data.tableName);
         setTableMatches(response.data.tableMatches);
       } catch (err) {
         setError(
@@ -33,9 +34,19 @@ const MatchDisplay = () => {
     fetchMatch();
   }, [matchId]);
 
+  const formatDate = (dateString) => {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const groupMatchesByDate = (matches) => {
     return matches.reduce((groups, matchItem) => {
-      const date = new Date(matchItem.matchDate).toLocaleDateString();
+      const date = formatDate(matchItem.matchDate);
       if (!groups[date]) {
         groups[date] = [];
       }
@@ -51,38 +62,50 @@ const MatchDisplay = () => {
   const groupedMatches = tableMatches ? groupMatchesByDate(tableMatches) : {};
 
   return (
-    <div className="flex max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <div className="flex max-w-7xl mx-auto rounded-lg p-6">
       {/* Left Sidebar - Other Matches */}
-      <div className="w-1/3 bg-gray-100 p-4 rounded-lg shadow-md">
-        <div>
+      <div className="w-[30%] ring ring-[#00684A] rounded-lg shadow-md">
+        <div className="flex items-center justify-center p-4 text-2xl text-white font-extrabold tracking-widest bg-[#00684A]">
+          {tableName}
+        </div>
+        <div className="ring ring-[#00684A] rounded-lg p-4">
           {tableMatches && tableMatches.length > 0 ? (
             Object.keys(groupedMatches).map((date) => (
-              <div key={date} className="space-y-4 mb-6">
-                <h3 className="text-lg font-semibold text-gray-700">{date}</h3>
+              <div key={date} className="space-y-8 mb-4">
+                <h3 className="text-lg text-center font-semibold text-[#00684A] font-fraunces">
+                  {date}
+                </h3>
                 {groupedMatches[date].map((matchItem) => (
                   <Link to={`/match/${matchItem._id}`} key={matchItem._id}>
-                    <div className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm hover:bg-gray-200 transition duration-200 ease-in-out">
-                      <div className="flex items-center">
+                    <div className="flex justify-between items-center p-2 mt-3 bg-white rounded-lg hover:ring hover:ring-[#00684A] transition duration-200 ease-in-out">
+                      <div className="flex items-center w-1/3 justify-center">
+                        <span className="text-lg font-semibold uppercase text-gray-800">
+                          {matchItem.homeClubId.name.substring(0, 3)}
+                        </span>
                         <img
                           src={matchItem.homeClubId.logoUrl}
                           alt={matchItem.homeClubId.name}
-                          className="h-12 w-12 mr-4"
+                          className="h-8 w-8 mx-2"
                         />
-                        <span className="text-lg font-semibold text-gray-800">
-                          {matchItem.homeClubId.name.substring(0, 3)}
-                        </span>
                       </div>
-                      <div className="text-lg font-bold text-gray-800">
+                      <div className="text-lg font-bold py-1 text-white rounded-md bg-[#00684A] w-1/3 text-center">
                         {matchItem.homeGoals} - {matchItem.awayGoals}
                       </div>
-                      <div className="flex items-center">
-                        <span className="text-lg font-semibold text-gray-800 mr-4">
-                          {matchItem.awayClubId.name.substring(0, 3)}
-                        </span>
+                      <div className="flex items-center w-1/3 justify-center">
                         <img
                           src={matchItem.awayClubId.logoUrl}
                           alt={matchItem.awayClubId.name}
-                          className="h-12 w-12"
+                          className="h-8 w-8 mx-2"
+                        />
+                        <span className="text-lg font-semibold uppercase text-gray-800">
+                          {matchItem.awayClubId.name.substring(0, 3)}
+                        </span>
+                      </div>
+                      <div className="ml-auto">
+                        <img
+                          src={arrowright}
+                          alt="arrow right"
+                          className="h-4 w-4"
                         />
                       </div>
                     </div>
@@ -95,37 +118,39 @@ const MatchDisplay = () => {
           )}
         </div>
       </div>
-
       {/* Right Side - Match Details */}
       <div className="w-2/3 pl-6">
-        <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-          <div className="flex justify-between items-center border-b border-gray-200 pb-4 mb-4">
-            <div className="flex items-center">
+        <div className=" p-6 rounded-lg  ring">
+          <div className="flex justify-center  text-white">
+            <div className="flex items-center   text-black rounded-lg p-2 border border-green-700">
+              <span className="text-xl font-bold mr-2">
+                {match.homeClubId.name}
+              </span>
               <img
                 src={match.homeClubId.logoUrl}
                 alt={match.homeClubId.name}
-                className="h-16 w-16 mr-4"
+                className="h-16 w-16"
               />
-              <span className="text-2xl font-semibold text-gray-800">
-                {match.homeClubId.name}
-              </span>
             </div>
-            <div className="text-3xl font-bold text-gray-900">
+
+            <div className="text-5xl font-bold p-4 bg-green-800 rounded-lg">
               {match.homeGoals} - {match.awayGoals}
+              <div className="text-lg text-center font-normal">FT</div>
             </div>
-            <div className="flex items-center">
-              <span className="text-2xl font-semibold text-gray-800 mr-4">
-                {match.awayClubId.name}
-              </span>
+
+            <div className="flex items-center bg-white text-black rounded-lg p-2 border border-green-700">
               <img
                 src={match.awayClubId.logoUrl}
                 alt={match.awayClubId.name}
                 className="h-16 w-16"
               />
+              <span className="text-xl font-bold ml-2">
+                {match.awayClubId.name}
+              </span>
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex  justify-between">
             <div className="border-b ring border-gray-200 pb-4">
               {match.homeScorers.length ? (
                 <ul className="list-none space-y-3">
@@ -160,7 +185,6 @@ const MatchDisplay = () => {
                 <p>No scorers for {match.homeClubId.name}.</p>
               )}
             </div>
-            {match.manOfMatch}
             <div className="border-b ring border-gray-200 pb-4">
               {match.awayScorers.length ? (
                 <ul className="list-none space-y-3">
