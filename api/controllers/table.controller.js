@@ -293,6 +293,7 @@ export const getMatchById = async (req, res, next) => {
       match,
       tableName: table.name,
       tableMatches: table.matches, // Return the table name along with the match
+      matchDate: new Date(match.matchDate).toLocaleDateString(),
     });
   } catch (error) {
     next(error);

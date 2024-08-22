@@ -9,6 +9,8 @@ const MatchDisplay = () => {
   const { matchId } = useParams();
   const [match, setMatch] = useState(null);
   const [tableName, setTableName] = useState(null);
+  const [matchDate, setMatchDate] = useState(null);
+
   const [tableMatches, setTableMatches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,6 +21,7 @@ const MatchDisplay = () => {
         const response = await axios.get(`/api/table/match/${matchId}`);
         setMatch(response.data.match);
         setTableName(response.data.tableName);
+        setMatchDate(response.data.matchDate);
         setTableMatches(response.data.tableMatches);
       } catch (err) {
         setError(
@@ -119,11 +122,14 @@ const MatchDisplay = () => {
         </div>
       </div>
       {/* Right Side - Match Details */}
-      <div className="w-2/3 pl-6">
-        <div className=" p-6 rounded-lg  ring">
-          <div className="flex justify-center  text-white">
-            <div className="flex items-center   text-black rounded-lg p-2 border border-green-700">
-              <span className="text-xl font-bold mr-2">
+      <div className="w-5/6  pl-4">
+        <div className=" rounded-lg  ">
+          <div className=" text-center text-md mb-2 text-black text-xs font-fraunces ">
+            {formatDate(matchDate)} 
+          </div>
+          <div className="flex justify-center text-white">
+            <div className="flex items-center flex-1 justify-center gap-3 mr-2 h-[7rem] bg-white rounded-r-none text-black rounded-lg p-3 ring-2 ring-[#00684A]">
+              <span className="text-3xl font-bold font-fraunces mr-2">
                 {match.homeClubId.name}
               </span>
               <img
@@ -133,18 +139,21 @@ const MatchDisplay = () => {
               />
             </div>
 
-            <div className="text-5xl font-bold p-4 bg-green-800 rounded-lg">
-              {match.homeGoals} - {match.awayGoals}
-              <div className="text-lg text-center font-normal">FT</div>
+            <div className="relative">
+              <div className="text-6xl font-fraunces font-bold bg-[#00684A] rounded-t-none rounded-lg flex flex-col text-center justify-center w-[11rem]  h-[9rem]">
+                <div className="py-2 font-poppins px-5">
+                  {match.homeGoals} - {match.awayGoals}
+                </div>
+                <div className="text-3xl font-bold text-center ">FT</div>
+              </div>
             </div>
-
-            <div className="flex items-center bg-white text-black rounded-lg p-2 border border-green-700">
+            <div className="flex items-center flex-1 justify-center gap-3 ml-2 h-[7rem] bg-white text-black rounded-l-none rounded-lg p-3 ring-2 ring-[#00684A]">
               <img
                 src={match.awayClubId.logoUrl}
                 alt={match.awayClubId.name}
-                className="h-16 w-16"
+                className="h-16 w-14"
               />
-              <span className="text-xl font-bold ml-2">
+              <span className="text-3xl font-fraunces font-bold ml-2">
                 {match.awayClubId.name}
               </span>
             </div>
