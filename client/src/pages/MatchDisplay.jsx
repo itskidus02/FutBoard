@@ -10,7 +10,6 @@ const MatchDisplay = () => {
   const [match, setMatch] = useState(null);
   const [tableName, setTableName] = useState(null);
   const [matchDate, setMatchDate] = useState(null);
-
   const [tableMatches, setTableMatches] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -65,9 +64,9 @@ const MatchDisplay = () => {
   const groupedMatches = tableMatches ? groupMatchesByDate(tableMatches) : {};
 
   return (
-    <div className="flex max-w-7xl mx-auto rounded-lg p-6">
+    <div className="flex flex-col-reverse lg:flex-row max-w-7xl mx-auto rounded-lg p-6">
       {/* Left Sidebar - Other Matches */}
-      <div className="w-[30%] ring ring-[#00684A] rounded-lg shadow-md">
+      <div className="lg:w-[30%] ring ring-[#00684A] rounded-lg shadow-md lg:order-first">
         <div className="flex items-center justify-center p-4 text-2xl text-white font-extrabold tracking-widest bg-[#00684A]">
           {tableName}
         </div>
@@ -121,11 +120,12 @@ const MatchDisplay = () => {
           )}
         </div>
       </div>
+
       {/* Right Side - Match Details */}
-      <div className="w-5/6  pl-4">
-        <div className=" rounded-lg  ">
-          <div className=" text-center text-md mb-2 text-black text-xs font-fraunces ">
-            {formatDate(matchDate)} 
+      <div className="lg:w-5/6 lg:pl-4 mb-4 lg:mb-0 lg:order-last">
+        <div className="rounded-lg">
+          <div className="text-center text-md mb-2 text-black text-xs font-fraunces">
+            {formatDate(matchDate)}
           </div>
           <div className="flex justify-center text-white">
             <div className="flex items-center flex-1 justify-center gap-3 mr-2 h-[7rem] bg-white rounded-r-none text-black rounded-lg p-3 ring-2 ring-[#00684A]">
@@ -140,11 +140,11 @@ const MatchDisplay = () => {
             </div>
 
             <div className="relative">
-              <div className="text-6xl font-fraunces font-bold bg-[#00684A] rounded-t-none rounded-lg flex flex-col text-center justify-center w-[11rem]  h-[9rem]">
+              <div className="text-6xl font-fraunces font-bold bg-[#00684A] rounded-t-none rounded-lg flex flex-col text-center justify-center w-[11rem] h-[9rem]">
                 <div className="py-2 font-poppins px-5">
                   {match.homeGoals} - {match.awayGoals}
                 </div>
-                <div className="text-3xl font-bold text-center ">FT</div>
+                <div className="text-3xl font-bold text-center">FT</div>
               </div>
             </div>
             <div className="flex items-center flex-1 justify-center gap-3 ml-2 h-[7rem] bg-white text-black rounded-l-none rounded-lg p-3 ring-2 ring-[#00684A]">
@@ -159,31 +159,34 @@ const MatchDisplay = () => {
             </div>
           </div>
 
-          <div className="flex  justify-between">
-            <div className="border-b ring border-gray-200 pb-4">
+          <div className="flex rig gap-[13rem] justify-center">
+            <div className="rng">
               {match.homeScorers.length ? (
                 <ul className="list-none space-y-3">
                   {match.homeScorers.map((scorer, index) => (
                     <li key={index} className="flex items-center gap-3">
-                      <span className="text-lg font-semibold text-gray-700">
-                        {scorer.scorer}
-                      </span>
-                      <span className="text-sm text-gray-600">
-                        {scorer.time}'{" "}
-                        <img
-                          src={football}
-                          alt="football"
-                          className="inline h-4 w-4"
-                        />
+                      <span className="text-sm flex flex-col text-gray-600">
+                        <div>
+                          {scorer.time}'{" "}
+                          <img
+                            src={football}
+                            alt="football"
+                            className="inline h-4 w-4"
+                          />
+                        </div>
+                        <span className="text-lg font-semibold text-gray-700">
+                          {scorer.scorer}
+                        </span>
                         {scorer.assistor && (
                           <>
-                            <span className="ml-2">Assist:</span>{" "}
-                            <img
-                              src={boots}
-                              alt="assist"
-                              className="inline h-4 w-4"
-                            />
-                            <span className="ml-1">{scorer.assistor}</span>
+                            <div className="text-sm flex gap-2 text-gray-600">
+                              <span className="ml-1">{scorer.assistor}</span>
+                              <img
+                                src={boots}
+                                alt="assist"
+                                className="inline h-4 w-4"
+                              />
+                            </div>
                           </>
                         )}
                       </span>
@@ -194,30 +197,34 @@ const MatchDisplay = () => {
                 <p>No scorers for {match.homeClubId.name}.</p>
               )}
             </div>
-            <div className="border-b ring border-gray-200 pb-4">
+
+            <div className=" rig ring-green-300  pb-4">
               {match.awayScorers.length ? (
                 <ul className="list-none space-y-3">
                   {match.awayScorers.map((scorer, index) => (
                     <li key={index} className="flex items-center gap-3">
-                      <span className="text-lg font-semibold text-gray-700">
-                        {scorer.scorer}
-                      </span>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm flex flex-col text-gray-600">
+                       <div>
                         {scorer.time}'{" "}
                         <img
                           src={football}
                           alt="football"
                           className="inline h-4 w-4"
                         />
+                        </div>
+                        <span className="text-lg font-semibold text-gray-700">
+                          {scorer.scorer}
+                        </span>
                         {scorer.assistor && (
                           <>
-                            <span className="ml-2">Assist:</span>{" "}
-                            <img
-                              src={boots}
-                              alt="assist"
-                              className="inline h-4 w-4"
-                            />
-                            <span className="ml-1">{scorer.assistor}</span>
+                             <div className="text-sm flex gap-2 text-gray-600">
+                              <span className="ml-1">{scorer.assistor}</span>
+                              <img
+                                src={boots}
+                                alt="assist"
+                                className="inline h-4 w-4"
+                              />
+                            </div>
                           </>
                         )}
                       </span>
