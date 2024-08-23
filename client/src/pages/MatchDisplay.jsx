@@ -253,10 +253,10 @@ const MatchDisplay = () => {
         </div>
 
         <div className="flex justify-center items-center">
-          <div className="bg-[#00684A] px-4 py-1 font-poppins text-xl font-bold text-white rounded-md">Player of the match</div>
-          <img src={arrowright} alt="" className="h-12 w-12" />
+          <div className="bg-[#00684A] lg:px-4 md:px-3 px-2 py-1 font-poppins lg:text-xl text-md font-bold text-white rounded-md">Player of the match</div>
+          <img src={arrowright} alt="" className="lg:h-10 lg:w-10 md:h-8 md:w-8 h-6 w-6" />
 
-          <div className="bg-[#EDE4E4] text-[#00684A] px-4 py-1 font-poppins text-xl font-bold uppercase rounded-md">{manOfMatch}</div>
+          <div className="bg-[#EDE4E4] text-[#00684A] lg:px-4 md:px-3 px-2  py-1 text-md font-poppins text-xl font-bold uppercase rounded-md">{manOfMatch}</div>
         </div>
       </div>
     </div>
