@@ -259,87 +259,98 @@ export default function ManageMatches() {
         );
       case 2:
         return (
-          <div className="mb-6">
-            <h2 className="text-lg font-bold mb-4">{selectedClubNames.homeClubName}</h2>
-            {homeScorers.map((scorer, index) => (
-              <div key={index} className="flex gap-4 mb-4">
-                <input
-                  type="text"
-                  placeholder={`Scorer ${index + 1}`}
-                  value={scorer.scorer}
-                  onChange={(e) =>
-                    handleScorerChange(index, "scorer", e.target.value, "home")
-                  }
-                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                />
-                <input
-                  type="text"
-                  placeholder={`Assistor ${index + 1}`}
-                  value={scorer.assistor}
-                  onChange={(e) =>
-                    handleScorerChange(
-                      index,
-                      "assistor",
-                      e.target.value,
-                      "home"
-                    )
-                  }
-                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                />
-                
-                <input
-                  type="text"
-                  placeholder={`Time ${index + 1}`}
-                  value={scorer.time}
-                  onChange={(e) =>
-                    handleScorerChange(index, "time", e.target.value, "home")
-                  }
-                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                />
-              
-              </div>
-            ))}
-
-            <h2 className="text-lg font-bold mb-4 mt-6">{selectedClubNames.awayClubName}</h2>
-            {awayScorers.map((scorer, index) => (
-              <div key={index} className="flex gap-4 mb-4">
-                <input
-                  type="text"
-                  placeholder={`Scorer ${index + 1}`}
-                  value={scorer.scorer}
-                  onChange={(e) =>
-                    handleScorerChange(index, "scorer", e.target.value, "away")
-                  }
-                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                />
-                <input
-                  type="text"
-                  placeholder={`Assistor ${index + 1}`}
-                  value={scorer.assistor}
-                  onChange={(e) =>
-                    handleScorerChange(
-                      index,
-                      "assistor",
-                      e.target.value,
-                      "away"
-                    )
-                  }
-                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                />
-                <input
-                  type="text"
-                  placeholder={`Time ${index + 1}`}
-                  value={scorer.time}
-                  onChange={(e) =>
-                    handleScorerChange(index, "time", e.target.value, "away")
-                  }
-                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                />
-                
-              </div>
-            ))}
+          <div className="flex justify-between mb-6">
+            {/* Home Club Section */}
+            <div className="w-1/2 mr-2">
+              <h2 className="text-lg font-bold mb-4 text-center bg-[#00684A] text-white py-2 rounded">
+                {selectedClubNames.homeClubName}
+              </h2>
+              {homeScorers.map((scorer, index) => (
+                <div key={index} className="mb-4">
+                  {/* Goal Label */}
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Goal {index + 1}
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <input
+                      type="text"
+                      placeholder="Scorer"
+                      value={scorer.scorer}
+                      onChange={(e) =>
+                        handleScorerChange(index, "scorer", e.target.value, "home")
+                      }
+                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Assistor"
+                      value={scorer.assistor}
+                      onChange={(e) =>
+                        handleScorerChange(index, "assistor", e.target.value, "home")
+                      }
+                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    />
+                    <input
+                      type="text"
+                      placeholder="min"
+                      value={scorer.time}
+                      onChange={(e) =>
+                        handleScorerChange(index, "time", e.target.value, "home")
+                      }
+                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+        
+            {/* Away Club Section */}
+            <div className="w-1/2 ml-2">
+              <h2 className="text-lg font-bold mb-4 text-center bg-[#00684A] text-white py-2 rounded">
+                {selectedClubNames.awayClubName}
+              </h2>
+              {awayScorers.map((scorer, index) => (
+                <div key={index} className="mb-4">
+                  {/* Goal Label */}
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Goal {index + 1}
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <input
+                      type="text"
+                      placeholder="Scorer"
+                      value={scorer.scorer}
+                      onChange={(e) =>
+                        handleScorerChange(index, "scorer", e.target.value, "away")
+                      }
+                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Assistor"
+                      value={scorer.assistor}
+                      onChange={(e) =>
+                        handleScorerChange(index, "assistor", e.target.value, "away")
+                      }
+                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    />
+                    <input
+                      type="text"
+                      placeholder="min"
+                      value={scorer.time}
+                      onChange={(e) =>
+                        handleScorerChange(index, "time", e.target.value, "away")
+                      }
+                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         );
+        
+        
       case 3:
         return (
           <div className="mb-6 mt-6 gap-4 flex flex-col items-center justify-center">
