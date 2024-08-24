@@ -13,6 +13,10 @@ export default function ManageMatches() {
     homeClub: "",
     awayClub: "",
   });
+  const [selectedClubNames, setSelectedClubNames] = useState({
+    homeClubName: "",
+    awayClubName: "",
+  });
   const [matchResult, setMatchResult] = useState({
     homeGoals: 0,
     awayGoals: 0,
@@ -47,12 +51,23 @@ export default function ManageMatches() {
   }, [tableId]);
 
   const handleClubChange = (type, clubId) => {
+    const selectedClub = clubs.find(club => club._id === clubId);
     setSelectedClubs((prevState) => ({
       ...prevState,
       [type]: clubId,
     }));
+    if (type === 'homeClub') {
+      setSelectedClubNames((prevState) => ({
+        ...prevState,
+        homeClubName: selectedClub ? selectedClub.name : '',
+      }));
+    } else if (type === 'awayClub') {
+      setSelectedClubNames((prevState) => ({
+        ...prevState,
+        awayClubName: selectedClub ? selectedClub.name : '',
+      }));
+    }
   };
-
   const handleManofMatch = (e) => {
     setManOfMatch(e.target.value);
   };
@@ -245,7 +260,7 @@ export default function ManageMatches() {
       case 2:
         return (
           <div className="mb-6">
-            <h2 className="text-lg font-bold mb-4">Home Scorer {}</h2>
+            <h2 className="text-lg font-bold mb-4">{selectedClubNames.homeClubName}</h2>
             {homeScorers.map((scorer, index) => (
               <div key={index} className="flex gap-4 mb-4">
                 <input
@@ -285,7 +300,7 @@ export default function ManageMatches() {
               </div>
             ))}
 
-            <h2 className="text-lg font-bold mb-4 mt-6">Away Scorers</h2>
+            <h2 className="text-lg font-bold mb-4 mt-6">{selectedClubNames.awayClubName}</h2>
             {awayScorers.map((scorer, index) => (
               <div key={index} className="flex gap-4 mb-4">
                 <input
