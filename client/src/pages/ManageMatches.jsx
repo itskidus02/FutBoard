@@ -268,7 +268,7 @@ export default function ManageMatches() {
               {homeScorers.map((scorer, index) => (
                 <div key={index} className="mb-4">
                   {/* Goal Label */}
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block font-medium text-lg font-poppins text-gray-700 mb-2">
                     Goal {index + 1}
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -312,7 +312,7 @@ export default function ManageMatches() {
               {awayScorers.map((scorer, index) => (
                 <div key={index} className="mb-4">
                   {/* Goal Label */}
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-lg font-poppins  font-medium text-gray-700 mb-2">
                     Goal {index + 1}
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -324,6 +324,7 @@ export default function ManageMatches() {
                         handleScorerChange(index, "scorer", e.target.value, "away")
                       }
                       className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                      required
                     />
                     <input
                       type="text"
@@ -382,11 +383,7 @@ export default function ManageMatches() {
         </h1>
       )}
       <ToastContainer />
-      {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-          {error}
-        </div>
-      )}
+      {/*  */}
       <div className="mb-8 flex justify-between">
         {["1", "2", "3"].map((item, index) => (
           <div
@@ -425,7 +422,7 @@ export default function ManageMatches() {
             <button
               type="button"
               onClick={() => setStep(step - 1)}
-              className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg"
+              className="bg-gray-200 text-gray-700 py-1 px-11 text-xl font-medium font-poppins rounded-lg"
             >
               Back
             </button>
@@ -434,7 +431,7 @@ export default function ManageMatches() {
             <button
               type="button"
               onClick={() => setStep(step + 1)}
-              className="bg-[#00684A] text-white py-2 px-4 rounded-lg"
+              className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
             >
               Next
             </button>
@@ -442,7 +439,7 @@ export default function ManageMatches() {
           {step === 3 && (
             <button
               type="submit"
-              className="bg-[#00684A] text-white py-2 px-4 rounded-lg"
+              className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
               disabled={isSaving}
             >
               {isSaving ? "Saving..." : "Save"}
