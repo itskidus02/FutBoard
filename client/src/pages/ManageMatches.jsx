@@ -237,138 +237,110 @@ export default function ManageMatches() {
                 value={matchDate}
                 onChange={handleMatchDateChange}
                 className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                required
               />
             </div>
           </div>
         );
       case 2:
         return (
-          <div>
-            <div className="mt-4">
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2 text-[#00684A] text-center">
-                  Home Team Goal Details:
-                </h2>
-                {homeScorers.map((scorer, index) => (
-                  <div key={index} className="mb-4">
-                    <input
-                      type="text"
-                      placeholder="Scorer Name"
-                      value={scorer.scorer}
-                      onChange={(e) =>
-                        handleScorerChange(
-                          index,
-                          "scorer",
-                          e.target.value,
-                          "home"
-                        )
-                      }
-                      className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A] mb-2"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Assistor Name"
-                      value={scorer.assistor}
-                      onChange={(e) =>
-                        handleScorerChange(
-                          index,
-                          "assistor",
-                          e.target.value,
-                          "home"
-                        )
-                      }
-                      className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A] mb-2"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Time (in minutes)"
-                      value={scorer.time}
-                      onChange={(e) =>
-                        handleScorerChange(
-                          index,
-                          "time",
-                          e.target.value,
-                          "home"
-                        )
-                      }
-                      className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                    />
-                  </div>
-                ))}
+          <div className="mb-6">
+            <h2 className="text-lg font-bold mb-4">Home Scorer {}</h2>
+            {homeScorers.map((scorer, index) => (
+              <div key={index} className="flex gap-4 mb-4">
+                <input
+                  type="text"
+                  placeholder={`Scorer ${index + 1}`}
+                  value={scorer.scorer}
+                  onChange={(e) =>
+                    handleScorerChange(index, "scorer", e.target.value, "home")
+                  }
+                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                />
+                <input
+                  type="text"
+                  placeholder={`Assistor ${index + 1}`}
+                  value={scorer.assistor}
+                  onChange={(e) =>
+                    handleScorerChange(
+                      index,
+                      "assistor",
+                      e.target.value,
+                      "home"
+                    )
+                  }
+                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                />
+                
+                <input
+                  type="text"
+                  placeholder={`Time ${index + 1}`}
+                  value={scorer.time}
+                  onChange={(e) =>
+                    handleScorerChange(index, "time", e.target.value, "home")
+                  }
+                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                />
+              
               </div>
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-2 text-[#00684A] text-center">
-                  Away Team Goal Details:
-                </h2>
-                {awayScorers.map((scorer, index) => (
-                  <div key={index} className="mb-4">
-                    <input
-                      type="text"
-                      placeholder="Scorer Name"
-                      value={scorer.scorer}
-                      onChange={(e) =>
-                        handleScorerChange(
-                          index,
-                          "scorer",
-                          e.target.value,
-                          "away"
-                        )
-                      }
-                      className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A] mb-2"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Assistor Name"
-                      value={scorer.assistor}
-                      onChange={(e) =>
-                        handleScorerChange(
-                          index,
-                          "assistor",
-                          e.target.value,
-                          "away"
-                        )
-                      }
-                      className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A] mb-2"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Time (in minutes)"
-                      value={scorer.time}
-                      onChange={(e) =>
-                        handleScorerChange(
-                          index,
-                          "time",
-                          e.target.value,
-                          "away"
-                        )
-                      }
-                      className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-                    />
-                  </div>
-                ))}
+            ))}
+
+            <h2 className="text-lg font-bold mb-4 mt-6">Away Scorers</h2>
+            {awayScorers.map((scorer, index) => (
+              <div key={index} className="flex gap-4 mb-4">
+                <input
+                  type="text"
+                  placeholder={`Scorer ${index + 1}`}
+                  value={scorer.scorer}
+                  onChange={(e) =>
+                    handleScorerChange(index, "scorer", e.target.value, "away")
+                  }
+                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                />
+                <input
+                  type="text"
+                  placeholder={`Assistor ${index + 1}`}
+                  value={scorer.assistor}
+                  onChange={(e) =>
+                    handleScorerChange(
+                      index,
+                      "assistor",
+                      e.target.value,
+                      "away"
+                    )
+                  }
+                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                />
+                <input
+                  type="text"
+                  placeholder={`Time ${index + 1}`}
+                  value={scorer.time}
+                  onChange={(e) =>
+                    handleScorerChange(index, "time", e.target.value, "away")
+                  }
+                  className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                />
+                
               </div>
-            </div>
+            ))}
           </div>
         );
       case 3:
         return (
-          <div>
-            <div className="mb-6">
-              <label
-                htmlFor="manOfMatch"
-                className="block text-gray-700 text-sm font-medium mb-2"
-              >
-                Man of the Match:
-              </label>
-              <input
-                type="text"
-                id="manOfMatch"
-                value={manOfMatch}
-                onChange={handleManofMatch}
-                placeholder="Enter Man of the Match"
-                className="block appearance-none w-full bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
-              />
-            </div>
+          <div className="mb-6 mt-6 gap-4 flex flex-col items-center justify-center">
+            <label
+              htmlFor="manOfMatch"
+              className=" text-[#00684A] uppercase text-2xl font-poppins font-medium mb-2"
+            >
+              Player of the Match
+            </label>
+            <input
+              type="text"
+              id="manOfMatch"
+              value={manOfMatch}
+              onChange={handleManofMatch}
+              className=" appearance-none w-1/3 items-center bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+            />
           </div>
         );
       default:
@@ -377,49 +349,81 @@ export default function ManageMatches() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg p-8 mt-8">
+    <div className="max-w-4xl ring mx-auto p-4 ">
+      {table && (
+        <h1 className="text-2xl text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
+          Create matches under {table.name}
+        </h1>
+      )}
       <ToastContainer />
-      <h1 className="text-2xl font-bold text-center text-[#00684A] mb-8">
-        Manage Match Details
-      </h1>
-      <form onSubmit={handleMatchSubmit} className="space-y-8">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+          {error}
+        </div>
+      )}
+      <div className="mb-8 flex justify-between">
+        {["1", "2", "3"].map((item, index) => (
+          <div
+            key={index}
+            className={`flex items-center ${
+              index < 2 ? "" : ""
+            } cursor-pointer`}
+            onClick={() => setStep(index + 1)}
+          >
+            <div
+              className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
+                step === index + 1
+                  ? "bg-[#00684A] text-white"
+                  : "bg-gray-300 text-gray-800"
+              }`}
+            >
+              <h1 className="text-2xl font-bold font-fraunces" >
+              {item}</h1>
+            </div>
+            {index < 2 && (
+              <div
+                className={`w-[18rem] h-[2px] ml-6 transition-all duration-500 ease-in-out ${
+                  step > index + 1 ? "bg-[#00684A]" : "bg-gray-300"
+                }`}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={handleMatchSubmit}>
         {renderStepContent()}
-        <div className="flex justify-between mt-8">
+
+        <div className="flex justify-between">
           {step > 1 && (
             <button
               type="button"
               onClick={() => setStep(step - 1)}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg"
+              className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg"
             >
-              Previous
+              Back
             </button>
           )}
-          {step < 3 ? (
+          {step < 3 && (
             <button
               type="button"
               onClick={() => setStep(step + 1)}
-              className="bg-[#00684A] hover:bg-[#004c35] text-white font-semibold py-2 px-4 rounded-lg"
+              className="bg-[#00684A] text-white py-2 px-4 rounded-lg"
             >
               Next
             </button>
-          ) : (
+          )}
+          {step === 3 && (
             <button
               type="submit"
+              className="bg-[#00684A] text-white py-2 px-4 rounded-lg"
               disabled={isSaving}
-              className={`${
-                isSaving ? "bg-gray-400" : "bg-[#00684A] hover:bg-[#004c35]"
-              } text-white font-semibold py-2 px-4 rounded-lg`}
             >
-              {isSaving ? "Saving..." : "Submit"}
+              {isSaving ? "Saving..." : "Save"}
             </button>
           )}
         </div>
       </form>
-      {error && (
-        <div className="text-red-500 mt-4">
-          <p>{error}</p>
-        </div>
-      )}
     </div>
   );
 }
