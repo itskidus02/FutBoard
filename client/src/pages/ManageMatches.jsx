@@ -432,7 +432,7 @@ export default function ManageMatches() {
   };
 
   return (
-    <div className="max-w-4xl ring mx-auto p-4 ">
+    <div className="max-w-4xl  mx-auto p-4 ">
       {table && (
         <div className="flex justify-center">
         <h1 className="text-lg lg:text-2xl md:text-lg flex gap-4 text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
