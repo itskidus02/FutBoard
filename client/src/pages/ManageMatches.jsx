@@ -255,7 +255,7 @@ export default function ManageMatches() {
             <div className="mb-6">
               <label
                 htmlFor="matchDate"
-                className="block text-gray-700 text-sm font-medium mb-2"
+                className="block font-poppins text-gray-700 text-sm font-medium mb-2"
               >
                 Match Date:
               </label>
