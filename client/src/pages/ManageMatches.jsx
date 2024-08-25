@@ -478,20 +478,26 @@ export default function ManageMatches() {
             </button>
           )}
           {step < 3 && (
-          <button
-          type="button"
-          onClick={() => {
-            if (step === 1 && (!selectedClubs.homeClub || !selectedClubs.awayClub)) {
-              toast.error("Please select both home and away clubs before proceeding.");
-            } else {
-              setStep(step + 1);
-            }
-          }}
-          className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
-        >
-          Next
-        </button>
-        
+         <button
+         type="button"
+         onClick={() => {
+           if (step === 1) {
+             if (!selectedClubs.homeClub || !selectedClubs.awayClub) {
+               toast.error("Please select both home and away clubs before proceeding.");
+             } else if (matchResult.homeGoals === 0 && matchResult.awayGoals === 0) {
+               setStep(3); // Skip to the man of the match step
+             } else {
+               setStep(2); // Proceed to the second step
+             }
+           } else {
+             setStep(step + 1);
+           }
+         }}
+         className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
+       >
+         Next
+       </button>
+       
           )}
           {step === 3 && (
             <button
