@@ -434,7 +434,7 @@ export default function ManageMatches() {
       )}
       <ToastContainer />
       {/*  */}
-      <div className="mb-8 flex justify-between">
+      <div className="mb-8 flex pointer-events-none justify-between">
         {["1", "2", "3"].map((item, index) => (
           <div
             key={index}
