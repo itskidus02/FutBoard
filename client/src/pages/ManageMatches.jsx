@@ -465,7 +465,7 @@ export default function ManageMatches() {
             </div>
             {index < 2 && (
               <div
-                className={`lg:w-[18rem] md:w-[14rem] w-[4rem] md:mr-9   h-[2px] ml-6 transition-all duration-500 ease-in-out ${
+                className={`lg:w-[18rem] md:w-[19rem] w-[4rem] md:ml-9   h-[2px] ml-12   transition-all duration-500 ease-in-out ${
                   step > index + 1 ? "bg-[#00684A]" : "bg-gray-300"
                 }`}
               />
