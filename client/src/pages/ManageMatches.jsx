@@ -424,6 +424,7 @@ export default function ManageMatches() {
               className=" appearance-none w-1/3 items-center bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
             />
           </div>
+          
         );
       default:
         return null;
