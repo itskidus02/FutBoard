@@ -272,7 +272,7 @@ export default function ManageMatches() {
         );
       case 2:
         return (
-          <div className="flex justify-between mb-6">
+          <div className="flex justify-between  mb-6">
             {/* Home Club Section */}
             <div className="w-1/2 mr-2">
               <h2 className="text-lg font-bold mb-4 text-center bg-[#00684A] text-white py-2 rounded">
@@ -453,7 +453,7 @@ export default function ManageMatches() {
             onClick={() => setStep(index + 1)}
           >
             <div
-              className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
+              className={`lg:w-16 lg:h-16 md:w-12 md:h-12 h-8 w-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                 step === index + 1
                   ? "bg-[#00684A] text-white"
                   : "bg-gray-300 text-gray-800"
@@ -463,7 +463,7 @@ export default function ManageMatches() {
             </div>
             {index < 2 && (
               <div
-                className={`w-[18rem] h-[2px] ml-6 transition-all duration-500 ease-in-out ${
+                className={`lg:w-[18rem] md:w-[14rem] w-[4rem]    h-[2px] ml-6 transition-all duration-500 ease-in-out ${
                   step > index + 1 ? "bg-[#00684A]" : "bg-gray-300"
                 }`}
               />
