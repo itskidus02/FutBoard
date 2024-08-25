@@ -226,7 +226,7 @@ const MatchDisplay = () => {
                             className="inline h-3 md:h-4 w-3 md:w-4"
                           />
                         </div>
-                        <span className="text-sm md:text-lg font-bold font-poppins text-gray-700">
+                        <span className="text-sm md:text-lg uppercase font-bold font-poppins text-gray-700">
                           {scorer.scorer}
                         </span>
                         {scorer.assistor && (

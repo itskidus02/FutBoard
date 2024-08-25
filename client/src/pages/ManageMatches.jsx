@@ -51,20 +51,20 @@ export default function ManageMatches() {
   }, [tableId]);
 
   const handleClubChange = (type, clubId) => {
-    const selectedClub = clubs.find(club => club._id === clubId);
+    const selectedClub = clubs.find((club) => club._id === clubId);
     setSelectedClubs((prevState) => ({
       ...prevState,
       [type]: clubId,
     }));
-    if (type === 'homeClub') {
+    if (type === "homeClub") {
       setSelectedClubNames((prevState) => ({
         ...prevState,
-        homeClubName: selectedClub ? selectedClub.name : '',
+        homeClubName: selectedClub ? selectedClub.name : "",
       }));
-    } else if (type === 'awayClub') {
+    } else if (type === "awayClub") {
       setSelectedClubNames((prevState) => ({
         ...prevState,
-        awayClubName: selectedClub ? selectedClub.name : '',
+        awayClubName: selectedClub ? selectedClub.name : "",
       }));
     }
   };
@@ -276,26 +276,47 @@ export default function ManageMatches() {
                       type="text"
                       placeholder="Scorer"
                       value={scorer.scorer}
-                      onChange={(e) =>
-                        handleScorerChange(index, "scorer", e.target.value, "home")
-                      }
+                      maxLength={10}
+                      minLength={3}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z\s]/g,
+                          ""
+                        ); // Allows only letters and spaces
+                        handleScorerChange(index, "scorer", value, "home");
+                      }}
                       className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
                     />
+
                     <input
                       type="text"
                       placeholder="Assistor"
                       value={scorer.assistor}
-                      onChange={(e) =>
-                        handleScorerChange(index, "assistor", e.target.value, "home")
-                      }
+                      maxLength={10}
+                      minLength={3}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z\s]/g,
+                          ""
+                        ); // Allows only letters and spaces
+                        handleScorerChange(index, "assistor", value, "home");
+                      }}
                       className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
                     />
+
                     <input
-                      type="text"
+                      type="number"
                       placeholder="min"
+                      min={0}
+                      max={120}
                       value={scorer.time}
                       onChange={(e) =>
-                        handleScorerChange(index, "time", e.target.value, "home")
+                        handleScorerChange(
+                          index,
+                          "time",
+                          e.target.value,
+                          "home"
+                        )
                       }
                       className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
                     />
@@ -303,7 +324,7 @@ export default function ManageMatches() {
                 </div>
               ))}
             </div>
-        
+
             {/* Away Club Section */}
             <div className="w-1/2 ml-2">
               <h2 className="text-lg font-bold mb-4 text-center bg-[#00684A] text-white py-2 rounded">
@@ -320,27 +341,47 @@ export default function ManageMatches() {
                       type="text"
                       placeholder="Scorer"
                       value={scorer.scorer}
-                      onChange={(e) =>
-                        handleScorerChange(index, "scorer", e.target.value, "away")
-                      }
-                      className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                      maxLength={10}
+                      minLength={3}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z\s]/g,
+                          ""
+                        ); // Allows only letters and spaces
+                        handleScorerChange(index, "scorer", value, "away");
+                      }}
+                      className="border border-gray-300 py-2 px-3 rounded  focus:outline-none focus:ring-2 focus:ring-[#00684A]"
                       required
                     />
                     <input
                       type="text"
                       placeholder="Assistor"
                       value={scorer.assistor}
-                      onChange={(e) =>
-                        handleScorerChange(index, "assistor", e.target.value, "away")
-                      }
+                      maxLength={10}
+                      minLength={3}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(
+                          /[^a-zA-Z\s]/g,
+                          ""
+                        ); // Allows only letters and spaces
+                        handleScorerChange(index, "assistor", value, "away");
+                      }}
                       className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
                     />
+
                     <input
-                      type="text"
+                      type="number"
                       placeholder="min"
+                      min={0}
+                      max={120}
                       value={scorer.time}
                       onChange={(e) =>
-                        handleScorerChange(index, "time", e.target.value, "away")
+                        handleScorerChange(
+                          index,
+                          "time",
+                          e.target.value,
+                          "away"
+                        )
                       }
                       className="border border-gray-300 py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-[#00684A]"
                     />
@@ -350,8 +391,7 @@ export default function ManageMatches() {
             </div>
           </div>
         );
-        
-        
+
       case 3:
         return (
           <div className="mb-6 mt-6 gap-4 flex flex-col items-center justify-center">
@@ -380,10 +420,8 @@ export default function ManageMatches() {
       {table && (
         <h1 className="text-2xl flex gap-4 text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
           Create matches under
-          <span className="ring-[#00684A] ring-2 hover:text-[#00684A] hover:bg-white bg-[#00684A] text-white font-fraunces rounded-lg py-1 px-11 text-xl transition-all duration-300">            
-
-           {table.name}
-
+          <span className="ring-[#00684A] ring-2 hover:text-[#00684A] hover:bg-white bg-[#00684A] text-white font-fraunces rounded-lg py-1 px-11 text-xl transition-all duration-300">
+            {table.name}
           </span>
         </h1>
       )}
@@ -405,8 +443,7 @@ export default function ManageMatches() {
                   : "bg-gray-300 text-gray-800"
               }`}
             >
-              <h1 className="text-2xl font-bold font-fraunces" >
-              {item}</h1>
+              <h1 className="text-2xl font-bold font-fraunces">{item}</h1>
             </div>
             {index < 2 && (
               <div
