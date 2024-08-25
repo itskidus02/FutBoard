@@ -121,6 +121,12 @@ export default function ManageMatches() {
   const handleMatchSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+
+    if (!manOfMatch) {
+      toast.error("There has to be a Player of the Match");
+      return; // Prevent form submission if manOfMatch is not set
+    }
     setIsSaving(true);
 
     try {
@@ -411,6 +417,8 @@ export default function ManageMatches() {
             <input
               type="text"
               id="manOfMatch"
+              maxLength={10}
+              minLength={3}
               value={manOfMatch}
               onChange={handleManofMatch}
               className=" appearance-none w-1/3 items-center bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
