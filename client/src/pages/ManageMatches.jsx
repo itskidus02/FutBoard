@@ -98,6 +98,14 @@ export default function ManageMatches() {
       });
     }
   };
+  const handleNextStep = () => {
+    if (step === 1 && (!selectedClubs.homeClub || !selectedClubs.awayClub)) {
+      toast.error("Please select both home and away clubs before proceeding.");
+      return;
+    }
+    setStep(step + 1);
+  };
+  
 
   useEffect(() => {
     setHomeScorers(
@@ -470,13 +478,20 @@ export default function ManageMatches() {
             </button>
           )}
           {step < 3 && (
-            <button
-              type="button"
-              onClick={() => setStep(step + 1)}
-              className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
-            >
-              Next
-            </button>
+          <button
+          type="button"
+          onClick={() => {
+            if (step === 1 && (!selectedClubs.homeClub || !selectedClubs.awayClub)) {
+              toast.error("Please select both home and away clubs before proceeding.");
+            } else {
+              setStep(step + 1);
+            }
+          }}
+          className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
+        >
+          Next
+        </button>
+        
           )}
           {step === 3 && (
             <button
