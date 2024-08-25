@@ -378,8 +378,13 @@ export default function ManageMatches() {
   return (
     <div className="max-w-4xl ring mx-auto p-4 ">
       {table && (
-        <h1 className="text-2xl text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
-          Create matches under {table.name}
+        <h1 className="text-2xl flex gap-4 text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
+          Create matches under
+          <span className="ring-[#00684A] ring-2 hover:text-[#00684A] hover:bg-white bg-[#00684A] text-white font-fraunces rounded-lg py-1 px-11 text-xl transition-all duration-300">            
+
+           {table.name}
+
+          </span>
         </h1>
       )}
       <ToastContainer />
@@ -422,7 +427,7 @@ export default function ManageMatches() {
             <button
               type="button"
               onClick={() => setStep(step - 1)}
-              className="bg-gray-200 text-gray-700 py-1 px-11 text-xl font-medium font-poppins rounded-lg"
+              className="bg-[#EDE4E4] text-gray-700 py-1 px-11 text-xl font-medium font-poppins rounded-lg"
             >
               Back
             </button>
