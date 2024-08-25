@@ -105,7 +105,6 @@ export default function ManageMatches() {
     }
     setStep(step + 1);
   };
-  
 
   useEffect(() => {
     setHomeScorers(
@@ -478,26 +477,52 @@ export default function ManageMatches() {
             </button>
           )}
           {step < 3 && (
-         <button
-         type="button"
-         onClick={() => {
-           if (step === 1) {
-             if (!selectedClubs.homeClub || !selectedClubs.awayClub) {
-               toast.error("Please select both home and away clubs before proceeding.");
-             } else if (matchResult.homeGoals === 0 && matchResult.awayGoals === 0) {
-               setStep(3); // Skip to the man of the match step
-             } else {
-               setStep(2); // Proceed to the second step
-             }
-           } else {
-             setStep(step + 1);
-           }
-         }}
-         className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
-       >
-         Next
-       </button>
-       
+            <button
+              type="button"
+              onClick={() => {
+                if (step === 1) {
+                  if (!selectedClubs.homeClub || !selectedClubs.awayClub) {
+                    toast.error(
+                      "Please select both home and away clubs before proceeding."
+                    );
+                  } else if (!matchDate) {
+                    toast.error(
+                      "Please select a match date before proceeding."
+                    );
+                  } else if (
+                    matchResult.homeGoals === 0 &&
+                    matchResult.awayGoals === 0
+                  ) {
+                    setStep(3); // Skip to the man of the match step
+                  } else {
+                    setStep(2); // Proceed to the second step
+                  }
+                } else if (step === 2) {
+                  const allScorersFilled =
+                    homeScorers.every(
+                      (scorer) =>
+                        scorer.scorer && scorer.assistor && scorer.time
+                    ) &&
+                    awayScorers.every(
+                      (scorer) =>
+                        scorer.scorer && scorer.assistor && scorer.time
+                    );
+
+                  if (!allScorersFilled) {
+                    toast.error(
+                      "Please fill out the scorer, assistor, and time for each goal."
+                    );
+                  } else {
+                    setStep(3); // Proceed to the man of the match step
+                  }
+                } else {
+                  setStep(step + 1);
+                }
+              }}
+              className="bg-[#00684A] text-white py-1 px-11 text-xl font-poppins rounded-lg"
+            >
+              Next
+            </button>
           )}
           {step === 3 && (
             <button
