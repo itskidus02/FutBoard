@@ -97,6 +97,9 @@ const ResultDisplay = () => {
 
                         return (
                           <div key={index} className="bg-white rounded-lg p-3">
+                             <Link
+                    to={`/match/${match._id}`}
+                    key={match._id}>
                             <div className="flex justify-evenly ring-2 ring-[#00684A] rounded-lg py-1 px-2 items-center">
                               <div className="flex items-center">
                                 <span className="font-bold md:text-xs font-poppins lg:text-2xl uppercase">
@@ -126,6 +129,7 @@ const ResultDisplay = () => {
                                 </span>
                               </div>
                             </div>
+                            </Link>
                           </div>
                         );
                       })}

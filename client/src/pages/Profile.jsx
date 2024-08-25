@@ -28,6 +28,7 @@ import userdel from "../assets/userdel.svg";
 import signout from "../assets/signout.svg";
 import pensq from "../assets/pensq.svg";
 
+
 export default function Profile() {
   const dispatch = useDispatch();
   const fileRef = useRef(null);
@@ -286,12 +287,16 @@ export default function Profile() {
                 className="ring-2 ring-[#00684A] w-full sm:w-[48%] lg:w-[48%] flex justify-between items-center p-3 rounded-lg"
               >
                 <div>
+                <Link to={`/display-table/${table._id}`}>
+
                   <div className="flex justify-center items-center text-white bg-[#00684A] font-bold rounded-md font-poppins py-1 w-32">
                     <h3 className="text-lg lg:text-xl font-semibold text-center">
                       {table.name.substring(0, 4)}
                       {table.name.length > 4 ? "..." : ""}
                     </h3>
                   </div>
+                  </Link>
+
                   <div className="flex flex-wrap gap-2 mt-4">
                     {table.clubs.slice(0, 3).map((club) => (
                       <div key={club.clubId._id} className="flex items-center">

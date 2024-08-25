@@ -16,6 +16,7 @@ import ResultDisplay from "./pages/ResultDisplay";
 import NotFound from "./pages/NotFound"; // Import the NotFound component
 import { BorderBeam } from "./components/magicui/border-beam";
 import Footer from "./components/Footer";
+import MatchDisplay from './pages/MatchDisplay';
 // import { AccordionDemo } from "./components/Demo/AccordionDemo";
 export default function App() {
   return (
@@ -32,6 +33,8 @@ export default function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/display-table/:tableId" element={<DisplayTable />} />
           <Route path="/display-result" element={<ResultDisplay />} />
+          <Route path="/match/:matchId" element={<MatchDisplay />} /> {/* New Route */}
+
           
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
