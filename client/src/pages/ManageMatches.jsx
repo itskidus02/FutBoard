@@ -122,7 +122,6 @@ export default function ManageMatches() {
     e.preventDefault();
     setError("");
 
-
     if (!manOfMatch) {
       toast.error("There has to be a Player of the Match");
       return; // Prevent form submission if manOfMatch is not set
@@ -230,7 +229,7 @@ export default function ManageMatches() {
                     onChange={(e) =>
                       handleClubChange("awayClub", e.target.value)
                     }
-                    className="block appearance-none w-full sm:w-3/4 bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
+                    className="block appearance-none w-full sm:w-3/4 bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A] mb-4 sm:mb-0"
                   >
                     <option value="">Select Away Club</option>
                     {filteredAwayClubs.map((club) => (
@@ -239,9 +238,11 @@ export default function ManageMatches() {
                       </option>
                     ))}
                   </select>
+                  
                   <input
                     type="number"
                     id="awayGoals"
+                    placeholder="goals"
                     value={matchResult.awayGoals}
                     min={0}
                     onChange={(e) =>
@@ -424,7 +425,6 @@ export default function ManageMatches() {
               className=" appearance-none w-1/3 items-center bg-white border border-gray-300 text-gray-900 py-3 px-4 rounded-lg leading-tight focus:outline-none focus:ring-2 focus:ring-[#00684A]"
             />
           </div>
-          
         );
       default:
         return null;
@@ -434,12 +434,14 @@ export default function ManageMatches() {
   return (
     <div className="max-w-4xl ring mx-auto p-4 ">
       {table && (
-        <h1 className="text-2xl flex gap-4 text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
+        <div className="flex justify-center">
+        <h1 className="text-lg lg:text-2xl md:text-lg flex gap-4 text-[#00684A] font-fraunces sm:text-3xl font-semibold mb-6 sm:mb-8">
           Create matches under
-          <span className="ring-[#00684A] ring-2 hover:text-[#00684A] hover:bg-white bg-[#00684A] text-white font-fraunces rounded-lg py-1 px-11 text-xl transition-all duration-300">
+          <span className="ring-[#00684A] ring-2 hover:text-[#00684A] hover:bg-white bg-[#00684A] text-white font-fraunces rounded-lg py-1 lg:px-11 lg:text-xl md:px-8 md:text-md px-4 text-sm items-center transition-all duration-300">
             {table.name}
           </span>
         </h1>
+        </div>
       )}
       <ToastContainer />
       {/*  */}
@@ -463,7 +465,7 @@ export default function ManageMatches() {
             </div>
             {index < 2 && (
               <div
-                className={`lg:w-[18rem] md:w-[14rem] w-[4rem]    h-[2px] ml-6 transition-all duration-500 ease-in-out ${
+                className={`lg:w-[18rem] md:w-[14rem] w-[4rem] md:mr-9   h-[2px] ml-6 transition-all duration-500 ease-in-out ${
                   step > index + 1 ? "bg-[#00684A]" : "bg-gray-300"
                 }`}
               />
