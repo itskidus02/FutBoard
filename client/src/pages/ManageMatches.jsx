@@ -272,10 +272,10 @@ export default function ManageMatches() {
         );
       case 2:
         return (
-          <div className="flex justify-between  mb-6">
+          <div className="flex flex-col md:flex-row md:justify-around justify-between  mb-6">
             {/* Home Club Section */}
-            <div className="w-1/2 mr-2">
-              <h2 className="text-lg font-bold mb-4 text-center bg-[#00684A] text-white py-2 rounded">
+            <div className="w-full md:w-1/2 md:mr-2 flex flex-col items-center">
+              <h2 className="text-lg font-bold mb-4 w-full md:w-1/2 text-center bg-[#00684A] text-white py-2 rounded">
                 {selectedClubNames.homeClubName}
               </h2>
               {homeScorers.map((scorer, index) => (
@@ -339,8 +339,8 @@ export default function ManageMatches() {
             </div>
 
             {/* Away Club Section */}
-            <div className="w-1/2 ml-2">
-              <h2 className="text-lg font-bold mb-4 text-center bg-[#00684A] text-white py-2 rounded">
+            <div className="w-full md:w-1/2 md:mr-2 flex flex-col items-center">
+              <h2 className="text-lg font-bold mb-4 w-full md:w-1/2 text-center bg-[#00684A] text-white py-2 rounded">
                 {selectedClubNames.awayClubName}
               </h2>
               {awayScorers.map((scorer, index) => (
