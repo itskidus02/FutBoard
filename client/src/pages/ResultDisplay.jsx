@@ -110,16 +110,16 @@ const ResultDisplay = () => {
                             >
                               <Link to={`/match/${match._id}`} key={match._id}>
                                 <div className="flex justify-between hover:ring-2 hover:ring-[#00684A] rounded-lg py-1 px-2 items-center">
-                                  <div className="flex items-center justify-between space-x-4">
+                                  <div className="flex items-center justify-between space-x-3">
                                     <div className="flex items-center space-x-2">
-                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-2xl">
+                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
                                         {homeClub?.clubId.name}
                                       </span>
                                       {homeClub?.clubId.logoUrl && (
                                         <img
                                           src={homeClub.clubId.logoUrl}
                                           alt={`${homeClub.clubId.name} logo`}
-                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8"
+                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
                                         />
                                       )}
                                     </div>
@@ -133,28 +133,27 @@ const ResultDisplay = () => {
                                         <img
                                           src={awayClub.clubId.logoUrl}
                                           alt={`${awayClub.clubId.name} logo`}
-                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8"
+                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
                                         />
                                       )}
-                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-2xl">
+                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
                                         {awayClub?.clubId.name}
                                       </span>
                                     </div>
                                   </div>
 
-                                  <div className="flex items-center justify-center uppercase font-poppins font-bold">
+                                  <div className="flex items-center justify-center uppercase font-poppins font-bold hidden sm:flex">
                                     <img
                                       src={motm}
                                       className="w-8 h-8"
                                       alt=""
                                     />
-
                                     {match.manOfMatch}
                                   </div>
 
                                   <img
                                     src={arrowright}
-                                    className="w-8 h-8"
+                                    className="lg:w-8 lg:h-8 w-4 h-4"
                                     alt=""
                                   />
                                 </div>
