@@ -1,6 +1,7 @@
 import Spinner from "@/components/Spinner";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import arrowright from "../assets/arrowright.svg";
 
 const ResultDisplay = () => {
   const [tables, setTables] = useState([]);
@@ -28,7 +29,7 @@ const ResultDisplay = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-       <Spinner/>
+        <Spinner />
       </div>
     );
   }
@@ -49,14 +50,17 @@ const ResultDisplay = () => {
   };
 
   const formatDate = (dateString) => {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   // Check if there are any matches across all tables
-  const noMatchesFound = tables.every(
-    (table) => table.matches.length === 0
-  );
+  const noMatchesFound = tables.every((table) => table.matches.length === 0);
 
   return (
     <main>
@@ -69,73 +73,89 @@ const ResultDisplay = () => {
           const matchesByDate = organizeMatchesByDate(table.matches);
 
           return (
-            <div key={table._id} className="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 p-3 my-7">
+            <div
+              key={table._id}
+              className="max-w-screen-2xl mx-auto j gap-4 p-3 my-7"
+            >
               <div className="">
-              <div className="p-3 rounded-lg">
-                {Object.keys(matchesByDate).map((date) => (
-                  <div key={date} className="mb-8">
-                    <div className="flex mb-3 justify-between items-center">
-                      <div className="text-[#00684A] font-fraunces flex gap-2 text-xs lg:text-2xl">
-                        <div className="bg-[#00684A] rounded-lg">.</div>
-                        {formatDate(date)}
-                      </div>
-                      <Link to={`/display-table/${table._id}`}>
-                        <div className="bg-[#00684A] uppercase font-fraunces text-white text-xs lg:text-2xl rounded-md px-5 py-1">
-                          {table.name.substring(0, 3)}
+                <div className="p-3 rounded-lg">
+                  {Object.keys(matchesByDate).map((date) => (
+                    <div key={date} className="mb-8">
+                      <div className="flex mb-3 justify-between items-center">
+                        <div className="text-[#00684A] font-fraunces flex gap-2 text-xs lg:text-2xl">
+                          <div className="bg-[#00684A] rounded-lg">.</div>
+                          {formatDate(date)}
                         </div>
-                      </Link>
-                    </div>
-
-                    <div className="">
-                      {matchesByDate[date].map((match, index) => {
-                        const homeClub = table.clubs.find(
-                          (club) => club.clubId._id === match.homeClubId
-                        );
-                        const awayClub = table.clubs.find(
-                          (club) => club.clubId._id === match.awayClubId
-                        );
-
-                        return (
-                          <div key={index} className="bg-white rounded-lg p-3">
-                             <Link
-                    to={`/match/${match._id}`}
-                    key={match._id}>
-                            <div className="flex justify-evenly ring-2 ring-[#00684A] rounded-lg py-1 px-2 items-center">
-                              <div className="flex items-center">
-                                <span className="font-bold md:text-xs font-poppins lg:text-2xl uppercase">
-                                  {homeClub?.clubId.name}
-                                </span>
-                                {homeClub?.clubId.logoUrl && (
-                                  <img
-                                    src={homeClub.clubId.logoUrl}
-                                    alt={`${homeClub.clubId.name} logo`}
-                                    className="lg:w-8 lg:h-8 md:w-6 md:h-8 w-4 h-4 mx-2"
-                                  />
-                                )}
-                              </div>
-                              <div className="bg-[#00684A] font-bold text-white text-xs lg:text-2xl font-poppins rounded-md lg:px-6 md:px-5 px-3 py-1">
-                                {match.homeGoals} - {match.awayGoals}
-                              </div>
-                              <div className="flex items-center">
-                                {awayClub?.clubId.logoUrl && (
-                                  <img
-                                    src={awayClub.clubId.logoUrl}
-                                    alt={`${awayClub.clubId.name} logo`}
-                                    className="lg:w-8 lg:h-8 md:w-6 md:h-8 w-4 h-4 mx-2"
-                                  />
-                                )}
-                                <span className="font-bold md:text-xs font-poppins lg:text-2xl uppercase">
-                                  {awayClub?.clubId.name}
-                                </span>
-                              </div>
-                            </div>
-                            </Link>
+                        <Link to={`/display-table/${table._id}`}>
+                          <div className="bg-[#00684A] uppercase font-fraunces text-white text-xs lg:text-2xl rounded-md px-5 py-1">
+                            {table.name.substring(0, 3)}
                           </div>
-                        );
-                      })}
+                        </Link>
+                      </div>
+
+                      <div className="">
+                        {matchesByDate[date].map((match, index) => {
+                          const homeClub = table.clubs.find(
+                            (club) => club.clubId._id === match.homeClubId
+                          );
+                          const awayClub = table.clubs.find(
+                            (club) => club.clubId._id === match.awayClubId
+                          );
+
+                          return (
+                            <div
+                              key={index}
+                              className="bg-white rounded-lg p-3"
+                            >
+                              <Link to={`/match/${match._id}`} key={match._id}>
+                                <div className="flex justify-between hover:ring-2 hover:ring-[#00684A] rounded-lg py-1 px-2 items-center">
+                                  <div className="flex items-center justify-between space-x-4">
+                                    <div className="flex items-center space-x-2">
+                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-2xl">
+                                        {homeClub?.clubId.name}
+                                      </span>
+                                      {homeClub?.clubId.logoUrl && (
+                                        <img
+                                          src={homeClub.clubId.logoUrl}
+                                          alt={`${homeClub.clubId.name} logo`}
+                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8"
+                                        />
+                                      )}
+                                    </div>
+
+                                    <div className="bg-[#00684A] font-bold text-white text-xs lg:text-2xl font-poppins rounded-md px-3 md:px-5 lg:px-6 py-1 text-center">
+                                      {match.homeGoals} - {match.awayGoals}
+                                    </div>
+
+                                    <div className="flex items-center space-x-2">
+                                      {awayClub?.clubId.logoUrl && (
+                                        <img
+                                          src={awayClub.clubId.logoUrl}
+                                          alt={`${awayClub.clubId.name} logo`}
+                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8"
+                                        />
+                                      )}
+                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-2xl">
+                                        {awayClub?.clubId.name}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  <div>dsdsds</div>
+
+                                  <img
+                                    src={arrowright}
+                                    className="w-8 h-8"
+                                    alt=""
+                                  />
+                                </div>
+                              </Link>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
                 </div>
               </div>
             </div>
