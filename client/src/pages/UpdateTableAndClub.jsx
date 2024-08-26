@@ -57,10 +57,19 @@ export default function UpdateTableAndClub() {
   };
 
   const handleLogoChange = (index, e) => {
+    const file = e.target.files[0];
     const newTeamLogos = [...teamLogos];
-    newTeamLogos[index] = e.target.files[0];
+    newTeamLogos[index] = file;
     setTeamLogos(newTeamLogos);
+  
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      const newExistingTeamLogos = [...existingTeamLogos];
+      newExistingTeamLogos[index] = previewUrl;
+      setExistingTeamLogos(newExistingTeamLogos);
+    }
   };
+  
 
   const handleAddTeam = () => {
     setTeamNames([...teamNames, ""]);
@@ -220,44 +229,60 @@ export default function UpdateTableAndClub() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {teamNames.map((teamName, index) => (
-            <div
-              key={index}
-              className="flex flex-col bg-white ring-1 ring-gray-100 gap-2 items-center border p-3 rounded-lg"
-            >
-              <input
-                type="text"
-                placeholder={`Team ${index + 1} Name`}
-                className="border p-3 font-poppins ring-2 ring-[#00684A] font-light rounded-lg w-full"
-                value={teamName}
-                onChange={(e) => handleTeamNameChange(index, e)}
-                required
-                maxLength={9}
-                minLength={3}
+  {teamNames.map((teamName, index) => (
+    <div
+      key={index}
+      className="flex flex-col bg-white ring-1 ring-gray-100 gap-2 items-center border p-3 rounded-lg"
+    >
+      <input
+        type="text"
+        placeholder={`Team ${index + 1} Name`}
+        className="border p-3 font-poppins ring-2 ring-[#00684A] font-light rounded-lg w-full"
+        value={teamName}
+        onChange={(e) => handleTeamNameChange(index, e)}
+        required
+        maxLength={9}
+        minLength={3}
+      />
+      <div className="relative flex w-full max-w-sm flex-col gap-1">
+        <input
+          id={`fileInput-${index}`}
+          type="file"
+          accept="image/*"
+          className="w-full max-w-md rounded-lg text-black font-poppins file:mr-4 file:cursor-pointer file:border-none file:bg-[#00684A] hover:file:bg-white file:px-4 file:py-2 file:font-semibold file:text-white hover:file:text-[#00684A] file:font-poppins ring-2 ring-[#00684A] transition-all"
+          onChange={(e) => handleLogoChange(index, e)}
+        />
+        {existingTeamLogos[index] && (
+          <img
+            src={existingTeamLogos[index]}
+            alt={`Preview ${index + 1}`}
+            className="mt-2 rounded-lg cursor-pointer w-10 h-10 transition-transform duration-300 ease-in-out transform hover:scale-105"
+            onClick={(e) => {
+              e.target.classList.add("animate-open-modal");
+              setTimeout(() => {
+                e.target.classList.remove("animate-open-modal");
+              }, 300);
+            }}
+          />
+        )}
+        {teamLogos[index] && (
+          <>
+            <div className="bg-[#00684A] h-1 rounded mt-2">
+              <div
+                className="bg-[#00C2C0] h-full rounded"
+                style={{ width: `${uploadProgress[index] || 0}%` }}
               />
-              <div className="relative flex w-full max-w-sm flex-col gap-1">
-                <input
-                  id={`fileInput-${index}`}
-                  type="file"
-                  accept="image/*"
-                  className="w-full max-w-md rounded-lg text-black font-poppins file:mr-4 file:cursor-pointer file:border-none file:bg-[#00684A] hover:file:bg-white file:px-4 file:py-2 file:font-semibold file:text-white hover:file:text-[#00684A] file:font-poppins ring-2 ring-[#00684A] transition-all"
-                  onChange={(e) => handleLogoChange(index, e)}
-                />
-                {teamLogos[index] && (
-                  <>
-                    <div className="bg-[#00684A] h-1 rounded mt-2">
-                      <div
-                        className="bg-[#00C2C0] h-full rounded"
-                        style={{ width: `${uploadProgress[index] || 0}%` }}
-                      />
-                    </div>
-                    <span className="text-sm mt-1 text-[#00C2C0]">{Math.round(uploadProgress[index] || 0)}%</span>
-                  </>
-                )}
-              </div>
             </div>
-          ))}
-        </div>
+            <span className="text-sm mt-1 text-[#00C2C0]">
+              {Math.round(uploadProgress[index] || 0)}%
+            </span>
+          </>
+        )}
+      </div>
+    </div>
+  ))}
+</div>
+
         {error && <p className="text-red-700 text-sm">{error}</p>}
         <button
           type="submit"
