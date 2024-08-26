@@ -2,6 +2,7 @@ import Spinner from "@/components/Spinner";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import arrowright from "../assets/arrowright.svg";
+import motm from "../assets/motm.svg";
 
 const ResultDisplay = () => {
   const [tables, setTables] = useState([]);
@@ -141,7 +142,15 @@ const ResultDisplay = () => {
                                     </div>
                                   </div>
 
-                                  <div>dsdsds</div>
+                                  <div className="flex items-center justify-center uppercase font-poppins font-bold">
+                                    <img
+                                      src={motm}
+                                      className="w-8 h-8"
+                                      alt=""
+                                    />
+
+                                    {match.manOfMatch}
+                                  </div>
 
                                   <img
                                     src={arrowright}
