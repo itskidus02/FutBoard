@@ -17,7 +17,8 @@ export default function CreateTableAndClub() {
   const [tableName, setTableName] = useState("");
   const [teamNames, setTeamNames] = useState([]);
   const [teamLogos, setTeamLogos] = useState([]);
-  const [error, setError] = useState("");
+  const [previewImages, setPreviewImages] = useState([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [uploadProgress, setUploadProgress] = useState({});
   const [isCreating, setIsCreating] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
@@ -29,6 +30,7 @@ export default function CreateTableAndClub() {
       setNumTeams(value);
       setTeamNames(new Array(value).fill(""));
       setTeamLogos(new Array(value).fill(null));
+      setPreviewImages(new Array(value).fill(null));
     }
   };
 
@@ -43,9 +45,28 @@ export default function CreateTableAndClub() {
   };
 
   const handleLogoChange = (index, e) => {
+    const file = e.target.files[0];
     const newTeamLogos = [...teamLogos];
-    newTeamLogos[index] = e.target.files[0];
+    newTeamLogos[index] = file;
     setTeamLogos(newTeamLogos);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const newPreviewImages = [...previewImages];
+        newPreviewImages[index] = reader.result;
+        setPreviewImages(newPreviewImages);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageClick = (index) => {
+    setSelectedImageIndex(index);
+  };
+
+  const handleClosePreview = () => {
+    setSelectedImageIndex(null);
   };
 
   const handleSubmit = async (e) => {
@@ -63,8 +84,6 @@ export default function CreateTableAndClub() {
       setIsCreating(false);
       return;
     }
-
-    setError("");
 
     try {
       const tableRes = await fetch("/api/table/create", {
@@ -113,16 +132,15 @@ export default function CreateTableAndClub() {
         throw new Error("Failed to add clubs to the table");
       }
 
-      const updatedTable = await clubsRes.json();
       toast.success("Table and clubs created successfully");
       setNumTeams(0);
       setTableName("");
       setTeamNames([]);
       setTeamLogos([]);
+      setPreviewImages([]);
       navigate(`/manage-matches/${tableId}`);
     } catch (error) {
       toast.error(`Error: ${error.message}`);
-      console.error("Error creating table and clubs:", error);
     } finally {
       setIsCreating(false);
     }
@@ -223,6 +241,14 @@ export default function CreateTableAndClub() {
                   onChange={(e) => handleLogoChange(index, e)}
                   required
                 />
+                {previewImages[index] && (
+                  <img
+                    src={previewImages[index]}
+                    alt={`Team ${index + 1} Logo Preview`}
+                    className="mt-2 w-10 h-10 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
+                    onClick={() => handleImageClick(index)}
+                  />
+                )}
                 {uploadProgress[index] !== undefined && (
                   <div className="w-full mt-2">
                     <div
@@ -249,8 +275,22 @@ export default function CreateTableAndClub() {
         >
           {isCreating ? <Spinner /> : "Create Table"}
         </button>
-        {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
+      {selectedImageIndex !== null && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={handleClosePreview}
+        >
+          <img
+            src={previewImages[selectedImageIndex]}
+            alt="Large Preview"
+            className="max-w-full max-h-full rounded-lg transition-transform transform scale-90 opacity-0 animate-open-modal"
+          />
+        </div>
+      )}
     </main>
   );
 }
+
+// Add the animation styles in your CSS or Tailwind config:
+
