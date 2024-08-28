@@ -111,7 +111,7 @@ const ResultDisplay = () => {
                               <Link to={`/match/${match._id}`} key={match._id}>
                                 <div className="grid grid-cols-9 justify-between gap-4 hover:ring-2 hover:ring-[#00684A] rounded-lg py-1 px-2 items-center">
                                   <div className="flex  items-center justify-end space-x-2 col-span-1">
-                                    <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
+                                    <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-[16px]">
                                       {homeClub?.clubId.name}
                                     </span>
                                     {homeClub?.clubId.logoUrl && (
@@ -135,7 +135,7 @@ const ResultDisplay = () => {
                                         className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
                                       />
                                     )}
-                                    <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
+                                    <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-[16px]">
                                       {awayClub?.clubId.name}
                                     </span>
                                   </div>
@@ -143,10 +143,10 @@ const ResultDisplay = () => {
                                   <div className="flex items-center justify-start text-center col-span-2 sm:col-span-3">
                                     <img
                                       src={motm}
-                                      className="w-8 h-8"
+                                      className="lg:w-8 md:w-6 md:h-6 w-4 h-4 lg:h-8"
                                       alt=""
                                     />
-                                    <span className="uppercase font-poppins font-bold hidden sm:inline-block">
+                                    <span className="uppercase font-poppins text-[11.25px] font-bold hidden sm:inline-block">
                                       {match.manOfMatch}
                                     </span>
                                   </div>
