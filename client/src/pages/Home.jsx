@@ -109,7 +109,7 @@ const Home = () => {
             >
               <div className="flex justify-between">
                 <div className="flex flex-col gap-3">
-                  <div className="ring-2 gap-2 flex ring-[#00684A] font-bold rounded-md font-poppins py-1 px-2 text-center">
+                  <div className="ring-2 gap-2 flex justify-center ring-[#00684A] font-bold rounded-md font-poppins py-1 px-2 text-center">
                     <h4 className="text-md font-light">by <span className="font-bold">{table.creator.username.substring(0, 10)}</span></h4>
                   <img src={user} className="w-6 h-6" alt="" />
                   </div>
@@ -119,14 +119,14 @@ const Home = () => {
                       {table.name.length > 4 ? "..." : ""}
                     </h3>
                   </div>
-                  <div className="flex items-center">
-                    {table.clubs.slice(0, 3).map((club) => (
+                  <div className="grid grid-cols-10 items-center">
+                    {table.clubs.map((club) => (
                       <div key={club.clubId._id} className="flex items-center">
                         {club.clubId.logoUrl && (
                           <img
                             src={club.clubId.logoUrl}
                             alt={`${club.clubId.name} logo`}
-                            className="lg:w-6 lg:h-6 w-6 h-6"
+                            className="lg:w-8 lg:h-8 w-6 h-6"
                           />
                         )}
                       </div>
