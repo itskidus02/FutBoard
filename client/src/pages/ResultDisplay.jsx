@@ -109,53 +109,55 @@ const ResultDisplay = () => {
                               className="bg-white rounded-lg p-3"
                             >
                               <Link to={`/match/${match._id}`} key={match._id}>
-                                <div className="flex justify-between hover:ring-2 hover:ring-[#00684A] rounded-lg py-1 px-2 items-center">
-                                  <div className="flex items-center justify-between space-x-3">
-                                    <div className="flex items-center space-x-2">
-                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
-                                        {homeClub?.clubId.name}
-                                      </span>
-                                      {homeClub?.clubId.logoUrl && (
-                                        <img
-                                          src={homeClub.clubId.logoUrl}
-                                          alt={`${homeClub.clubId.name} logo`}
-                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
-                                        />
-                                      )}
-                                    </div>
-
-                                    <div className="bg-[#00684A] font-bold text-white text-xs lg:text-2xl font-poppins rounded-md px-3 md:px-5 lg:px-6 py-1 text-center">
-                                      {match.homeGoals} - {match.awayGoals}
-                                    </div>
-
-                                    <div className="flex items-center space-x-2">
-                                      {awayClub?.clubId.logoUrl && (
-                                        <img
-                                          src={awayClub.clubId.logoUrl}
-                                          alt={`${awayClub.clubId.name} logo`}
-                                          className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
-                                        />
-                                      )}
-                                      <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
-                                        {awayClub?.clubId.name}
-                                      </span>
-                                    </div>
+                                <div className="grid grid-cols-9 justify-between gap-4 hover:ring-2 hover:ring-[#00684A] rounded-lg py-1 px-2 items-center">
+                                  <div className="flex  items-center justify-end space-x-2 col-span-1">
+                                    <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
+                                      {homeClub?.clubId.name}
+                                    </span>
+                                    {homeClub?.clubId.logoUrl && (
+                                      <img
+                                        src={homeClub.clubId.logoUrl}
+                                        alt={`${homeClub.clubId.name} logo`}
+                                        className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
+                                      />
+                                    )}
                                   </div>
 
-                                  <div className="flex items-center justify-center uppercase font-poppins font-bold hidden sm:flex">
+                                  <div className="flex items-center justify-center bg-[#00684A] font-bold text-white text-xs lg:text-2xl font-poppins rounded-md px-3 md:px-5 lg:px-6 py-1 col-span-1">
+                                    {match.homeGoals} - {match.awayGoals}
+                                  </div>
+
+                                  <div className="flex items-center justify-start space-x-2 col-span-1">
+                                    {awayClub?.clubId.logoUrl && (
+                                      <img
+                                        src={awayClub.clubId.logoUrl}
+                                        alt={`${awayClub.clubId.name} logo`}
+                                        className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7"
+                                      />
+                                    )}
+                                    <span className="font-bold font-poppins uppercase text-xs md:text-sm lg:text-xl">
+                                      {awayClub?.clubId.name}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center justify-start col-span-2 sm:col-span-1">
                                     <img
                                       src={motm}
                                       className="w-8 h-8"
                                       alt=""
                                     />
-                                    {match.manOfMatch}
+                                    <span className="uppercase font-poppins font-bold hidden sm:inline-block">
+                                      {match.manOfMatch}
+                                    </span>
                                   </div>
 
-                                  <img
-                                    src={arrowright}
-                                    className="lg:w-8 lg:h-8 w-4 h-4"
-                                    alt=""
-                                  />
+                                  <div className="flex justify-end col-span-1">
+                                    <img
+                                      src={arrowright}
+                                      className="lg:w-8 lg:h-8 w-4 h-4"
+                                      alt=""
+                                    />
+                                  </div>
                                 </div>
                               </Link>
                             </div>
