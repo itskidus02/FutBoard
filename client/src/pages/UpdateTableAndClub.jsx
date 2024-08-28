@@ -208,7 +208,7 @@ export default function UpdateTableAndClub() {
               <input
                 type="number"
                 placeholder="Number of Teams"
-                className="border ring-2 ring-[#00684A] p-3 rounded-lg flex-grow"
+                className="border ring-2 ring-[#00684A] p-3 rounded-lg"
                 value={numTeams}
                 disabled
                 required
