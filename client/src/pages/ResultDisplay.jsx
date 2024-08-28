@@ -127,7 +127,7 @@ const ResultDisplay = () => {
                                     {match.homeGoals} - {match.awayGoals}
                                   </div>
 
-                                  <div className="flex items-center justify-start space-x-2 col-span-1">
+                                  <div className="flex items-center justify-start space-x-2 col-span-2">
                                     {awayClub?.clubId.logoUrl && (
                                       <img
                                         src={awayClub.clubId.logoUrl}
@@ -140,7 +140,7 @@ const ResultDisplay = () => {
                                     </span>
                                   </div>
 
-                                  <div className="flex items-center justify-start col-span-2 sm:col-span-1">
+                                  <div className="flex items-center justify-start text-center col-span-2 sm:col-span-3">
                                     <img
                                       src={motm}
                                       className="w-8 h-8"
@@ -151,7 +151,7 @@ const ResultDisplay = () => {
                                     </span>
                                   </div>
 
-                                  <div className="flex justify-end col-span-1">
+                                  <div className="flex justify-end col-span-2">
                                     <img
                                       src={arrowright}
                                       className="lg:w-8 lg:h-8 w-4 h-4"
